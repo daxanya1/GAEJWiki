@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pt>
+	<phtml name="header">
+		<param key="title"></param>
+	</phtml>
+	<phtml name="wikidata">
+		<param key="wiki"></param>
+	</phtml>
+	<phtml name="footer"></phtml>
+</pt>
