@@ -17,6 +17,12 @@ public class PtXmlParser  implements BitXmlParserI {
 	
 	private PtParam nowparam = null;
 	
+	public final String TAG_PHTML = "phtml";
+	public final String TAG_PARAM = "param";
+	public final String ATTRIVUTE_KEY = "key";
+	public final String ATTRIVUTE_NAME = "name";
+	public final String PARAMVALUE = "_";
+	
 	public final List<PtParam> getList() {
 		return list;
 	}
@@ -48,15 +54,17 @@ public class PtXmlParser  implements BitXmlParserI {
 			return;
 		}
 		
-		String nowtag = nowstack.firstElement();
+		String nowtag = nowstack.lastElement();
 		
-		if ("param".equals(nowtag)) {
-			if ("key".equals(arg0)) {
-				nowparam.setMapKey(arg1, null);
+		if (TAG_PARAM.equals(nowtag)) {
+			if (ATTRIVUTE_KEY.equals(arg0)) {
+				String param = new Util().trimDoubleQuote(arg1);
+				nowparam.setMapKey(param, PARAMVALUE);
 			}
-		} else if ("phtml".equals(nowtag)) {
-			if ("name".equals(arg0)) {
-				nowparam.setName(arg1);
+		} else if (TAG_PHTML.equals(nowtag)) {
+			if (ATTRIVUTE_NAME.equals(arg0)) {
+				String param = new Util().trimDoubleQuote(arg1);
+				nowparam.setName(param);
 			}
 		}
 	}
@@ -64,7 +72,7 @@ public class PtXmlParser  implements BitXmlParserI {
 	@Override
 	public void startTag(String arg0) {
 		nowstack.push(arg0);
-		if ("phtml".equals(arg0)) {
+		if (TAG_PHTML.equals(arg0)) {
 			nowparam = new PtParam();
 			list.add(nowparam);
 		}
@@ -74,5 +82,17 @@ public class PtXmlParser  implements BitXmlParserI {
 	public void text(String arg0) {
 		// –³Ž‹‚·‚é
 	} 
+	
+	static public class Util {
+		
+		public String trimDoubleQuote(String param) {
+			if (param != null && param.length() > 0) {
+				if (param.charAt(0) == '"' && param.charAt(param.length()-1) == '"') {
+					param = param.substring(1, param.length()-1);
+				}
+			}
+			return param;
+		}
+	}
 
 }
