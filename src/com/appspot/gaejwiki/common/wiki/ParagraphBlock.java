@@ -49,12 +49,7 @@ public class ParagraphBlock implements WikiObjectI {
 	
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		for (String str : rawlist) {
-			sb.append(str);
-			sb.append("\n");
-		}
-		return sb.toString();
+		return null;
 	}
 	
 	@Override
@@ -70,6 +65,10 @@ public class ParagraphBlock implements WikiObjectI {
 	@Override
 	public void setParent(WikiObjectI wikiobject) {
 		parent = wikiobject;
+	}
+	
+	protected List<String> getRawlist() {
+		return rawlist;
 	}
 
 }

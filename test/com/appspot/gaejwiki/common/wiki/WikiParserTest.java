@@ -8,6 +8,62 @@ import static org.junit.Assert.*;
 
 public class WikiParserTest {
 
+	public WikiObjectBlockFactory getTestFactory() {
+		return new WikiObjectBlockFactory() {
+			
+			private String toRawlistString(List<String> rawlist) {
+				StringBuffer sb = new StringBuffer();
+				for (String str : rawlist) {
+					sb.append(str);
+					sb.append("\n");
+				}
+				return sb.toString();
+			}
+			
+			private String toChildlistString(List<WikiObjectI> childlist) {
+				StringBuffer sb = new StringBuffer();
+				for (WikiObjectI wikiobj : childlist) {
+					sb.append("/c:");
+					sb.append(wikiobj.toString());
+					sb.append(":c/");
+				}
+				return sb.toString();
+			}
+			
+			protected WikiObjectI createParagraphBlock() {
+				return new ParagraphBlock() {
+					public String toString() {
+						return toRawlistString(getRawlist());
+					}
+				};
+			}
+			
+			protected WikiObjectI createFormatedBlock() {
+				return new FormatedBlock() {
+					public String toString() {
+						return toRawlistString(getRawlist());
+					}
+				};
+			}
+			
+			protected WikiObjectI createHeadlineBlock() {
+				return new HeadlineBlock() {
+					public String toString() {
+						return getData() + "\n";
+					}
+				};
+			}
+			
+			protected WikiObjectI createQuotationBlock() {
+				return new QuotationBlock() {
+					public String toString() {
+						return toRawlistString(getRawlist()) + toChildlistString(getChildlist());
+					}
+				};
+			}			
+		};
+	}
+	
 	
 	public List<String> prepareWikiTestList1() {
 		List<String> list = new ArrayList<String>();
@@ -23,7 +79,7 @@ public class WikiParserTest {
 	public void testWikiParser1() {
 		WikiParser parser = new WikiParser();
 		
-		List<WikiObjectI> wikilist = parser.parse(prepareWikiTestList1());
+		List<WikiObjectI> wikilist = parser.parse(getTestFactory(), prepareWikiTestList1());
 		assertEquals(wikilist.size(), 2);
 		assertEquals(((WikiObjectI)wikilist.get(0)).toString(), "test1\n");
 		assertEquals(((WikiObjectI)wikilist.get(1)).toString(), "test2\ntest3\n");
@@ -44,7 +100,7 @@ public class WikiParserTest {
 	public void testWikiParser2() {
 		WikiParser parser = new WikiParser();
 		
-		List<WikiObjectI> wikilist = parser.parse(prepareWikiTestList2());
+		List<WikiObjectI> wikilist = parser.parse(getTestFactory(), prepareWikiTestList2());
 		assertEquals(wikilist.size(), 3);
 		assertEquals(((WikiObjectI)wikilist.get(0)).toString(), "test1\n");
 		assertEquals(((WikiObjectI)wikilist.get(1)).toString(), " test2\n test3\n");
@@ -67,7 +123,7 @@ public class WikiParserTest {
 	public void testWikiParser3() {
 		WikiParser parser = new WikiParser();
 		
-		List<WikiObjectI> wikilist = parser.parse(prepareWikiTestList3());
+		List<WikiObjectI> wikilist = parser.parse(getTestFactory(), prepareWikiTestList3());
 		assertEquals(wikilist.size(), 5);
 		assertEquals(((WikiObjectI)wikilist.get(0)).toString(), "test1\n");
 		assertEquals(((WikiObjectI)wikilist.get(1)).toString(), "*test2\n");
@@ -94,7 +150,7 @@ public class WikiParserTest {
 	public void testWikiParser4() {
 		WikiParser parser = new WikiParser();
 		
-		List<WikiObjectI> wikilist = parser.parse(prepareWikiTestList4());
+		List<WikiObjectI> wikilist = parser.parse(getTestFactory(), prepareWikiTestList4());
 		assertEquals(wikilist.size(), 2);
 		assertEquals(((WikiObjectI)wikilist.get(0)).toString(), "test1\n");
 		assertEquals(((WikiObjectI)wikilist.get(1)).toString(), ">test2\n/c: test3\n test4\n:c//c:test5\n:c//c:< test6\ntest7\ntest8\n:c/");
@@ -118,7 +174,7 @@ public class WikiParserTest {
 	public void testWikiParser5() {
 		WikiParser parser = new WikiParser();
 		
-		List<WikiObjectI> wikilist = parser.parse(prepareWikiTestList5());
+		List<WikiObjectI> wikilist = parser.parse(getTestFactory(), prepareWikiTestList5());
 		// for (WikiObjectI i : wikilist) {
 		// 	System.out.print(i.toString() + "\n\n");
 		// }

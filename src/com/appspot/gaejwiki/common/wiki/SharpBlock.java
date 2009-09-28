@@ -1,36 +1,38 @@
 package com.appspot.gaejwiki.common.wiki;
 
 
-
 /**
  * WikiObject
- * 見出し
+ * #～のブロック
  * @author daxanya
+ * 
+ * --
+ * 
+#contents : 目次
+#hr : 水平線
+#br : 行間開け
+#ref : 添付ファイル・画像の貼り付け
+#clear : テキストの回り込みの解除
+#comment,#pcomment, #article, #vote : フォーム
+
  *
  * --
- * 
-行頭で * を記述すると、見出しになります。見出しは *、**、*** の3段階あります。
-
-見出しは、他のブロック要素の子要素になることはできません。見出しが現われると他のブロック要素は終了します。
-見出しは、他のブロック要素を子要素にすることはできません。
- * 
- * --
-
  */
-public class HeadlineBlock implements WikiObjectI {
+public class SharpBlock implements WikiObjectI {
 
-	private String headline = new String("");
+	private WikiObjectI parent = null;
+	private String data = new String("");
 	
 	@Override
 	public void addLine(String str) {
-		headline = str;
+		data = str;
 	}
 	
 	@Override
 	public boolean isAddChildBlock() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isAddLine() {
 		return false;
@@ -38,8 +40,9 @@ public class HeadlineBlock implements WikiObjectI {
 	
 	@Override
 	public boolean isAddToParent() {
-		return false;
+		return true;
 	}
+	
 	
 	@Override
 	public String toString() {
@@ -53,17 +56,16 @@ public class HeadlineBlock implements WikiObjectI {
 
 	@Override
 	public WikiObjectI getParent() {
-		// 親は存在しない
-		return null;
+		return parent;
 	}
 
 	@Override
 	public void setParent(WikiObjectI wikiobject) {
-		// なにもしない。
+		parent = wikiobject;
 	}
-	
+
 	protected String getData() {
-		return headline;
+		return data;
 	}
 
 }

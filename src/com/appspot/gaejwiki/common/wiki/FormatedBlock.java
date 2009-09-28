@@ -47,15 +47,9 @@ public class FormatedBlock implements WikiObjectI {
 	
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		for (String str : rawlist) {
-			// sb.append(WikiObjectBlockFactory.FORMATED);
-			sb.append(str);
-			sb.append("\n");
-		}
-		return sb.toString();
+		return null;
 	}
-
+	
 	@Override
 	public void addChildBlock(WikiObjectI wikiobject) {
 		// Ç»Ç…Ç‡ÇµÇ»Ç¢ÅB
@@ -70,5 +64,10 @@ public class FormatedBlock implements WikiObjectI {
 	public void setParent(WikiObjectI wikiobject) {
 		parent = wikiobject;
 	}
+
+	protected List<String> getRawlist() {
+		return rawlist;
+	}
+
 
 }

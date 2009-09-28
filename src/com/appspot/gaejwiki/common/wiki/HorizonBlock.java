@@ -4,26 +4,26 @@ package com.appspot.gaejwiki.common.wiki;
 
 /**
  * WikiObject
- * 見出し
+ * 水平線
  * @author daxanya
  *
  * --
  * 
-行頭で * を記述すると、見出しになります。見出しは *、**、*** の3段階あります。
+行頭で4つ以上の - を書くと水平線になります。
 
-見出しは、他のブロック要素の子要素になることはできません。見出しが現われると他のブロック要素は終了します。
-見出しは、他のブロック要素を子要素にすることはできません。
+水平線は、他のブロック要素の子要素になることはできません。水平線が現われると他のブロック要素は終了します。
+水平線は、他のブロック要素を子要素にすることはできません。
  * 
  * --
 
  */
-public class HeadlineBlock implements WikiObjectI {
+public class HorizonBlock implements WikiObjectI {
 
-	private String headline = new String("");
+	private String horizon = new String("");
 	
 	@Override
 	public void addLine(String str) {
-		headline = str;
+		horizon = str;
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public class HeadlineBlock implements WikiObjectI {
 	}
 	
 	protected String getData() {
-		return headline;
+		return horizon;
 	}
 
 }

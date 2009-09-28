@@ -14,7 +14,7 @@ public class WikiParser {
 	 * @param linelist
 	 * @return
 	 */
-	public List<WikiObjectI> parse(List<String> linelist) {
+	public List<WikiObjectI> parse(WikiObjectBlockFactory factory, List<String> linelist) {
 		List<WikiObjectI> wikilist = new ArrayList<WikiObjectI>();
 		WikiObjectI nowobject = null;
 
@@ -22,8 +22,6 @@ public class WikiParser {
 			logger.fine("wikiparser linelist is null");
 			return wikilist;
 		}
-		
-		WikiObjectBlockFactory factory = new WikiObjectBlockFactory();
 		
 		// 一行ずつ取得する。
 		for (String line : linelist) {
@@ -35,7 +33,13 @@ public class WikiParser {
 			
 			WikiObjectI wikiobject = factory.createWikiObject(line);
 			if (wikiobject == null) {
-				// どれでもなかったら区切りとみなす。（ここにはこないはず）
+				// どれでもなかったらコメントかどうか判断する
+				if (new WikiObjectBlockFactory.BlockCheck().isComment(line)) {
+					// なにもせずに次へ。
+					continue;
+				}
+				
+				// それ以外は区切りとみなす。（ここにはこないはず）
 				assert(false);
 				nowobject = null;
 				continue;
