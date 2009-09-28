@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.appspot.gaejwiki.common.wiki.base.WikiObjectI;
+
 public class WikiParser {
 
 	private static final Logger logger = Logger.getLogger(WikiParser.class.getName());
@@ -73,11 +75,11 @@ public class WikiParser {
 				}
 			}
 			
-			// nowobjectがnullの場合、行追加ができるかどうかで、nowobjectへセットするかどうかが決まる。
-			if (wikiobject.isAddLine()) {
-				nowobject = wikiobject;
-			} else {
+			// リセットする場合はnowobjectをnullとする。
+			if (wikiobject.isReset()) {
 				nowobject = null;
+			} else {
+				nowobject = wikiobject;
 			}
 		}
 		
@@ -87,8 +89,9 @@ public class WikiParser {
 	public static class Sub {
 		
 		/**
-		 * nowobjectがFormatedではなくて、wikiobjectが段落の場合、もしくは
-		 * nowobjectがFormatedで、wikiobjectがFormatedの場合、true
+		 * nowobjectがisAddline()=trueの場合に、次のどちらかであればtrue
+		 * １．nowobjectがisSameBlockAddLine()=trueで、nowobjectとwikiobjectが同じクラス
+		 * ２．nowobjectがisSameBlockAddLine()=falseで、wikiobjectが段落
 		 *
 		 * @param nowobject
 		 * @param wikiobject
@@ -98,8 +101,18 @@ public class WikiParser {
 			if (nowobject == null || wikiobject == null) {
 				return false;
 			}
-			return ((wikiobject instanceof ParagraphBlock && !(nowobject instanceof FormatedBlock))
-					|| (wikiobject instanceof FormatedBlock && nowobject instanceof FormatedBlock));
+			
+			if (nowobject.isAddLine()) {
+				if (nowobject.isSameBlockAddLine()) {
+					return (nowobject.getClass() == wikiobject.getClass()) ? true : false;
+				} else {
+					return (wikiobject instanceof ParagraphBlock) ? true : false;
+				}
+			} else {
+				// ここにはこないはず。
+				assert(false);
+				return false;
+			}
 		}
 
 		/**

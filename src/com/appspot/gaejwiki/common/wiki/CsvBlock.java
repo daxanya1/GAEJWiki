@@ -1,5 +1,7 @@
 package com.appspot.gaejwiki.common.wiki;
 
+import com.appspot.gaejwiki.common.wiki.base.YesChildNoAddlineBlockBase;
+
 
 /**
  * WikiObject
@@ -20,54 +22,6 @@ package com.appspot.gaejwiki.common.wiki;
  *
  * --
  */
-public class CsvBlock implements WikiObjectI {
-
-	private WikiObjectI parent = null;
-	private String csv = new String("");
-	
-	@Override
-	public void addLine(String str) {
-		csv = str;
-	}
-	
-	@Override
-	public boolean isAddChildBlock() {
-		return false;
-	}
-
-	@Override
-	public boolean isAddLine() {
-		return false;
-	}
-	
-	@Override
-	public boolean isAddToParent() {
-		return true;
-	}
-	
-	
-	@Override
-	public String toString() {
-		return null;
-	}
-	
-	@Override
-	public void addChildBlock(WikiObjectI wikiobject) {
-		// Ç»Ç…Ç‡ÇµÇ»Ç¢ÅB
-	}
-
-	@Override
-	public WikiObjectI getParent() {
-		return parent;
-	}
-
-	@Override
-	public void setParent(WikiObjectI wikiobject) {
-		parent = wikiobject;
-	}
-
-	protected String getData() {
-		return csv;
-	}
+public class CsvBlock extends YesChildNoAddlineBlockBase {
 
 }

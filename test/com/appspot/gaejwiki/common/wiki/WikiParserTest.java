@@ -4,64 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+
+import com.appspot.gaejwiki.common.wiki.base.WikiObjectI;
+import com.appspot.gaejwiki.common.wiki.stub.WikiObjectBlockFactoryForTest;
+
 import static org.junit.Assert.*;
 
 public class WikiParserTest {
 
 	public WikiObjectBlockFactory getTestFactory() {
-		return new WikiObjectBlockFactory() {
-			
-			private String toRawlistString(List<String> rawlist) {
-				StringBuffer sb = new StringBuffer();
-				for (String str : rawlist) {
-					sb.append(str);
-					sb.append("\n");
-				}
-				return sb.toString();
-			}
-			
-			private String toChildlistString(List<WikiObjectI> childlist) {
-				StringBuffer sb = new StringBuffer();
-				for (WikiObjectI wikiobj : childlist) {
-					sb.append("/c:");
-					sb.append(wikiobj.toString());
-					sb.append(":c/");
-				}
-				return sb.toString();
-			}
-			
-			protected WikiObjectI createParagraphBlock() {
-				return new ParagraphBlock() {
-					public String toString() {
-						return toRawlistString(getRawlist());
-					}
-				};
-			}
-			
-			protected WikiObjectI createFormatedBlock() {
-				return new FormatedBlock() {
-					public String toString() {
-						return toRawlistString(getRawlist());
-					}
-				};
-			}
-			
-			protected WikiObjectI createHeadlineBlock() {
-				return new HeadlineBlock() {
-					public String toString() {
-						return getData() + "\n";
-					}
-				};
-			}
-			
-			protected WikiObjectI createQuotationBlock() {
-				return new QuotationBlock() {
-					public String toString() {
-						return toRawlistString(getRawlist()) + toChildlistString(getChildlist());
-					}
-				};
-			}			
-		};
+		return new WikiObjectBlockFactoryForTest();
 	}
 	
 	
@@ -166,6 +118,8 @@ public class WikiParserTest {
 		list.add("< test6");
 		list.add("test7");
 		list.add("test8");
+		list.add("#test9");
+		list.add("#test10");
 		
 		return list;
 	}
@@ -182,7 +136,41 @@ public class WikiParserTest {
 		assertEquals(((WikiObjectI)wikilist.get(0)).toString(), "test1\n");
 		assertEquals(((WikiObjectI)wikilist.get(1)).toString(), ">test2\n/c: test3\n test4\n:c/");
 		assertEquals(((WikiObjectI)wikilist.get(2)).toString(), "*test5\n");
-		assertEquals(((WikiObjectI)wikilist.get(3)).toString(), "< test6\ntest7\ntest8\n");
+		assertEquals(((WikiObjectI)wikilist.get(3)).toString(), "< test6\ntest7\ntest8\n/c:#test9\n:c//c:#test10\n:c/");
+	}
+	
+	public List<String> prepareWikiTestList6() {
+		List<String> list = new ArrayList<String>();
+		list.add("test1");
+		list.add(">test2");
+		list.add(" test3");
+		list.add(" test4");
+		list.add("*test5");
+		list.add(" test6");
+		list.add("test7");
+		list.add("test8");
+		list.add("#test9");
+		list.add("#test10");
+		
+		return list;
+	}
+	
+	@Test
+	public void testWikiParser6() {
+		WikiParser parser = new WikiParser();
+		
+		List<WikiObjectI> wikilist = parser.parse(getTestFactory(), prepareWikiTestList6());
+		// for (WikiObjectI i : wikilist) {
+		// 	System.out.print(i.toString() + "\n\n");
+		// }
+		assertEquals(wikilist.size(), 7);
+		assertEquals(((WikiObjectI)wikilist.get(0)).toString(), "test1\n");
+		assertEquals(((WikiObjectI)wikilist.get(1)).toString(), ">test2\n/c: test3\n test4\n:c/");
+		assertEquals(((WikiObjectI)wikilist.get(2)).toString(), "*test5\n");
+		assertEquals(((WikiObjectI)wikilist.get(3)).toString(), " test6\n");
+		assertEquals(((WikiObjectI)wikilist.get(4)).toString(), "test7\ntest8\n");
+		assertEquals(((WikiObjectI)wikilist.get(5)).toString(), "#test9\n");
+		assertEquals(((WikiObjectI)wikilist.get(6)).toString(), "#test10\n");
 	}
 	
 	

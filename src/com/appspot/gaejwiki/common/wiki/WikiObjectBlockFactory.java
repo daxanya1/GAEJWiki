@@ -2,6 +2,8 @@ package com.appspot.gaejwiki.common.wiki;
 
 import java.util.HashMap;
 
+import com.appspot.gaejwiki.common.wiki.base.WikiObjectI;
+
 public class WikiObjectBlockFactory {
 
 	public static final char PARAGRAPH = '~';
@@ -11,7 +13,7 @@ public class WikiObjectBlockFactory {
 	public static final char UNNUMBEREDLIST = '-';
 	public static final char NUMBEREDLIST = '+';
 	public static final char DEFINEDLIST = ':';
-	public static final char CONTENTS = '#';
+	public static final char HASH = '#';
 	public static final char HEADLINE = '*';
 	public static final char TABLE = '|';
 	public static final char CSV = ',';
@@ -45,6 +47,30 @@ public class WikiObjectBlockFactory {
 			return createQuotationBlock();
 		}
 		
+		if (blockcheck.isCsv(line)) {
+			return createCsvBlock();
+		}
+		
+		if (blockcheck.isDefinedList(line)) {
+			return createDefinedListBlock();
+		}
+		
+		if (blockcheck.isHash(line)) {
+			return createHashBlock();
+		}
+		
+		if (blockcheck.isHorizon(line)) {
+			return createHorizonBlock();
+		}
+		
+		if (blockcheck.isList(line)) {
+			return createListBlock();
+		}
+		
+		if (blockcheck.isTable(line)) {
+			return createTableBlock();
+		}
+		
 		// 
 		return null;
 	}
@@ -61,6 +87,30 @@ public class WikiObjectBlockFactory {
 		return new HeadlineBlock();
 	}
 	
+	protected WikiObjectI createCsvBlock() {
+		return new CsvBlock();
+	}
+	
+	protected WikiObjectI createDefinedListBlock() {
+		return new DefinedListBlock();
+	}
+	
+	protected WikiObjectI createHashBlock() {
+		return new HashBlock();
+	}
+	
+	protected WikiObjectI createHorizonBlock() {
+		return new HorizonBlock();
+	}
+	
+	protected WikiObjectI createListBlock() {
+		return new UnnumberedListBlock();
+	}
+	
+	protected WikiObjectI createTableBlock() {
+		return new TableBlock();
+	}
+	
 	protected WikiObjectI createQuotationBlock() {
 		return new QuotationBlock();
 	}
@@ -70,7 +120,7 @@ public class WikiObjectBlockFactory {
 	static public class BlockCheck {
 		
 		// 行頭書式の文字(-、+、:、>、|、#、//)
-		private static final char[] NOTPARAGRAPHCHAR = { QUOTATION, UNQUOTATION, FORMATED, UNNUMBEREDLIST, NUMBEREDLIST, DEFINEDLIST, CONTENTS, HEADLINE, TABLE, CSV, COMMENTFIRST };
+		private static final char[] NOTPARAGRAPHCHAR = { QUOTATION, UNQUOTATION, FORMATED, UNNUMBEREDLIST, NUMBEREDLIST, DEFINEDLIST, HASH, HEADLINE, TABLE, CSV, COMMENTFIRST };
 		private static final HashMap<Character, Boolean> NOTPARAGRAPHS = new HashMap<Character, Boolean>();
 		
 		static {
@@ -119,13 +169,13 @@ public class WikiObjectBlockFactory {
 					return false;
 				} else {
 					// コメントと定義リストだけ特別扱い
-					if (line.charAt(0) != COMMENTFIRST) {
+					if (line.charAt(0) == COMMENTFIRST) {
 						// コメントかどうか確認
 						if (isComment(line)) {
 							return false;
 						}
 					}
-					if (line.charAt(0) != DEFINEDLIST) {
+					if (line.charAt(0) == DEFINEDLIST) {
 						// 定義リストの場合 どこかに|があれば定義リスト、それ以外は段落扱い
 						if (isDefinedList(line)) {
 							return false;
@@ -257,6 +307,38 @@ public class WikiObjectBlockFactory {
 			
 			// NUMBEREDLIST要素かUNNUMBEREDLIST要素が一文字目であれば、リストとする
 			return (line.charAt(0) == NUMBEREDLIST || line.charAt(0) == UNNUMBEREDLIST) ? true : false;
+		}
+		
+		/**
+		 * #系かどうかチェックする
+		 * #系要素が一文字目であれば、#系とする
+		 * それ以外は違う
+		 * @param line 一行分の文字列
+		 * @return #系であればtrue
+		 */
+		public boolean isHash(String line) {
+			if (line == null || line.length() == 0) {
+				return false;
+			}
+			
+			// SHARP要素が一文字目であれば、#系とする
+			return (line.charAt(0) == HASH) ? true : false;
+		}
+		
+		/**
+		 * Tableかどうかチェックする
+		 * TABLE要素が一文字目であれば、Tableとする
+		 * それ以外は違う
+		 * @param line 一行分の文字列
+		 * @return Tableであればtrue
+		 */
+		public boolean isTable(String line) {
+			if (line == null || line.length() == 0) {
+				return false;
+			}
+			
+			// TABLE要素が一文字目であれば、Tableとする
+			return (line.charAt(0) == TABLE) ? true : false;
 		}
 		
 

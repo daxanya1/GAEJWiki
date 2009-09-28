@@ -1,7 +1,7 @@
 package com.appspot.gaejwiki.common.wiki;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.appspot.gaejwiki.common.wiki.base.ListBlockBase;
+
 
 /**
  * WikiObject
@@ -20,59 +20,6 @@ import java.util.List;
  *
  * --
  */
-public class DefinedListBlock implements WikiObjectI {
+public class DefinedListBlock extends ListBlockBase {
 
-	private WikiObjectI parent = null;
-	private List<String> rawlist = new ArrayList<String>();
-	private List<WikiObjectI> childlist = new ArrayList<WikiObjectI>();
-	
-	@Override
-	public void addLine(String str) {
-		rawlist.add(str);
-	}
-	
-	@Override
-	public void addChildBlock(WikiObjectI wikiobject) {
-		childlist.add(wikiobject);
-		wikiobject.setParent(this);
-	}
-	
-	@Override
-	public boolean isAddChildBlock() {
-		return true;
-	}
-	
-	@Override
-	public boolean isAddLine() {
-		return true;
-	}
-	
-	@Override
-	public boolean isAddToParent() {
-		return true;
-	}
-	
-	@Override
-	public String toString() {
-		return null;
-	}
-
-	@Override
-	public WikiObjectI getParent() {
-		return parent;
-	}
-	
-
-	@Override
-	public void setParent(WikiObjectI wikiobject) {
-		parent = wikiobject;
-	}
-	
-	protected List<String> getRawlist() {
-		return rawlist;
-	}	
-	
-	protected List<WikiObjectI> getChildlist() {
-		return childlist;
-	}
 }

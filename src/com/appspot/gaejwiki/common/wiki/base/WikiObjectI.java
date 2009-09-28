@@ -1,4 +1,4 @@
-package com.appspot.gaejwiki.common.wiki;
+package com.appspot.gaejwiki.common.wiki.base;
 
 public interface WikiObjectI {
 
@@ -37,6 +37,18 @@ public interface WikiObjectI {
 	 * @return 次の行を追加できる場合はtrue
 	 */
 	boolean isAddLine();
+	
+	/**
+	 * 次の行を追加する際に同じブロックの場合に限るかどうか。
+	 * @return 次の行を追加する際に同じブロックの場合に限る場合はtrue
+	 */
+	boolean isSameBlockAddLine();
+	
+	/**
+	 * このブロックを処理した後、仕切りとするかどうか
+	 * @return このブロックを処理した後、仕切りとする場合はtrue
+	 */
+	boolean isReset();
 	
 	/**
 	 * Wikiフォーマット用の文字列を返す。

@@ -1,7 +1,6 @@
 package com.appspot.gaejwiki.common.wiki;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.appspot.gaejwiki.common.wiki.base.SameAddBlockBase;
 
 /**
  * WikiObject
@@ -20,54 +19,6 @@ import java.util.List;
  * @author daxanya
  *
  */
-public class FormatedBlock implements WikiObjectI {
-
-	private WikiObjectI parent = null;
-	private List<String> rawlist = new ArrayList<String>();
-	
-	@Override
-	public void addLine(String str) {
-		rawlist.add(str);
-	}
-	
-	@Override
-	public boolean isAddChildBlock() {
-		return false;
-	}
-	
-	@Override
-	public boolean isAddLine() {
-		return true;
-	}
-	
-	@Override
-	public boolean isAddToParent() {
-		return true;
-	}
-	
-	@Override
-	public String toString() {
-		return null;
-	}
-	
-	@Override
-	public void addChildBlock(WikiObjectI wikiobject) {
-		// Ç»Ç…Ç‡ÇµÇ»Ç¢ÅB
-	}
-
-	@Override
-	public WikiObjectI getParent() {
-		return parent;
-	}
-
-	@Override
-	public void setParent(WikiObjectI wikiobject) {
-		parent = wikiobject;
-	}
-
-	protected List<String> getRawlist() {
-		return rawlist;
-	}
-
+public class FormatedBlock extends SameAddBlockBase  {
 
 }

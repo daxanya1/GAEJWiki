@@ -1,24 +1,18 @@
-package com.appspot.gaejwiki.common.wiki;
+package com.appspot.gaejwiki.common.wiki.base;
 
 
 /**
  * WikiObject
- * #～のブロック
+ * 子供にはなれるが行追加ができない
  * @author daxanya
  * 
  * --
  * 
-#contents : 目次
-#hr : 水平線
-#br : 行間開け
-#ref : 添付ファイル・画像の貼り付け
-#clear : テキストの回り込みの解除
-#comment,#pcomment, #article, #vote : フォーム
 
  *
  * --
  */
-public class SharpBlock implements WikiObjectI {
+public class YesChildNoAddlineBlockBase implements WikiObjectI {
 
 	private WikiObjectI parent = null;
 	private String data = new String("");
@@ -39,10 +33,19 @@ public class SharpBlock implements WikiObjectI {
 	}
 	
 	@Override
+	public boolean isSameBlockAddLine() {
+		return false;
+	}
+	
+	@Override
 	public boolean isAddToParent() {
 		return true;
 	}
 	
+	@Override
+	public boolean isReset() {
+		return false;
+	}
 	
 	@Override
 	public String toString() {
@@ -67,5 +70,4 @@ public class SharpBlock implements WikiObjectI {
 	protected String getData() {
 		return data;
 	}
-
 }

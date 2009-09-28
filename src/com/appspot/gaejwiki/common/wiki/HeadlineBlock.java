@@ -1,5 +1,7 @@
 package com.appspot.gaejwiki.common.wiki;
 
+import com.appspot.gaejwiki.common.wiki.base.NoChildParentBlockBase;
+
 
 
 /**
@@ -17,53 +19,6 @@ package com.appspot.gaejwiki.common.wiki;
  * --
 
  */
-public class HeadlineBlock implements WikiObjectI {
-
-	private String headline = new String("");
-	
-	@Override
-	public void addLine(String str) {
-		headline = str;
-	}
-	
-	@Override
-	public boolean isAddChildBlock() {
-		return false;
-	}
-	
-	@Override
-	public boolean isAddLine() {
-		return false;
-	}
-	
-	@Override
-	public boolean isAddToParent() {
-		return false;
-	}
-	
-	@Override
-	public String toString() {
-		return null;
-	}
-	
-	@Override
-	public void addChildBlock(WikiObjectI wikiobject) {
-		// Ç»Ç…Ç‡ÇµÇ»Ç¢ÅB
-	}
-
-	@Override
-	public WikiObjectI getParent() {
-		// êeÇÕë∂ç›ÇµÇ»Ç¢
-		return null;
-	}
-
-	@Override
-	public void setParent(WikiObjectI wikiobject) {
-		// Ç»Ç…Ç‡ÇµÇ»Ç¢ÅB
-	}
-	
-	protected String getData() {
-		return headline;
-	}
+public class HeadlineBlock extends NoChildParentBlockBase {
 
 }

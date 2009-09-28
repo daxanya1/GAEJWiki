@@ -42,15 +42,41 @@ public class WikiObjectBlockFactoryTest {
 		list.add(",CSV");
 		list.add("\\関係ない（段落)");
 		list.add("　全角スペース（段落)");
-		// 25 - 28
+		// 25 - 29
 		list.add("～全角チルダ（段落)");
 		list.add("＃全角ナンバー（段落)");
 		list.add(null);
 		list.add("");
+		list.add(":定義|");
+		// 30 - 32
+		list.add(":定義|test");
+		list.add("----test");
+		list.add("-----");
 		
 		return list;
 	}
+
 	
+	@Test
+	public void testBlockCheckIsComment() {
+		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
+		
+		List<String> list = prepareBlockCheckLineList();
+		List<Boolean> blist = new ArrayList<Boolean>();
+		for (String line : list) {
+			blist.add(blockcheck.isComment(line));
+		}
+		
+		for (int i = 0; i<blist.size(); i++) {
+			if (i == 18) {
+				assertTrue(blist.get(i).booleanValue());
+			} else {
+				assertFalse("" + i, blist.get(i).booleanValue());
+			}
+		}
+	}
+	
+
 	@Test
 	public void testBlockCheckIsParagraph() {
 		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
@@ -62,10 +88,10 @@ public class WikiObjectBlockFactoryTest {
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
-			if (i == 0 || i == 1 || i == 2 || (i >= 23 && i <= 26)) {
+			if (i == 0 || i == 1 || i == 2 || i == 20 || (i >= 23 && i <= 26)) {
 				assertTrue(blist.get(i).booleanValue());
 			} else {
-				assertFalse(blist.get(i).booleanValue());
+				assertFalse("" + i, blist.get(i).booleanValue());
 			}
 			
 		}
@@ -134,6 +160,124 @@ public class WikiObjectBlockFactoryTest {
 		}
 		
 	}
+	
+	
+	@Test
+	public void testBlockCheckIsCsv() {
+		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
+		
+		List<String> list = prepareBlockCheckLineList();
+		List<Boolean> blist = new ArrayList<Boolean>();
+		for (String line : list) {
+			blist.add(blockcheck.isCsv(line));
+		}
+		
+		for (int i = 0; i<blist.size(); i++) {
+			if (i == 22) {
+				assertTrue(blist.get(i).booleanValue());
+			} else {
+				assertFalse("" + i, blist.get(i).booleanValue());
+			}
+		}
+	}
+	
+	
+	@Test
+	public void testBlockCheckIsDefinedList() {
+		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
+		
+		List<String> list = prepareBlockCheckLineList();
+		List<Boolean> blist = new ArrayList<Boolean>();
+		for (String line : list) {
+			blist.add(blockcheck.isDefinedList(line));
+		}
+		
+		for (int i = 0; i<blist.size(); i++) {
+			if (i == 29 || i == 30) {
+				assertTrue(blist.get(i).booleanValue());
+			} else {
+				assertFalse("" + i, blist.get(i).booleanValue());
+			}
+		}
+	}
+	
+	@Test
+	public void testBlockCheckIsHorizon() {
+		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
+		
+		List<String> list = prepareBlockCheckLineList();
+		List<Boolean> blist = new ArrayList<Boolean>();
+		for (String line : list) {
+			blist.add(blockcheck.isHorizon(line));
+		}
+		
+		for (int i = 0; i<blist.size(); i++) {
+			if (i == 31 || i == 32) {
+				assertTrue(blist.get(i).booleanValue());
+			} else {
+				assertFalse("" + i, blist.get(i).booleanValue());
+			}
+		}
+	}
+	
+	@Test
+	public void testBlockCheckIsList() {
+		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
+		
+		List<String> list = prepareBlockCheckLineList();
+		List<Boolean> blist = new ArrayList<Boolean>();
+		for (String line : list) {
+			blist.add(blockcheck.isList(line));
+		}
+		
+		for (int i = 0; i<blist.size(); i++) {
+			if (i >= 12 && i <= 17) {
+				assertTrue("" + i, blist.get(i).booleanValue());
+			} else {
+				assertFalse("" + i, blist.get(i).booleanValue());
+			}
+		}
+	}
+	
+	@Test
+	public void testBlockCheckIsHash() {
+		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
+		
+		List<String> list = prepareBlockCheckLineList();
+		List<Boolean> blist = new ArrayList<Boolean>();
+		for (String line : list) {
+			blist.add(blockcheck.isHash(line));
+		}
+		
+		for (int i = 0; i<blist.size(); i++) {
+			if (i == 19) {
+				assertTrue(blist.get(i).booleanValue());
+			} else {
+				assertFalse("" + i, blist.get(i).booleanValue());
+			}
+		}
+	}
+	
+	@Test
+	public void testBlockCheckIsTable() {
+		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
+		
+		List<String> list = prepareBlockCheckLineList();
+		List<Boolean> blist = new ArrayList<Boolean>();
+		for (String line : list) {
+			blist.add(blockcheck.isTable(line));
+		}
+		
+		for (int i = 0; i<blist.size(); i++) {
+			if (i == 21) {
+				assertTrue(blist.get(i).booleanValue());
+			} else {
+				assertFalse("" + i, blist.get(i).booleanValue());
+			}
+		}
+	}
+	
+
 	
 	
 }
