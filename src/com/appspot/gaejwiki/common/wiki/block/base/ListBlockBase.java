@@ -1,7 +1,10 @@
-package com.appspot.gaejwiki.common.wiki.base;
+package com.appspot.gaejwiki.common.wiki.block.base;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
+
 
 
 /**
@@ -15,11 +18,11 @@ import java.util.List;
  *
  * --
  */
-public class ListBlockBase implements WikiObjectI {
+public class ListBlockBase implements WikiObjectBlockI {
 
-	private WikiObjectI parent = null;
+	private WikiObjectBlockI parent = null;
 	private List<String> rawlist = new ArrayList<String>();
-	private List<WikiObjectI> childlist = new ArrayList<WikiObjectI>();
+	private List<WikiObjectBlockI> childlist = new ArrayList<WikiObjectBlockI>();
 	
 	@Override
 	public void addLine(String str) {
@@ -27,7 +30,7 @@ public class ListBlockBase implements WikiObjectI {
 	}
 	
 	@Override
-	public void addChildBlock(WikiObjectI wikiobject) {
+	public void addChildBlock(WikiObjectBlockI wikiobject) {
 		childlist.add(wikiobject);
 		wikiobject.setParent(this);
 	}
@@ -63,13 +66,13 @@ public class ListBlockBase implements WikiObjectI {
 	}
 
 	@Override
-	public WikiObjectI getParent() {
+	public WikiObjectBlockI getParent() {
 		return parent;
 	}
 	
 
 	@Override
-	public void setParent(WikiObjectI wikiobject) {
+	public void setParent(WikiObjectBlockI wikiobject) {
 		parent = wikiobject;
 	}
 	
@@ -77,7 +80,23 @@ public class ListBlockBase implements WikiObjectI {
 		return rawlist;
 	}	
 	
-	protected List<WikiObjectI> getChildlist() {
+	protected List<WikiObjectBlockI> getChildlist() {
 		return childlist;
 	}
+
+	@Override
+	public String toDebugString() {
+		StringBuffer sb = new StringBuffer();
+		for (String str : rawlist) {
+			sb.append(str);
+			sb.append("\n");
+		}
+		for (WikiObjectBlockI wikiobj : childlist) {
+			sb.append("/c:");
+			sb.append(wikiobj.toDebugString());
+			sb.append(":c/");
+		}
+		return sb.toString();
+	}
+
 }

@@ -1,6 +1,6 @@
-package com.appspot.gaejwiki.common.wiki;
+package com.appspot.gaejwiki.common.wiki.block;
 
-import com.appspot.gaejwiki.common.wiki.base.YesChildNoAddlineBlockBase;
+import com.appspot.gaejwiki.common.wiki.block.base.YesChildNoAddlineBlockBase;
 
 
 /**
@@ -24,4 +24,22 @@ import com.appspot.gaejwiki.common.wiki.base.YesChildNoAddlineBlockBase;
  */
 public class CsvBlock extends YesChildNoAddlineBlockBase {
 
+	static public class Checker implements WikiObjectBlockI.Checker {
+		
+		/**
+		 * CSVどうかチェックする
+		 * CSV要素が一文字目であれば、CSVとする
+		 * それ以外は違う
+		 * @param line 一行分の文字列
+		 * @return CSVであればtrue
+		 */
+		public boolean isThis(String line) {
+			if (line == null || line.length() == 0) {
+				return false;
+			}
+			
+			// CSV要素が一文字目であれば、CSVとする
+			return (line.charAt(0) == CSV) ? true : false;
+		}
+	}
 }

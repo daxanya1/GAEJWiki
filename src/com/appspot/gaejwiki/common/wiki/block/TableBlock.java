@@ -1,6 +1,6 @@
-package com.appspot.gaejwiki.common.wiki;
+package com.appspot.gaejwiki.common.wiki.block;
 
-import com.appspot.gaejwiki.common.wiki.base.SameAddBlockBase;
+import com.appspot.gaejwiki.common.wiki.block.base.SameAddBlockBase;
 
 /**
  * WikiObject
@@ -43,4 +43,22 @@ SIZE(サイズ):
  */
 public class TableBlock extends SameAddBlockBase {
 
+	static public class Checker implements WikiObjectBlockI.Checker {
+
+		/**
+		 * Tableかどうかチェックする
+		 * TABLE要素が一文字目であれば、Tableとする
+		 * それ以外は違う
+		 * @param line 一行分の文字列
+		 * @return Tableであればtrue
+		 */
+		public boolean isThis(String line) {
+			if (line == null || line.length() == 0) {
+				return false;
+			}
+			
+			// TABLE要素が一文字目であれば、Tableとする
+			return (line.charAt(0) == TABLE) ? true : false;
+		}
+	}
 }

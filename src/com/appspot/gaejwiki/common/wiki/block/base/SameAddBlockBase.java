@@ -1,7 +1,10 @@
-package com.appspot.gaejwiki.common.wiki.base;
+package com.appspot.gaejwiki.common.wiki.block.base;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
+
 
 
 /**
@@ -15,9 +18,9 @@ import java.util.List;
  *
  * --
  */
-public class SameAddBlockBase implements WikiObjectI {
+public class SameAddBlockBase implements WikiObjectBlockI {
 
-	private WikiObjectI parent = null;
+	private WikiObjectBlockI parent = null;
 	private List<String> rawlist = new ArrayList<String>();
 	
 	@Override
@@ -56,21 +59,31 @@ public class SameAddBlockBase implements WikiObjectI {
 	}
 	
 	@Override
-	public void addChildBlock(WikiObjectI wikiobject) {
+	public void addChildBlock(WikiObjectBlockI wikiobject) {
 		// Ç»Ç…Ç‡ÇµÇ»Ç¢ÅB
 	}
 
 	@Override
-	public WikiObjectI getParent() {
+	public WikiObjectBlockI getParent() {
 		return parent;
 	}
 
 	@Override
-	public void setParent(WikiObjectI wikiobject) {
+	public void setParent(WikiObjectBlockI wikiobject) {
 		parent = wikiobject;
 	}
 	
 	protected List<String> getRawlist() {
 		return rawlist;
+	}
+
+	@Override
+	public String toDebugString() {
+		StringBuffer sb = new StringBuffer();
+		for (String str : rawlist) {
+			sb.append(str);
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 }

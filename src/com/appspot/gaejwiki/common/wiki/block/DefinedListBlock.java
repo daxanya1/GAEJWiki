@@ -1,6 +1,6 @@
-package com.appspot.gaejwiki.common.wiki;
+package com.appspot.gaejwiki.common.wiki.block;
 
-import com.appspot.gaejwiki.common.wiki.base.ListBlockBase;
+import com.appspot.gaejwiki.common.wiki.block.base.ListBlockBase;
 
 
 /**
@@ -22,4 +22,22 @@ import com.appspot.gaejwiki.common.wiki.base.ListBlockBase;
  */
 public class DefinedListBlock extends ListBlockBase {
 
+	static public class Checker implements WikiObjectBlockI.Checker {
+		
+		/**
+		 * 定義リストどうかチェックする
+		 * 定義リスト要素が一文字目であれば、定義リストとする
+		 * それ以外は違う
+		 * @param line 一行分の文字列
+		 * @return 定義リストであればtrue
+		 */
+		public boolean isThis(String line) {
+			if (line == null || line.length() == 0) {
+				return false;
+			}
+			
+			// 定義リスト要素が一文字目でかつ、どこかに|があれば定義リストとする
+			return (line.charAt(0) == DEFINEDLIST && line.indexOf(DEFINEDLIST_SECONDCHAR) >= 0) ? true : false;
+		}
+	}
 }

@@ -1,13 +1,27 @@
-package com.appspot.gaejwiki.common.wiki;
+package com.appspot.gaejwiki.common.wiki.block;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import com.appspot.gaejwiki.common.wiki.block.CsvBlock;
+import com.appspot.gaejwiki.common.wiki.block.DefinedListBlock;
+import com.appspot.gaejwiki.common.wiki.block.FormatedBlock;
+import com.appspot.gaejwiki.common.wiki.block.HashBlock;
+import com.appspot.gaejwiki.common.wiki.block.HeadlineBlock;
+import com.appspot.gaejwiki.common.wiki.block.HorizonBlock;
+import com.appspot.gaejwiki.common.wiki.block.NumberedListBlock;
+import com.appspot.gaejwiki.common.wiki.block.ParagraphBlock;
+import com.appspot.gaejwiki.common.wiki.block.QuotationBlock;
+import com.appspot.gaejwiki.common.wiki.block.TableBlock;
+import com.appspot.gaejwiki.common.wiki.block.UnnumberedListBlock;
 
 
-public class WikiObjectBlockFactoryTest {
+public class WikiObjectBlockCheckTest {
 
 	public List<String> prepareBlockCheckLineList() {
 		List<String> list = new ArrayList<String>();
@@ -59,12 +73,10 @@ public class WikiObjectBlockFactoryTest {
 	
 	@Test
 	public void testBlockCheckIsComment() {
-		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
-		
 		List<String> list = prepareBlockCheckLineList();
 		List<Boolean> blist = new ArrayList<Boolean>();
 		for (String line : list) {
-			blist.add(blockcheck.isComment(line));
+			blist.add(new CommentBlock.Checker().isThis(line));
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
@@ -79,12 +91,10 @@ public class WikiObjectBlockFactoryTest {
 
 	@Test
 	public void testBlockCheckIsParagraph() {
-		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
-		
 		List<String> list = prepareBlockCheckLineList();
 		List<Boolean> blist = new ArrayList<Boolean>();
 		for (String line : list) {
-			blist.add(blockcheck.isParagraph(line));
+			blist.add(new ParagraphBlock.Checker().isThis(line));
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
@@ -100,12 +110,10 @@ public class WikiObjectBlockFactoryTest {
 	
 	@Test
 	public void testBlockCheckIsFormated() {
-		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
-		
 		List<String> list = prepareBlockCheckLineList();
 		List<Boolean> blist = new ArrayList<Boolean>();
 		for (String line : list) {
-			blist.add(blockcheck.isFormated(line));
+			blist.add(new FormatedBlock.Checker().isThis(line));
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
@@ -121,12 +129,10 @@ public class WikiObjectBlockFactoryTest {
 	
 	@Test
 	public void testBlockCheckIsHeadline() {
-		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
-		
 		List<String> list = prepareBlockCheckLineList();
 		List<Boolean> blist = new ArrayList<Boolean>();
 		for (String line : list) {
-			blist.add(blockcheck.isHeadline(line));
+			blist.add(new HeadlineBlock.Checker().isThis(line));
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
@@ -142,12 +148,10 @@ public class WikiObjectBlockFactoryTest {
 	
 	@Test
 	public void testBlockCheckIsQuotation() {
-		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
-		
 		List<String> list = prepareBlockCheckLineList();
 		List<Boolean> blist = new ArrayList<Boolean>();
 		for (String line : list) {
-			blist.add(blockcheck.isQuotation(line));
+			blist.add(new QuotationBlock.Checker().isThis(line));
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
@@ -164,12 +168,10 @@ public class WikiObjectBlockFactoryTest {
 	
 	@Test
 	public void testBlockCheckIsCsv() {
-		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
-		
 		List<String> list = prepareBlockCheckLineList();
 		List<Boolean> blist = new ArrayList<Boolean>();
 		for (String line : list) {
-			blist.add(blockcheck.isCsv(line));
+			blist.add(new CsvBlock.Checker().isThis(line));
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
@@ -184,12 +186,10 @@ public class WikiObjectBlockFactoryTest {
 	
 	@Test
 	public void testBlockCheckIsDefinedList() {
-		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
-		
 		List<String> list = prepareBlockCheckLineList();
 		List<Boolean> blist = new ArrayList<Boolean>();
 		for (String line : list) {
-			blist.add(blockcheck.isDefinedList(line));
+			blist.add(new DefinedListBlock.Checker().isThis(line));
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
@@ -203,12 +203,10 @@ public class WikiObjectBlockFactoryTest {
 	
 	@Test
 	public void testBlockCheckIsHorizon() {
-		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
-		
 		List<String> list = prepareBlockCheckLineList();
 		List<Boolean> blist = new ArrayList<Boolean>();
 		for (String line : list) {
-			blist.add(blockcheck.isHorizon(line));
+			blist.add(new HorizonBlock.Checker().isThis(line));
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
@@ -221,17 +219,32 @@ public class WikiObjectBlockFactoryTest {
 	}
 	
 	@Test
-	public void testBlockCheckIsList() {
-		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
-		
+	public void testBlockCheckIsNumberedList() {
 		List<String> list = prepareBlockCheckLineList();
 		List<Boolean> blist = new ArrayList<Boolean>();
 		for (String line : list) {
-			blist.add(blockcheck.isList(line));
+			blist.add(new NumberedListBlock.Checker().isThis(line));
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
-			if (i >= 12 && i <= 17) {
+			if (i >= 12 && i <= 14) {
+				assertTrue("" + i, blist.get(i).booleanValue());
+			} else {
+				assertFalse("" + i, blist.get(i).booleanValue());
+			}
+		}
+	}
+	
+	@Test
+	public void testBlockCheckIsUnnumberedList() {
+		List<String> list = prepareBlockCheckLineList();
+		List<Boolean> blist = new ArrayList<Boolean>();
+		for (String line : list) {
+			blist.add(new UnnumberedListBlock.Checker().isThis(line));
+		}
+		
+		for (int i = 0; i<blist.size(); i++) {
+			if (i >= 15 && i <= 17) {
 				assertTrue("" + i, blist.get(i).booleanValue());
 			} else {
 				assertFalse("" + i, blist.get(i).booleanValue());
@@ -241,12 +254,10 @@ public class WikiObjectBlockFactoryTest {
 	
 	@Test
 	public void testBlockCheckIsHash() {
-		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
-		
 		List<String> list = prepareBlockCheckLineList();
 		List<Boolean> blist = new ArrayList<Boolean>();
 		for (String line : list) {
-			blist.add(blockcheck.isHash(line));
+			blist.add(new HashBlock.Checker().isThis(line));
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
@@ -260,12 +271,10 @@ public class WikiObjectBlockFactoryTest {
 	
 	@Test
 	public void testBlockCheckIsTable() {
-		WikiObjectBlockFactory.BlockCheck blockcheck = new WikiObjectBlockFactory.BlockCheck();
-		
 		List<String> list = prepareBlockCheckLineList();
 		List<Boolean> blist = new ArrayList<Boolean>();
 		for (String line : list) {
-			blist.add(blockcheck.isTable(line));
+			blist.add(new TableBlock.Checker().isThis(line));
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {

@@ -1,4 +1,7 @@
-package com.appspot.gaejwiki.common.wiki.base;
+package com.appspot.gaejwiki.common.wiki.block.base;
+
+import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
+
 
 
 /**
@@ -12,7 +15,7 @@ package com.appspot.gaejwiki.common.wiki.base;
  *
  * --
  */
-public class NoChildParentBlockBase implements WikiObjectI {
+public class NoChildParentBlockBase implements WikiObjectBlockI {
 
 	private String data = new String("");
 	
@@ -52,22 +55,27 @@ public class NoChildParentBlockBase implements WikiObjectI {
 	}
 	
 	@Override
-	public void addChildBlock(WikiObjectI wikiobject) {
+	public void addChildBlock(WikiObjectBlockI wikiobject) {
 		// Ç»Ç…Ç‡ÇµÇ»Ç¢ÅB
 	}
 
 	@Override
-	public WikiObjectI getParent() {
+	public WikiObjectBlockI getParent() {
 		// êeÇÕë∂ç›ÇµÇ»Ç¢
 		return null;
 	}
 
 	@Override
-	public void setParent(WikiObjectI wikiobject) {
+	public void setParent(WikiObjectBlockI wikiobject) {
 		// Ç»Ç…Ç‡ÇµÇ»Ç¢ÅB
 	}
 	
 	protected String getData() {
 		return data;
+	}
+
+	@Override
+	public String toDebugString() {
+		return data + "\n";
 	}
 }
