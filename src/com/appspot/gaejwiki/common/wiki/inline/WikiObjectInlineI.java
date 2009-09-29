@@ -1,6 +1,21 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
+import java.util.HashMap;
+
 public interface WikiObjectInlineI {
+
+	public static final char AMPERSAND = '&';
+	public static final char STRONG = '\'';
+	public static final char PARCENT = '%';
+	public static final char ROUNDBRACKET = '(';
+	public static final char ANGLEBRACKET = '[';
+	
+	public static final String PAGEFORMATBEGIN = "[[";
+	public static final String PAGEFORMATEND = "]]";
+	public static final char[] PAGENOTINCLUDES = { '"', ':', '&', '<', '>' };
+	public static final char[] LINKINCLUDES = { ':', '>' };
+	public static final char ANCHOR = '#';
+
 
 	/**
 	 * 文字を追加する。
@@ -12,7 +27,7 @@ public interface WikiObjectInlineI {
 	 * inlineを追加する
 	 * @param wikiobject 子inline
 	 */
-	void addChildBlock(WikiObjectInlineI wikiobject);
+	void addChildInline(WikiObjectInlineI wikiobject);
 	
 	/**
 	 * 親を設定する
@@ -24,7 +39,7 @@ public interface WikiObjectInlineI {
 	 * 次のinlineを子供として追加できるかどうか。
 	 * @return 次のinlineを子供として追加できる場合はtrue
 	 */
-	boolean isAddChildBlock();
+	boolean isAddChildInline();
 	
 	/**
 	 * 自分自身を親に追加できるか
@@ -43,4 +58,11 @@ public interface WikiObjectInlineI {
 	 * @return 親のWikiObjectInlineI
 	 */
 	WikiObjectInlineI getParent();
+	
+	/**
+	 * 自分自身かどうかをチェックする
+	 */
+	static interface Checker {
+		boolean isThis(String str);
+	}
 }
