@@ -62,10 +62,17 @@ public class WikiObjectBlockCheckTest {
 		list.add(null);
 		list.add("");
 		list.add(":定義|");
-		// 30 - 32
+		// 30 - 34
 		list.add(":定義|test");
 		list.add("----test");
 		list.add("-----");
+		list.add("CENTER:t");
+		list.add("LEFT:tt");
+		// 35 - 38
+		list.add("LEFT::");
+		list.add("RIGHT:tt");
+		list.add("RiGHT:tt");
+		list.add("CENTER");
 		
 		return list;
 	}
@@ -97,13 +104,9 @@ public class WikiObjectBlockCheckTest {
 			blist.add(new ParagraphBlock.Checker().isThis(line));
 		}
 		
+		// パラグラフは全部trueとしている。
 		for (int i = 0; i<blist.size(); i++) {
-			if (i == 0 || i == 1 || i == 2 || i == 20 || (i >= 23 && i <= 26)) {
-				assertTrue(blist.get(i).booleanValue());
-			} else {
-				assertFalse("" + i, blist.get(i).booleanValue());
-			}
-			
+			assertTrue(blist.get(i).booleanValue());
 		}
 		
 	}
@@ -279,6 +282,23 @@ public class WikiObjectBlockCheckTest {
 		
 		for (int i = 0; i<blist.size(); i++) {
 			if (i == 21) {
+				assertTrue(blist.get(i).booleanValue());
+			} else {
+				assertFalse("" + i, blist.get(i).booleanValue());
+			}
+		}
+	}
+	
+	@Test
+	public void testBlockCheckIsAlign() {
+		List<String> list = prepareBlockCheckLineList();
+		List<Boolean> blist = new ArrayList<Boolean>();
+		for (String line : list) {
+			blist.add(new AlignBlock.Checker().isThis(line));
+		}
+		
+		for (int i = 0; i<blist.size(); i++) {
+			if (i >= 33 && i <= 36) {
 				assertTrue(blist.get(i).booleanValue());
 			} else {
 				assertFalse("" + i, blist.get(i).booleanValue());

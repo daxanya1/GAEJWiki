@@ -19,7 +19,10 @@ public class WikiObjectBlockFactory {
 		blockmap.put(getC(WikiObjectBlockI.FORMATED), getL(new FormatedBlock.Checker()));
 		blockmap.put(getC(WikiObjectBlockI.UNNUMBEREDLIST), getL2(new UnnumberedListBlock.Checker(), new HorizonBlock.Checker()));
 		blockmap.put(getC(WikiObjectBlockI.NUMBEREDLIST), getL(new NumberedListBlock.Checker()));
-		blockmap.put(getC(WikiObjectBlockI.DEFINEDLIST), getL2(new DefinedListBlock.Checker(), new ParagraphBlock.Checker()));
+		blockmap.put(getC(WikiObjectBlockI.DEFINEDLIST), getL(new DefinedListBlock.Checker()));
+		blockmap.put(getC(WikiObjectBlockI.CENTER), getL(new AlignBlock.Checker()));
+		blockmap.put(getC(WikiObjectBlockI.LEFT), getL(new AlignBlock.Checker()));
+		blockmap.put(getC(WikiObjectBlockI.RIGHT), getL(new AlignBlock.Checker()));
 		blockmap.put(getC(WikiObjectBlockI.HASH), getL(new HashBlock.Checker()));
 		blockmap.put(getC(WikiObjectBlockI.HEADLINE), getL(new HeadlineBlock.Checker()));
 		blockmap.put(getC(WikiObjectBlockI.TABLE), getL(new TableBlock.Checker()));
@@ -57,19 +60,16 @@ public class WikiObjectBlockFactory {
 		Character checkc = new Character(line.charAt(0));
 		List<WikiObjectBlockI.Checker> listc = blockmap.get(checkc);
 		
-		// 何もない場合はparagraphチェックして、終わり
-		if (listc == null) {
-			return (new ParagraphBlock.Checker().isThis(line)) ? new Sub().createWikiObjectBlockFromChecker(new ParagraphBlock.Checker()) : null;
-		}
-		
-		for (WikiObjectBlockI.Checker checker : listc) {
-			if (checker.isThis(line)) {
-				return new Sub().createWikiObjectBlockFromChecker(checker);
+		if (listc != null) {
+			for (WikiObjectBlockI.Checker checker : listc) {
+				if (checker.isThis(line)) {
+					return new Sub().createWikiObjectBlockFromChecker(checker);
+				}
 			}
 		}
 		
-		// 何もなければnullを返す
-		return null;
+		// 何もないなら、パラグラフとみなす
+		return new Sub().createWikiObjectBlockFromChecker(new ParagraphBlock.Checker());
 	}
 	
 	static public class Sub {

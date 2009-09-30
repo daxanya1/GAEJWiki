@@ -1,7 +1,5 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
-import java.util.HashMap;
-
 import com.appspot.gaejwiki.common.wiki.block.base.SameAddBlockBase;
 
 /**
@@ -24,58 +22,15 @@ import com.appspot.gaejwiki.common.wiki.block.base.SameAddBlockBase;
  */
 public class ParagraphBlock extends SameAddBlockBase {
 
-	// 行頭書式の文字(-、+、:、>、|、#、//)
-	private static final char[] NOTPARAGRAPHCHAR = { QUOTATION, UNQUOTATION, FORMATED, UNNUMBEREDLIST, NUMBEREDLIST, DEFINEDLIST, HASH, HEADLINE, TABLE, CSV, COMMENTFIRST };
-	private static final HashMap<Character, Boolean> NOTPARAGRAPHS = new HashMap<Character, Boolean>();
-	
-	static {
-		for (char notpara : NOTPARAGRAPHCHAR) {
-			NOTPARAGRAPHS.put(new Character(notpara), Boolean.TRUE);
-		}
-	}
 	
 	static public class Checker implements WikiObjectBlockI.Checker {
 		
 		/**
-		 * パラグラフのblockかどうかチェックする
-		 * ~が先頭であれば、パラグラフ
-		 * 他のブロック要素であればパラグラフではない
-		 * それ以外はパラグラフとする
+		 * パラグラフのblockであるとする。
 		 * @param line　一行分の文字列
-		 * @return パラグラフであればtrue
+		 * @return 必ずtrue
 		 */
 		public boolean isThis(String line) {
-			if (line == null || line.length() == 0) {
-				return false;
-			}
-			
-			// PARAGRAPH要素が一文字目であれば、パラグラフとする
-			if (line.charAt(0) == PARAGRAPH) {
-				return true;
-			}
-			
-			// 他のブロック要素であればパラグラフではない
-			if (NOTPARAGRAPHS.containsKey(new Character(line.charAt(0)))) {
-				if (line.charAt(0) != COMMENTFIRST && line.charAt(0) != DEFINEDLIST) {
-					return false;
-				} else {
-					// コメントと定義リストだけ特別扱い
-					if (line.charAt(0) == COMMENTFIRST) {
-						// コメントかどうか確認
-						if (new CommentBlock.Checker().isThis(line)) {
-							return false;
-						}
-					}
-					if (line.charAt(0) == DEFINEDLIST) {
-						// 定義リストの場合 どこかに|があれば定義リスト、それ以外は段落扱い
-						if (new DefinedListBlock.Checker().isThis(line)) {
-							return false;
-						}
-					}
-				}
-			}
-		
-			// それ以外はパラグラフとする。
 			return true;
 		}
 	}

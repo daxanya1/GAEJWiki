@@ -1,5 +1,8 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.appspot.gaejwiki.common.wiki.inline.base.YesChildNoParentInlineBase;
 
 /**
@@ -117,4 +120,14 @@ total
 
 public class AmpersandChildInline extends YesChildNoParentInlineBase {
 
+	/**
+	 * &()Œn‚©‚Ç‚¤‚©Šm”F
+	 */
+	static public class Checker implements WikiObjectInlineI.Checker {
+
+		@Override
+		public int getMatchLength(String str) {
+			return new Util().getRegexMatcherLength(str, AMPERSANDCHILDFORMATPATTERN);
+		}
+	}
 }

@@ -17,4 +17,13 @@ import com.appspot.gaejwiki.common.wiki.inline.base.YesChildNoParentInlineBase;
 
 public class CharacterInline extends YesChildNoParentInlineBase {
 
+	/**
+	 * •¶Žš—ñ‚ð‚P•¶Žš‚Æ‚·‚é
+	 */
+	static public class Checker implements WikiObjectInlineI.Checker {
+
+		public int getMatchLength(String str) {
+			return 1;
+		}
+	}
 }

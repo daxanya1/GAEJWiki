@@ -12,12 +12,18 @@ public interface WikiObjectBlockI {
 	public static final char HASH = '#';
 	public static final char HEADLINE = '*';
 	public static final char TABLE = '|';
+	public static final char CENTER = 'C';
+	public static final char LEFT = 'L';
+	public static final char RIGHT = 'R';
 	public static final char CSV = ',';
 	public static final char COMMENTFIRST = '/';
 	
 	public static final String COMMENT = "//";
 	public static final String HORIZON = "----";
 	public static final char DEFINEDLIST_SECONDCHAR = '|';
+	public static final String CENTERFORMAT = "CENTER:";
+	public static final String LEFTFORMAT = "LEFT:";
+	public static final String RIGHTFORMAT = "RIGHT:";
 	
 	/**
 	 * 行を追加する。（一行目も含む）

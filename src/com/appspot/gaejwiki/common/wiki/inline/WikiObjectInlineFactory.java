@@ -34,9 +34,10 @@ public class WikiObjectInlineFactory {
 	}
 	
 	/**
-	 * 文字列から判断してwikiobjectblockを返す
-	 * @param line
-	 * @return
+	 * 文字列から判断してwikiobjectinlineを返す(中身はつめない)
+	 * 
+	 * @param line 文字列
+	 * @return wikiobjectinline
 	 */
 	public WikiObjectInlineI createWikiObjectBlock(String line) {
 		if (line == null || line.length() == 0) {
@@ -46,19 +47,17 @@ public class WikiObjectInlineFactory {
 		Character checkc = new Character(line.charAt(0));
 		List<WikiObjectInlineI.Checker> listc = blockmap.get(checkc);
 		
-		// 何もない場合はparagraphチェックして、終わり
-		if (listc == null) {
-//			return (new ParagraphBlock.Checker().isThis(line)) ? new Sub().createWikiObjectInlineFromChecker(new ParagraphBlock.Checker()) : null;
-		}
-		
-		for (WikiObjectInlineI.Checker checker : listc) {
-			if (checker.isThis(line)) {
-				return new Sub().createWikiObjectInlineFromChecker(checker);
+		if (listc != null) {
+			for (WikiObjectInlineI.Checker checker : listc) {
+				int length = checker.getMatchLength(line);
+				if (length > 0) {
+					return new Sub().createWikiObjectInlineFromChecker(checker);
+				}
 			}
 		}
 		
-		// 何もなければnullを返す
-		return null;
+		// 何もない場合は文字Inlineを返す
+		return new Sub().createWikiObjectInlineFromChecker(new CharacterInline.Checker());
 	}
 	
 	static public class Sub {

@@ -1,6 +1,8 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public interface WikiObjectInlineI {
 
@@ -10,10 +12,21 @@ public interface WikiObjectInlineI {
 	public static final char ROUNDBRACKET = '(';
 	public static final char ANGLEBRACKET = '[';
 	
-	public static final String PAGEFORMATBEGIN = "[[";
-	public static final String PAGEFORMATEND = "]]";
-	public static final char[] PAGENOTINCLUDES = { '"', ':', '&', '<', '>' };
-	public static final char[] LINKINCLUDES = { ':', '>' };
+	public static final String PAGEFORMATPATTERN = "^\\[\\[[^\":&<>]+\\]\\]";
+	public static final String LINKFORMATPATTERN = "^\\[\\[[^:>]+[:>].+\\]\\]";
+	public static final String AMPERSANDCHILDFORMATPATTERN = "^(" +
+	"&(br|online|version|page|fpage|date|time|now|_date|_time|_now|t);" +
+	"|&(heart|smile|bigsmile|huh|oh|wink|sad|worried);" +
+	"|&#[0-9]+;" +
+	"|&#x[0-9a-f]+;" +
+	"|&ref\\([^\\(\\)]+\\);" +
+	"|&counter(\\([^\\(\\)]+\\))?;" +
+	")";
+	public static final String AMPERSANDCHILDPARENTFORMATPATTERN = "^(" +
+	"&(color|ruby)\\([^\\(\\)]+\\)\\{[^\\{\\}]+\\};" +
+	"|&size\\([0-9]+\\)(\\{[^\\{\\}]+\\})?;" +
+	"|&aname\\([a-zA-Z][a-zA-Z0-9-_]*\\)(\\{[^\\{\\}]+\\})?;" +
+	")";
 	public static final char ANCHOR = '#';
 
 
@@ -63,6 +76,32 @@ public interface WikiObjectInlineI {
 	 * 自分自身かどうかをチェックする
 	 */
 	static interface Checker {
-		boolean isThis(String str);
+		
+		/**
+		 * 自分自身であれば、文字列を切り取るEndPositionを返す
+		 * @param str 文字列
+		 * @return endpositionを返す。なければ0を返す
+		 */
+		int getMatchLength(String str);
+		
+		static class Util {
+			/**
+			 * patにstrがマッチしたら、マッチした文字数を返す
+			 * @param str
+			 * @param pat パターン
+			 * @return マッチした文字数
+			 */
+			public int getRegexMatcherLength(String str, String pat) {
+				if (str == null || pat == null) {
+					return 0;
+				}
+				Pattern pattern = Pattern.compile(pat);
+				Matcher matcher = pattern.matcher(str);
+				if (matcher.find()) {
+					return matcher.group(0).length();
+				}
+				return 0;
+			}
+		}
 	}
 }

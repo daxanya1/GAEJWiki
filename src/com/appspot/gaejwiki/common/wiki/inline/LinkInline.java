@@ -1,8 +1,9 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import com.appspot.gaejwiki.common.wiki.inline.PageInline.Sub;
+import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI.Checker.Util;
 import com.appspot.gaejwiki.common.wiki.inline.base.YesChildNoParentInlineBase;
 
 /**
@@ -68,27 +69,11 @@ public class LinkInline extends YesChildNoParentInlineBase {
 
 	/**
 	 * リンクかどうか確認
-	 * @param str 文字列
-	 * @return リンクならtrue
 	 */
 	static public class Checker implements WikiObjectInlineI.Checker {
 
-		public static final HashMap<Character, Boolean> LINKINCLUDESMAP = new HashMap<Character, Boolean>();
-		
-		static {
-			for (char includes : LINKINCLUDES) {
-				LINKINCLUDESMAP.put(new Character(includes), Boolean.TRUE);
-			}
-		}
-	
-		public boolean isThis(String str) {
-			if (str == null || str.length() == 0) {
-				return false;
-			}
-			
-			PageInline.Sub sub = new PageInline.Sub();
-			// ページ名形式かつ、中に":>が含まれているケースのみ該当
-			return (sub.isPageFormat(str) && sub.isIncludeChars(str, LINKINCLUDESMAP)) ? true : false;
+		public int getMatchLength(String str) {
+			return new Util().getRegexMatcherLength(str, LINKFORMATPATTERN);
 		}
 	}
 

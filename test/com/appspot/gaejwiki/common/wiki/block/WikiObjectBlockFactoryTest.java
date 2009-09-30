@@ -63,9 +63,16 @@ public class WikiObjectBlockFactoryTest {
 		assertNull(blocklist.get(count++));
 		assertNull(blocklist.get(count++));
 		assertEquals(blocklist.get(count++).getClass().getName(), DefinedListBlock.class.getName());
-		// 30-32
+		// 30-34
 		assertEquals(blocklist.get(count++).getClass().getName(), DefinedListBlock.class.getName());
 		assertEquals(blocklist.get(count++).getClass().getName(), HorizonBlock.class.getName());
 		assertEquals(blocklist.get(count++).getClass().getName(), HorizonBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), AlignBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), AlignBlock.class.getName());
+		// 35-38
+		assertEquals(blocklist.get(count++).getClass().getName(), AlignBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), AlignBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), ParagraphBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), ParagraphBlock.class.getName());
 	}
 }

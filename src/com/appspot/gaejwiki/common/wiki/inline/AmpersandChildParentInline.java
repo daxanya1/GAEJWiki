@@ -42,4 +42,14 @@ import com.appspot.gaejwiki.common.wiki.inline.base.YesChildParentInlineBase;
 
 public class AmpersandChildParentInline extends YesChildParentInlineBase {
 
+	/**
+	 * &(){}Œn‚©‚Ç‚¤‚©Šm”F
+	 */
+	static public class Checker implements WikiObjectInlineI.Checker {
+
+		@Override
+		public int getMatchLength(String str) {
+			return new Util().getRegexMatcherLength(str, AMPERSANDCHILDPARENTFORMATPATTERN);
+		}
+	}
 }

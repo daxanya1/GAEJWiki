@@ -35,9 +35,8 @@ public class HorizonBlock extends NoChildParentBlockBase {
 				return false;
 			}
 			
-			// ‚S•¶š–Ú‚Ü‚Å’²‚×‚ÄA----‚¾‚Á‚½‚çtrue
-			String checkstr = line.substring(0, 4);
-			return (HORIZON.equals(checkstr)) ? true : false;
+			// ----‚¾‚Á‚½‚çtrue
+			return (HORIZON.equals(line.substring(0, HORIZON.length()))) ? true : false;
 		}
 	}
 }
