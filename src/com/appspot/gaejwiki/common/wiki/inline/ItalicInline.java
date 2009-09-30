@@ -17,4 +17,13 @@ import com.appspot.gaejwiki.common.wiki.inline.base.YesChildParentInlineBase;
 
 public class ItalicInline extends YesChildParentInlineBase {
 
+	/**
+	 * イタリックかどうか確認
+	 */
+	static public class Checker implements WikiObjectInlineI.Checker {
+
+		public int getMatchLength(String str) {
+			return new Util().getRegexMatcherLength(str, ITALICFORMATPATTERN);
+		}
+	}
 }

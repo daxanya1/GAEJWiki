@@ -19,4 +19,13 @@ import com.appspot.gaejwiki.common.wiki.inline.base.NoChildParentInlineBase;
 
 public class NewlineInline extends NoChildParentInlineBase {
 
+	/**
+	 * ~‚©‚Ç‚¤‚©Šm”F
+	 */
+	static public class Checker implements WikiObjectInlineI.Checker {
+
+		public int getMatchLength(String str) {
+			return (str != null && str.length() == 1 && str.equals("~")) ? 1 : 0;
+		}
+	}
 }

@@ -7,7 +7,7 @@ import org.junit.Test;
 public class AmpersandChildInlineTest {
 
 	@Test
-	public void tetWikiObjectBlockFactorySub() {
+	public void tetWikiObjectInlineChecker() {
 		AmpersandChildInline.Checker checker = new AmpersandChildInline.Checker();
 		assertEquals(checker.getMatchLength(""), 0);
 		assertEquals(checker.getMatchLength(null), 0);

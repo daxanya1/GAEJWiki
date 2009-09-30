@@ -17,4 +17,13 @@ import com.appspot.gaejwiki.common.wiki.inline.base.YesChildParentInlineBase;
 
 public class StrikeInline extends YesChildParentInlineBase {
 
+	/**
+	 * æ‚èÁ‚µü‚©‚Ç‚¤‚©Šm”F
+	 */
+	static public class Checker implements WikiObjectInlineI.Checker {
+
+		public int getMatchLength(String str) {
+			return new Util().getRegexMatcherLength(str, STRIKEFORMATPATTERN);
+		}
+	}
 }

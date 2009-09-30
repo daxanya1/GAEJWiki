@@ -7,7 +7,7 @@ import org.junit.Test;
 public class LinkInlineTest {
 
 	@Test
-	public void tetWikiObjectBlockFactorySub() {
+	public void tetWikiObjectInlineChecker() {
 		LinkInline.Checker checker = new LinkInline.Checker();
 		
 		assertEquals(checker.getMatchLength("[[page]]"), 0);

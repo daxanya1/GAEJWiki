@@ -1,9 +1,5 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI.Checker.Util;
 import com.appspot.gaejwiki.common.wiki.inline.base.YesChildNoParentInlineBase;
 
 /**

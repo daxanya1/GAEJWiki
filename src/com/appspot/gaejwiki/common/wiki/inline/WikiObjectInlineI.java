@@ -12,6 +12,11 @@ public interface WikiObjectInlineI {
 	public static final char ROUNDBRACKET = '(';
 	public static final char ANGLEBRACKET = '[';
 	
+	public static final String WIKINAMEFORMATPATTERN = "^[A-Z]+[a-z]+[A-Z]+[a-z]+";
+	public static final String NOTEFORMATPATTERN = "^\\(\\(.+\\)\\)";
+	public static final String STRIKEFORMATPATTERN = "^%.+%";
+	public static final String STRONGFORMATPATTERN = "^''.+''";
+	public static final String ITALICFORMATPATTERN = "^'''.+'''";
 	public static final String PAGEFORMATPATTERN = "^\\[\\[[^\":&<>]+\\]\\]";
 	public static final String LINKFORMATPATTERN = "^\\[\\[[^:>]+[:>].+\\]\\]";
 	public static final String AMPERSANDCHILDFORMATPATTERN = "^(" +

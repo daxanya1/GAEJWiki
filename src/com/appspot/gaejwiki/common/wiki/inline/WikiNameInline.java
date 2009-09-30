@@ -18,5 +18,13 @@ WikiNameは、他のインライン要素を子要素にはできません。
  */
 
 public class WikiNameInline extends YesChildNoParentInlineBase {
+	/**
+	 * WikiNameかどうか確認
+	 */
+	static public class Checker implements WikiObjectInlineI.Checker {
 
+		public int getMatchLength(String str) {
+			return new Util().getRegexMatcherLength(str, WIKINAMEFORMATPATTERN);
+		}
+	}
 }

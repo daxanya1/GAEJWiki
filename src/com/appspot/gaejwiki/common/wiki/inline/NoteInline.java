@@ -17,4 +17,13 @@ import com.appspot.gaejwiki.common.wiki.inline.base.YesChildParentInlineBase;
 
 public class NoteInline extends YesChildParentInlineBase {
 
+	/**
+	 * íçéﬂÇ©Ç«Ç§Ç©ämîF
+	 */
+	static public class Checker implements WikiObjectInlineI.Checker {
+
+		public int getMatchLength(String str) {
+			return new Util().getRegexMatcherLength(str, NOTEFORMATPATTERN);
+		}
+	}
 }
