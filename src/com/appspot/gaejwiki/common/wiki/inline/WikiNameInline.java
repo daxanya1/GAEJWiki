@@ -1,6 +1,6 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import com.appspot.gaejwiki.common.wiki.inline.base.YesChildNoParentInlineBase;
+import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
 
 /**
  * WikiObject
@@ -17,7 +17,7 @@ WikiNameは、他のインライン要素を子要素にはできません。
  *
  */
 
-public class WikiNameInline extends YesChildNoParentInlineBase {
+public class WikiNameInline extends ChildOnlyInlineBase {
 	/**
 	 * WikiNameかどうか確認
 	 */

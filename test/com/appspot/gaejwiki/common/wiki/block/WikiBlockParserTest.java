@@ -1,4 +1,4 @@
-package com.appspot.gaejwiki.common.wiki;
+package com.appspot.gaejwiki.common.wiki.block;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,10 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockFactory;
-import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
 
-public class WikiParserTest {
+public class WikiBlockParserTest {
 
 	public WikiObjectBlockFactory getTestFactory() {
 		return new WikiObjectBlockFactory();
@@ -28,8 +26,8 @@ public class WikiParserTest {
 	}
 	
 	@Test
-	public void testWikiParser1() {
-		WikiParser.BlockSub parser = new WikiParser.BlockSub();
+	public void testWikiBlockParser1() {
+		WikiBlockParser parser = new WikiBlockParser();
 		
 		List<WikiObjectBlockI> wikilist = parser.parseBlock(getTestFactory(), prepareWikiTestList1());
 		assertEquals(wikilist.size(), 2);
@@ -49,8 +47,8 @@ public class WikiParserTest {
 	}
 	
 	@Test
-	public void testWikiParser2() {
-		WikiParser.BlockSub parser = new WikiParser.BlockSub();
+	public void testWikiBlockParser2() {
+		WikiBlockParser parser = new WikiBlockParser();
 		
 		List<WikiObjectBlockI> wikilist = parser.parseBlock(getTestFactory(), prepareWikiTestList2());
 		assertEquals(wikilist.size(), 3);
@@ -72,8 +70,8 @@ public class WikiParserTest {
 	}
 	
 	@Test
-	public void testWikiParser3() {
-		WikiParser.BlockSub parser = new WikiParser.BlockSub();
+	public void testWikiBlockParser3() {
+		WikiBlockParser parser = new WikiBlockParser();
 		
 		List<WikiObjectBlockI> wikilist = parser.parseBlock(getTestFactory(), prepareWikiTestList3());
 		assertEquals(wikilist.size(), 5);
@@ -99,8 +97,8 @@ public class WikiParserTest {
 	}
 	
 	@Test
-	public void testWikiParser4() {
-		WikiParser.BlockSub parser = new WikiParser.BlockSub();
+	public void testWikiBlockParser4() {
+		WikiBlockParser parser = new WikiBlockParser();
 		
 		List<WikiObjectBlockI> wikilist = parser.parseBlock(getTestFactory(), prepareWikiTestList4());
 		assertEquals(wikilist.size(), 2);
@@ -125,8 +123,8 @@ public class WikiParserTest {
 	}
 	
 	@Test
-	public void testWikiParser5() {
-		WikiParser.BlockSub parser = new WikiParser.BlockSub();
+	public void testWikiBlockParser5() {
+		WikiBlockParser parser = new WikiBlockParser();
 		
 		List<WikiObjectBlockI> wikilist = parser.parseBlock(getTestFactory(), prepareWikiTestList5());
 		// for (WikiObjectI i : wikilist) {
@@ -157,8 +155,8 @@ public class WikiParserTest {
 	}
 	
 	@Test
-	public void testWikiParser6() {
-		WikiParser.BlockSub parser = new WikiParser.BlockSub();
+	public void testWikiBlockParser6() {
+		WikiBlockParser parser = new WikiBlockParser();
 		
 		List<WikiObjectBlockI> wikilist = parser.parseBlock(getTestFactory(), prepareWikiTestList6());
 		// for (WikiObjectI i : wikilist) {

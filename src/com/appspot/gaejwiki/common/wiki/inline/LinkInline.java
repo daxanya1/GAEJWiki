@@ -1,6 +1,6 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import com.appspot.gaejwiki.common.wiki.inline.base.YesChildNoParentInlineBase;
+import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
 
 /**
  * WikiObject
@@ -61,7 +61,7 @@ URLを指定する場合は、>の代わりに:も使用できます。
  *
  */
 
-public class LinkInline extends YesChildNoParentInlineBase {
+public class LinkInline extends ChildOnlyInlineBase {
 
 	/**
 	 * リンクかどうか確認

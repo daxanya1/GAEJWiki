@@ -1,6 +1,8 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import com.appspot.gaejwiki.common.wiki.inline.base.YesChildParentInlineBase;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * WikiObject
@@ -40,7 +42,99 @@ import com.appspot.gaejwiki.common.wiki.inline.base.YesChildParentInlineBase;
  *
  */
 
-public class AmpersandChildParentInline extends YesChildParentInlineBase {
+public class AmpersandChildParentInline implements WikiObjectInlineI {
+
+	private String rawdata = null;
+	private List<WikiObjectInlineI> childlist = null;
+	private String ampersandtype = null;
+	private String ampersandparam = null;
+	private WikiObjectInlineI parent = null;
+	
+	@Override
+	public WikiObjectInlineI getParent() {
+		return parent;
+	}
+
+	@Override
+	public void setParent(WikiObjectInlineI wikiobject) {
+		parent = wikiobject;
+	}
+	
+	@Override
+	public void set(String str, WikiObjectInlineFactory factory) {
+		rawdata = str;
+		// 再帰処理を行う
+		String line = new Sub().matchSet(rawdata);
+		if (line != null) {
+			childlist = new WikiInlineParser().parseInline(factory, line);
+		}
+	}
+	
+	@Override
+	public String toDebugString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(ampersandtype);
+		sb.append("|");
+		sb.append(ampersandparam);
+		sb.append("|");
+		if (childlist != null) {
+			for (WikiObjectInlineI inline : childlist) {
+				sb.append("c:/");
+				sb.append(inline.toDebugString());
+				sb.append("/:c");
+			}
+		}
+		return sb.toString();
+	}
+
+	public class Sub {
+		
+		// 正規表現にかけて、必要な情報を取り出す
+		public String matchSet(String str) {
+			Pattern pattern1 = Pattern.compile(AMPERSANDCHILDPARENTFORMATPATTERN1);
+			Matcher matcher1 = pattern1.matcher(str);
+			if (matcher1.find()) {
+				return matchSet1(matcher1);
+			}
+
+			Pattern pattern2 = Pattern.compile(AMPERSANDCHILDPARENTFORMATPATTERN2);
+			Matcher matcher2 = pattern2.matcher(str);
+			if (matcher2.find()) {
+				return matchSet2(matcher2);
+			}
+
+			Pattern pattern3 = Pattern.compile(AMPERSANDCHILDPARENTFORMATPATTERN3);
+			Matcher matcher3 = pattern3.matcher(str);
+			if (matcher3.find()) {
+				return matchSet2(matcher3);
+			}
+
+			
+			return null;
+		}
+		
+		public String matchSet1(Matcher matcher) {
+			if (matcher.groupCount() >= 1) {
+				ampersandtype = matcher.group(1);
+			}
+			if (matcher.groupCount() >= 2) {
+				ampersandparam = matcher.group(2);
+			}
+
+			return (matcher.groupCount() >= 3) ? matcher.group(3) : null;
+		}
+		
+		public String matchSet2(Matcher matcher) {
+			if (matcher.groupCount() >= 1) {
+				ampersandtype = matcher.group(1);
+			}
+			if (matcher.groupCount() >= 2) {
+				ampersandparam = matcher.group(2);
+			}
+
+			return (matcher.groupCount() >= 4) ? matcher.group(4) : null;
+		}
+	}
 
 	/**
 	 * &(){}系かどうか確認
@@ -49,7 +143,16 @@ public class AmpersandChildParentInline extends YesChildParentInlineBase {
 
 		@Override
 		public int getMatchLength(String str) {
-			return new Util().getRegexMatcherLength(str, AMPERSANDCHILDPARENTFORMATPATTERN);
+			int length = 0;
+			length = new Util().getRegexMatcherLength(str, AMPERSANDCHILDPARENTFORMATPATTERN1);
+			if (length > 0) { return length; }
+			length = new Util().getRegexMatcherLength(str, AMPERSANDCHILDPARENTFORMATPATTERN2);
+			if (length > 0) { return length; }
+			length = new Util().getRegexMatcherLength(str, AMPERSANDCHILDPARENTFORMATPATTERN3);
+			if (length > 0) { return length; }
+			
+			return 0;
 		}
 	}
+
 }

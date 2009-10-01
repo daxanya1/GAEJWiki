@@ -1,6 +1,6 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import com.appspot.gaejwiki.common.wiki.inline.base.YesChildParentInlineBase;
+import com.appspot.gaejwiki.common.wiki.inline.base.ParentableInlineBase;
 
 /**
  * WikiObject
@@ -15,8 +15,28 @@ import com.appspot.gaejwiki.common.wiki.inline.base.YesChildParentInlineBase;
  *
  */
 
-public class StrikeInline extends YesChildParentInlineBase {
+public class StrikeInline extends ParentableInlineBase {
 
+	@Override
+	public String toDebugString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("strike");
+		sb.append("|");
+		if (getChildList() != null) {
+			for (WikiObjectInlineI inline : getChildList()) {
+				sb.append("c:/");
+				sb.append(inline.toDebugString());
+				sb.append("/:c");
+			}
+		}
+		return sb.toString();
+	}
+
+	@Override
+	public String getPattern() {
+		return STRIKEFORMATPATTERN;
+	}
+	
 	/**
 	 * éÊÇËè¡Çµê¸Ç©Ç«Ç§Ç©ämîF
 	 */

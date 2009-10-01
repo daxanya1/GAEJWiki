@@ -11,12 +11,13 @@ public interface WikiObjectInlineI {
 	public static final char PARCENT = '%';
 	public static final char ROUNDBRACKET = '(';
 	public static final char ANGLEBRACKET = '[';
+	public static final char TILDE = '~';
 	
-	public static final String WIKINAMEFORMATPATTERN = "^[A-Z]+[a-z]+[A-Z]+[a-z]+";
-	public static final String NOTEFORMATPATTERN = "^\\(\\(.+\\)\\)";
-	public static final String STRIKEFORMATPATTERN = "^%.+%";
-	public static final String STRONGFORMATPATTERN = "^''.+''";
-	public static final String ITALICFORMATPATTERN = "^'''.+'''";
+	public static final String WIKINAMEFORMATPATTERN = "^([A-Z]+[a-z]+[A-Z]+[a-z]+)";
+	public static final String NOTEFORMATPATTERN = "^\\(\\((.+)\\)\\)";
+	public static final String STRIKEFORMATPATTERN = "^%(.+)%";
+	public static final String STRONGFORMATPATTERN = "^''(.+)''";
+	public static final String ITALICFORMATPATTERN = "^'''(.+)'''";
 	public static final String PAGEFORMATPATTERN = "^\\[\\[[^\":&<>]+\\]\\]";
 	public static final String LINKFORMATPATTERN = "^\\[\\[[^:>]+[:>].+\\]\\]";
 	public static final String AMPERSANDCHILDFORMATPATTERN = "^(" +
@@ -27,25 +28,19 @@ public interface WikiObjectInlineI {
 	"|&ref\\([^\\(\\)]+\\);" +
 	"|&counter(\\([^\\(\\)]+\\))?;" +
 	")";
-	public static final String AMPERSANDCHILDPARENTFORMATPATTERN = "^(" +
-	"&(color|ruby)\\([^\\(\\)]+\\)\\{[^\\{\\}]+\\};" +
-	"|&size\\([0-9]+\\)(\\{[^\\{\\}]+\\})?;" +
-	"|&aname\\([a-zA-Z][a-zA-Z0-9-_]*\\)(\\{[^\\{\\}]+\\})?;" +
-	")";
+
+	public static final String AMPERSANDCHILDPARENTFORMATPATTERN1 = "^&(color|ruby)\\(([^\\(\\)]+)\\)\\{([^\\{\\}]+)\\};";
+	public static final String AMPERSANDCHILDPARENTFORMATPATTERN2 = "&(size)\\(([0-9]+)\\)(\\{([^\\{\\}]+)\\})?;";
+	public static final String AMPERSANDCHILDPARENTFORMATPATTERN3 = "&(aname)\\(([a-zA-Z][a-zA-Z0-9-_]*)\\)(\\{([^\\{\\}]+)\\})?;";
 	public static final char ANCHOR = '#';
 
 
 	/**
 	 * 文字を追加する。
 	 * @param str 追加する文字
+	 * @param factory TODO
 	 */
-	void addString(String str);
-	
-	/**
-	 * inlineを追加する
-	 * @param wikiobject 子inline
-	 */
-	void addChildInline(WikiObjectInlineI wikiobject);
+	void set(String str, WikiObjectInlineFactory factory);
 	
 	/**
 	 * 親を設定する
@@ -54,22 +49,16 @@ public interface WikiObjectInlineI {
 	void setParent(WikiObjectInlineI wikiobject);
 	
 	/**
-	 * 次のinlineを子供として追加できるかどうか。
-	 * @return 次のinlineを子供として追加できる場合はtrue
-	 */
-	boolean isAddChildInline();
-	
-	/**
-	 * 自分自身を親に追加できるか
-	 * @return 自分自身を親に追加できる場合はtrue
-	 */
-	boolean isAddToParent();
-	
-	/**
 	 * Wikiフォーマット用の文字列を返す。
 	 * @return
 	 */
 	String toString();
+	
+	/**
+	 * Debug用文字列を返す。
+	 * @return
+	 */
+	String toDebugString();
 	
 	/**
 	 * 親を返す

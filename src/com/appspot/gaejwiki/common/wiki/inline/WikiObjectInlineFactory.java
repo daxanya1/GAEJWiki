@@ -13,7 +13,16 @@ public class WikiObjectInlineFactory {
 	
 	static {
 		blockmap = new HashMap<Character, List<WikiObjectInlineI.Checker>>();
+		blockmap.put(getC(WikiObjectInlineI.AMPERSAND), getL2(new AmpersandChildInline.Checker(), new AmpersandChildParentInline.Checker()));
+		blockmap.put(getC(WikiObjectInlineI.STRONG), getL2(new StrongInline.Checker(), new ItalicInline.Checker()));
 		blockmap.put(getC(WikiObjectInlineI.ANGLEBRACKET), getL2(new PageInline.Checker(), new LinkInline.Checker()));
+		blockmap.put(getC(WikiObjectInlineI.TILDE), getL(new NewlineInline.Checker()));
+		blockmap.put(getC(WikiObjectInlineI.ROUNDBRACKET), getL(new NoteInline.Checker()));
+		blockmap.put(getC(WikiObjectInlineI.PARCENT), getL(new StrikeInline.Checker()));
+		// WikiName‚Í”¼Šp‘å•¶š‘S•”‚ª‘ÎÛ
+		for (char c = 'A'; c <= 'Z'; c++) {
+			blockmap.put(getC(c), getL(new WikiNameInline.Checker()));
+		}
 	}
 	
 	static public Character getC(char c) {
@@ -39,7 +48,7 @@ public class WikiObjectInlineFactory {
 	 * @param line •¶š—ñ
 	 * @return wikiobjectinline
 	 */
-	public WikiObjectInlineI createWikiObjectBlock(String line) {
+	public WikiObjectInlineIPair createWikiObjectInline(String line) {
 		if (line == null || line.length() == 0) {
 			return null;
 		}
@@ -51,13 +60,39 @@ public class WikiObjectInlineFactory {
 			for (WikiObjectInlineI.Checker checker : listc) {
 				int length = checker.getMatchLength(line);
 				if (length > 0) {
-					return new Sub().createWikiObjectInlineFromChecker(checker);
+					return make(new Sub().createWikiObjectInlineFromChecker(checker), length);
 				}
 			}
 		}
 		
 		// ‰½‚à‚È‚¢ê‡‚Í•¶šInline‚ğ•Ô‚·
-		return new Sub().createWikiObjectInlineFromChecker(new CharacterInline.Checker());
+		return make(new Sub().createWikiObjectInlineFromChecker(new CharacterInline.Checker()), new CharacterInline.Checker().getMatchLength(""));
+	}
+	
+	public WikiObjectInlineIPair make(WikiObjectInlineI i, int len) {
+		WikiObjectInlineIPair pair = new WikiObjectInlineIPair();
+		pair.setInline(i);
+		pair.setLength(len);
+		return pair;
+	}
+	
+	public class WikiObjectInlineIPair {
+		
+		private WikiObjectInlineI inline;
+		private int length;
+		public WikiObjectInlineI getInline() {
+			return inline;
+		}
+		public void setInline(WikiObjectInlineI inline) {
+			this.inline = inline;
+		}
+		public int getLength() {
+			return length;
+		}
+		public void setLength(int length) {
+			this.length = length;
+		}
+
 	}
 	
 	static public class Sub {

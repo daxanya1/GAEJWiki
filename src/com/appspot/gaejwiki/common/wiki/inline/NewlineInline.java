@@ -1,6 +1,6 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import com.appspot.gaejwiki.common.wiki.inline.base.NoChildParentInlineBase;
+import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
 
 /**
  * WikiObject
@@ -17,7 +17,7 @@ import com.appspot.gaejwiki.common.wiki.inline.base.NoChildParentInlineBase;
  *
  */
 
-public class NewlineInline extends NoChildParentInlineBase {
+public class NewlineInline extends ChildOnlyInlineBase {
 
 	/**
 	 * ~‚©‚Ç‚¤‚©Šm”F
@@ -25,7 +25,7 @@ public class NewlineInline extends NoChildParentInlineBase {
 	static public class Checker implements WikiObjectInlineI.Checker {
 
 		public int getMatchLength(String str) {
-			return (str != null && str.length() == 1 && str.equals("~")) ? 1 : 0;
+			return (str != null && str.length() == 1 && str.charAt(0) == TILDE) ? 1 : 0;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import com.appspot.gaejwiki.common.wiki.inline.base.YesChildNoParentInlineBase;
+import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
 
 /**
  * WikiObject
@@ -20,7 +20,7 @@ import com.appspot.gaejwiki.common.wiki.inline.base.YesChildNoParentInlineBase;
  *
  */
 
-public class PageInline extends YesChildNoParentInlineBase {
+public class PageInline extends ChildOnlyInlineBase {
 
 	
 	/**
