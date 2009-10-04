@@ -22,4 +22,10 @@ public class WikiNameInlineTest {
 
 	}
 
+	@Test
+	public void testWikiNameInlineSub() {
+		WikiNameInline inline1 = new WikiNameInline();
+		inline1.set("WikiNNamee", null);
+		assertEquals(inline1.toDebugString(), "wikiname|WikiNNamee|");
+	}
 }

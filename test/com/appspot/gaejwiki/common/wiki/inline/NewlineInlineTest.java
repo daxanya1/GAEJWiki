@@ -17,4 +17,10 @@ public class NewlineInlineTest {
 		assertEquals(checker.getMatchLength("~ "), 0);
 	}
 
+	@Test
+	public void testNewlineInlineSub() {
+		NewlineInline inline1 = new NewlineInline();
+		inline1.set("~", null);
+		assertEquals(inline1.toDebugString(), "<br />");
+	}
 }

@@ -18,6 +18,22 @@ WikiNameは、他のインライン要素を子要素にはできません。
  */
 
 public class WikiNameInline extends ChildOnlyInlineBase {
+
+	@Override
+	public String toDebugString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("wikiname");
+		sb.append("|");
+		sb.append(getData());
+		sb.append("|");
+		return sb.toString();
+	}
+	
+	@Override
+	public String getPattern() {
+		return WIKINAMEFORMATPATTERN;
+	}
+	
 	/**
 	 * WikiNameかどうか確認
 	 */

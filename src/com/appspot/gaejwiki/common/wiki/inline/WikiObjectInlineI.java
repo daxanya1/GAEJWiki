@@ -18,16 +18,23 @@ public interface WikiObjectInlineI {
 	public static final String STRIKEFORMATPATTERN = "^%(.+)%";
 	public static final String STRONGFORMATPATTERN = "^''(.+)''";
 	public static final String ITALICFORMATPATTERN = "^'''(.+)'''";
-	public static final String PAGEFORMATPATTERN = "^\\[\\[[^\":&<>]+\\]\\]";
-	public static final String LINKFORMATPATTERN = "^\\[\\[[^:>]+[:>].+\\]\\]";
-	public static final String AMPERSANDCHILDFORMATPATTERN = "^(" +
-	"&(br|online|version|page|fpage|date|time|now|_date|_time|_now|t);" +
-	"|&(heart|smile|bigsmile|huh|oh|wink|sad|worried);" +
-	"|&#[0-9]+;" +
-	"|&#x[0-9a-f]+;" +
-	"|&ref\\([^\\(\\)]+\\);" +
-	"|&counter(\\([^\\(\\)]+\\))?;" +
-	")";
+	
+	public static final String URLPATTERN = "([a-z]+://[-_.!~*'\\(\\)a-zA-Z0-9;/?:@&=+$,%#]+)";
+	public static final String MAILPATTERN = "((?:(?:(?:(?:[a-zA-Z0-9_!#\\$\\%&'*+/=?\\^`{}~|\\-]+)(?:\\.(?:[a-zA-Z0-9_!#\\$\\%&'*+/=?\\^`{}~|\\-]+))*)|(?:\"(?:\\\\[^\\r\\n]|[^\\\\\"])*\")))\\@(?:(?:(?:(?:[a-zA-Z0-9_!#\\$\\%&'*+/=?\\^`{}~|\\-]+)(?:\\.(?:[a-zA-Z0-9_!#\\$\\%&'*+/=?\\^`{}~|\\-]+))*)|(?:\\[(?:\\\\\\S|[\\x21-\\x5a\\x5e-\\x7e])*\\]))))";
+	public static final String PAGEPATTERN = "([^\":&<>]+)";
+	public static final String PAGEFORMATPATTERN = "^\\[\\[" + PAGEPATTERN + "\\]\\]";
+	
+	public static final String LINKFORMATPATTERN1 = "^\\[\\[([^:>]+)" + "[:>]" + URLPATTERN + "\\]\\]";
+	public static final String LINKFORMATPATTERN2 = "^\\[\\[([^:>]+)" + "[:>]" + MAILPATTERN + "\\]\\]";
+	public static final String LINKFORMATPATTERN3 = "^\\[\\[" + URLPATTERN + "\\]\\]";
+	public static final String LINKFORMATPATTERN4 = "^\\[\\[" + MAILPATTERN + "\\]\\]";
+	public static final String LINKFORMATPATTERN5 = "^\\[\\[([^>]+)>(([^:]+):)?" + PAGEPATTERN + "\\]\\]";
+	public static final String LINKFORMATPATTERN6 = "^\\[\\[([^:]+):" + PAGEPATTERN + "\\]\\]";
+
+	public static final String AMPERSANDCHILDFORMATPATTERN1 = "^&(br|online|version|page|fpage|date|time|now|_date|_time|_now|heart|smile|bigsmile|huh|oh|wink|sad|worried|t);";
+	public static final String AMPERSANDCHILDFORMATPATTERN2 = "^&((#[0-9]+)|(#x[0-9a-f]+));";
+	public static final String AMPERSANDCHILDFORMATPATTERN3 = "^&(ref)\\(([^\\(\\)]+)\\);";
+	public static final String AMPERSANDCHILDFORMATPATTERN4 = "^&(counter)(\\((today|yesterday|total)\\))?;";
 
 	public static final String AMPERSANDCHILDPARENTFORMATPATTERN1 = "^&(color|ruby)\\(([^\\(\\)]+)\\)\\{([^\\{\\}]+)\\};";
 	public static final String AMPERSANDCHILDPARENTFORMATPATTERN2 = "&(size)\\(([0-9]+)\\)(\\{([^\\{\\}]+)\\})?;";
@@ -65,6 +72,25 @@ public interface WikiObjectInlineI {
 	 * @return 親のWikiObjectInlineI
 	 */
 	WikiObjectInlineI getParent();
+
+
+	static public class Util {
+		
+		// 正規表現にかけて、必要な情報を取り出す
+		public String matchSet(String str, String pat) {
+			if (str == null || pat == null) {
+				return null;
+			}
+			
+			Pattern pattern = Pattern.compile(pat);
+			Matcher matcher = pattern.matcher(str);
+			if (matcher.find()) {
+				return (matcher.groupCount() >= 1) ? matcher.group(1) : null;
+			}
+			
+			return null;
+		}
+	}
 	
 	/**
 	 * 自分自身かどうかをチェックする

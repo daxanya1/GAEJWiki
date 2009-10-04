@@ -22,6 +22,19 @@ import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
 
 public class PageInline extends ChildOnlyInlineBase {
 
+	@Override
+	public String toDebugString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("page");
+		sb.append("|");
+		sb.append(getData());
+		return sb.toString();
+	}
+	
+	@Override
+	public String getPattern() {
+		return PAGEFORMATPATTERN;
+	}
 	
 	/**
 	 * ページ名かどうか確認

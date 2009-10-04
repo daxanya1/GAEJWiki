@@ -1,6 +1,7 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * WikiObject
@@ -61,7 +62,150 @@ URLを指定する場合は、>の代わりに:も使用できます。
  *
  */
 
-public class LinkInline extends ChildOnlyInlineBase {
+public class LinkInline  implements WikiObjectInlineI {
+
+	private String rawdata = null;
+	private String alias = null;
+	private String interwiki = null;
+	private String param = null;
+	private WikiObjectInlineI parent = null;
+	private boolean urlflag = false;
+	
+	@Override
+	public WikiObjectInlineI getParent() {
+		return parent;
+	}
+
+	@Override
+	public void setParent(WikiObjectInlineI wikiobject) {
+		parent = wikiobject;
+	}
+	
+	@Override
+	public void set(String str, WikiObjectInlineFactory factory) {
+		rawdata = str;
+		// 再帰処理を行う
+		new Sub().matchSet(rawdata);
+
+	}
+	
+	@Override
+	public String toDebugString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(new Boolean(urlflag).toString());
+		sb.append("|");
+		if (alias != null) sb.append(alias);
+		sb.append("|");
+		if (interwiki != null) sb.append(interwiki);
+		sb.append("|");
+		if (param != null) sb.append(param);
+		sb.append("|");
+		return sb.toString();
+	}
+	
+	public class Sub {
+		
+		// 正規表現にかけて、必要な情報を取り出す
+		public void matchSet(String str) {
+			{
+				Pattern pattern1 = Pattern.compile(LINKFORMATPATTERN1);
+				Matcher matcher1 = pattern1.matcher(str);
+				if (matcher1.find()) {
+					matchSet1(matcher1);
+					return;
+				}
+			}
+
+			{
+				Pattern pattern2 = Pattern.compile(LINKFORMATPATTERN2);
+				Matcher matcher2 = pattern2.matcher(str);
+				if (matcher2.find()) {
+					matchSet1(matcher2);
+					return;
+				}
+			}
+
+			{
+				Pattern pattern3 = Pattern.compile(LINKFORMATPATTERN3);
+				Matcher matcher3 = pattern3.matcher(str);
+				if (matcher3.find()) {
+					matchSet2(matcher3);
+					return;
+				}
+			}
+
+			{
+				Pattern pattern4 = Pattern.compile(LINKFORMATPATTERN4);
+				Matcher matcher4 = pattern4.matcher(str);
+				if (matcher4.find()) {
+					matchSet2(matcher4);
+					return;
+				}
+			}
+
+			{
+				Pattern pattern5 = Pattern.compile(LINKFORMATPATTERN5);
+				Matcher matcher5 = pattern5.matcher(str);
+				if (matcher5.find()) {
+					matchSet3(matcher5);
+					return;
+				}
+			}
+
+			{
+				Pattern pattern6 = Pattern.compile(LINKFORMATPATTERN6);
+				Matcher matcher6 = pattern6.matcher(str);
+				if (matcher6.find()) {
+					matchSet4(matcher6);
+					return;
+				}
+			}
+			
+			return;
+		}
+		
+		public void matchSet1(Matcher matcher) {
+			urlflag = true;
+			if (matcher.groupCount() >= 1) {
+				alias = matcher.group(1);
+			}
+			if (matcher.groupCount() >= 2) {
+				param = matcher.group(2);
+			}
+		}
+
+		
+		public void matchSet2(Matcher matcher) {
+			urlflag = true;
+			if (matcher.groupCount() >= 1) {
+				param = matcher.group(1);
+			}
+		}
+		
+		public void matchSet3(Matcher matcher) {
+			urlflag = false;
+			if (matcher.groupCount() >= 1) {
+				alias = matcher.group(1);
+			}
+			if (matcher.groupCount() >= 3) {
+				interwiki = matcher.group(3);
+			}
+			if (matcher.groupCount() >= 4) {
+				param = matcher.group(4);
+			}
+		}
+
+		public void matchSet4(Matcher matcher) {
+			urlflag = false;
+			if (matcher.groupCount() >= 1) {
+				interwiki = matcher.group(1);
+			}
+			if (matcher.groupCount() >= 2) {
+				param = matcher.group(2);
+			}
+		}
+
+	}
 
 	/**
 	 * リンクかどうか確認
@@ -69,7 +213,22 @@ public class LinkInline extends ChildOnlyInlineBase {
 	static public class Checker implements WikiObjectInlineI.Checker {
 
 		public int getMatchLength(String str) {
-			return new Util().getRegexMatcherLength(str, LINKFORMATPATTERN);
+			int length = 0;
+			length = new Util().getRegexMatcherLength(str, LINKFORMATPATTERN1);
+			if (length > 0) { return length; }
+			length = new Util().getRegexMatcherLength(str, LINKFORMATPATTERN2);
+			if (length > 0) { return length; }
+			length = new Util().getRegexMatcherLength(str, LINKFORMATPATTERN3);
+			if (length > 0) { return length; }
+			length = new Util().getRegexMatcherLength(str, LINKFORMATPATTERN4);
+			if (length > 0) { return length; }
+			length = new Util().getRegexMatcherLength(str, LINKFORMATPATTERN5);
+			if (length > 0) { return length; }
+			length = new Util().getRegexMatcherLength(str, LINKFORMATPATTERN6);
+			if (length > 0) { return length; }
+
+			
+			return 0;
 		}
 	}
 

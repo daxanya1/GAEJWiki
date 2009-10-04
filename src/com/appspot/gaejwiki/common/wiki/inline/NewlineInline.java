@@ -1,6 +1,6 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
+import com.appspot.gaejwiki.common.wiki.inline.base.OneCharacterInlineBase;
 
 /**
  * WikiObject
@@ -17,8 +17,13 @@ import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
  *
  */
 
-public class NewlineInline extends ChildOnlyInlineBase {
+public class NewlineInline extends OneCharacterInlineBase {
 
+	@Override
+	public String toDebugString() {
+		return "<br />";
+	}
+	
 	/**
 	 * ~‚©‚Ç‚¤‚©Šm”F
 	 */

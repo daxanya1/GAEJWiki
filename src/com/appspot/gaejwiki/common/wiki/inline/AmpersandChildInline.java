@@ -1,6 +1,7 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * WikiObject
@@ -115,8 +116,108 @@ total
  *
  */
 
-public class AmpersandChildInline extends ChildOnlyInlineBase {
+public class AmpersandChildInline implements WikiObjectInlineI  {
 
+	private String rawdata = null;
+	private String ampersandtype = null;
+	private String ampersandparam = null;
+	private WikiObjectInlineI parent = null;
+	
+	@Override
+	public WikiObjectInlineI getParent() {
+		return parent;
+	}
+
+	@Override
+	public void setParent(WikiObjectInlineI wikiobject) {
+		parent = wikiobject;
+	}
+	
+	@Override
+	public void set(String str, WikiObjectInlineFactory factory) {
+		rawdata = str;
+		// 再帰処理を行う
+		new Sub().matchSet(rawdata);
+
+	}
+	
+	@Override
+	public String toDebugString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(ampersandtype);
+		sb.append("|");
+		if (ampersandparam != null) sb.append(ampersandparam);
+		sb.append("|");
+		return sb.toString();
+	}
+	
+	public class Sub {
+		
+		// 正規表現にかけて、必要な情報を取り出す
+		public void matchSet(String str) {
+			Pattern pattern1 = Pattern.compile(AMPERSANDCHILDFORMATPATTERN1);
+			Matcher matcher1 = pattern1.matcher(str);
+			if (matcher1.find()) {
+				matchSet1(matcher1);
+				return;
+			}
+
+			Pattern pattern2 = Pattern.compile(AMPERSANDCHILDFORMATPATTERN2);
+			Matcher matcher2 = pattern2.matcher(str);
+			if (matcher2.find()) {
+				matchSet2("number", matcher2);
+				return;
+			}
+
+			Pattern pattern3 = Pattern.compile(AMPERSANDCHILDFORMATPATTERN3);
+			Matcher matcher3 = pattern3.matcher(str);
+			if (matcher3.find()) {
+				matchSet3(matcher3);
+				return;
+			}
+
+			Pattern pattern4 = Pattern.compile(AMPERSANDCHILDFORMATPATTERN4);
+			Matcher matcher4 = pattern4.matcher(str);
+			if (matcher4.find()) {
+				matchSet4(matcher4);
+				return;
+			}
+			
+			return;
+		}
+		
+		public void matchSet1(Matcher matcher) {
+			if (matcher.groupCount() >= 1) {
+				ampersandtype = matcher.group(1);
+			}
+		}
+		
+		public void matchSet2(String type, Matcher matcher) {
+			ampersandtype = type;
+			if (matcher.groupCount() >= 1) {
+				ampersandparam = matcher.group(1);
+			}
+		}
+		
+		public void matchSet3(Matcher matcher) {
+			if (matcher.groupCount() >= 1) {
+				ampersandtype = matcher.group(1);
+			}
+			if (matcher.groupCount() >= 2) {
+				ampersandparam = matcher.group(2);
+			}
+		}
+		
+		public void matchSet4(Matcher matcher) {
+			if (matcher.groupCount() >= 1) {
+				ampersandtype = matcher.group(1);
+			}
+			if (matcher.groupCount() >= 3) {
+				ampersandparam = matcher.group(3);
+			}
+		}
+	}
+	
 	/**
 	 * &()系かどうか確認
 	 */
@@ -124,7 +225,17 @@ public class AmpersandChildInline extends ChildOnlyInlineBase {
 
 		@Override
 		public int getMatchLength(String str) {
-			return new Util().getRegexMatcherLength(str, AMPERSANDCHILDFORMATPATTERN);
+			int length = 0;
+			length = new Util().getRegexMatcherLength(str, AMPERSANDCHILDFORMATPATTERN1);
+			if (length > 0) { return length; }
+			length = new Util().getRegexMatcherLength(str, AMPERSANDCHILDFORMATPATTERN2);
+			if (length > 0) { return length; }
+			length = new Util().getRegexMatcherLength(str, AMPERSANDCHILDFORMATPATTERN3);
+			if (length > 0) { return length; }
+			length = new Util().getRegexMatcherLength(str, AMPERSANDCHILDFORMATPATTERN4);
+			if (length > 0) { return length; }
+			
+			return 0;
 		}
 	}
 }
