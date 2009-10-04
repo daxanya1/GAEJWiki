@@ -1,6 +1,6 @@
 package com.appspot.gaejwiki.common.wiki.inline.base;
 
-import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineFactory;
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 public abstract class OneCharacterInlineBase implements WikiObjectInlineI {
@@ -9,7 +9,7 @@ public abstract class OneCharacterInlineBase implements WikiObjectInlineI {
 	private String rawdata = null;
 	
 	@Override
-	public void set(String str, WikiObjectInlineFactory factory) {
+	public void set(String str, WikiInlineParser parser) {
 		rawdata = str;
 	}
 

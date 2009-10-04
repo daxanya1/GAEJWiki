@@ -14,7 +14,7 @@ public class WikiObjectInlineFactory {
 	static {
 		blockmap = new HashMap<Character, List<WikiObjectInlineI.Checker>>();
 		blockmap.put(getC(WikiObjectInlineI.AMPERSAND), getL2(new AmpersandChildInline.Checker(), new AmpersandChildParentInline.Checker()));
-		blockmap.put(getC(WikiObjectInlineI.STRONG), getL2(new StrongInline.Checker(), new ItalicInline.Checker()));
+		blockmap.put(getC(WikiObjectInlineI.STRONG), getL2(new ItalicInline.Checker(), new StrongInline.Checker()));
 		blockmap.put(getC(WikiObjectInlineI.ANGLEBRACKET), getL2(new PageInline.Checker(), new LinkInline.Checker()));
 		blockmap.put(getC(WikiObjectInlineI.TILDE), getL(new NewlineInline.Checker()));
 		blockmap.put(getC(WikiObjectInlineI.ROUNDBRACKET), getL(new NoteInline.Checker()));

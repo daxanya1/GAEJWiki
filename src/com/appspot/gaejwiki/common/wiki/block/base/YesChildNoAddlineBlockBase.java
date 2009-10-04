@@ -1,6 +1,11 @@
 package com.appspot.gaejwiki.common.wiki.block.base;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
+import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 
 
@@ -15,14 +20,15 @@ import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
  *
  * --
  */
-public class YesChildNoAddlineBlockBase implements WikiObjectBlockI {
+public abstract class YesChildNoAddlineBlockBase implements WikiObjectBlockI {
 
 	private WikiObjectBlockI parent = null;
-	private String data = new String("");
+	private String rawdata = new String("");
+	private List<WikiObjectInlineI> inlinelist = new ArrayList<WikiObjectInlineI>();
 	
 	@Override
 	public void addLine(String str) {
-		data = str;
+		rawdata = str;
 	}
 	
 	@Override
@@ -70,12 +76,25 @@ public class YesChildNoAddlineBlockBase implements WikiObjectBlockI {
 		parent = wikiobject;
 	}
 
-	protected String getData() {
-		return data;
-	}
 
 	@Override
 	public String toDebugString() {
-		return data + "\n";
+		return rawdata + "\n";
 	}
+	
+	@Override
+	public void paserInline(WikiInlineParser parser) {
+		if (parser == null) {
+			return;
+		}
+		
+		inlinelist.addAll(parser.parseInline(cutData(rawdata)));
+	}
+	
+	/**
+	 * ƒuƒƒbƒN‚Ìæ“ª•”•ª‚ğØ‚é
+	 * @param data
+	 * @return æ“ª•”•ª‚ğØ‚Á‚½•¶š—ñ
+	 */
+	abstract protected String cutData(String data);
 }

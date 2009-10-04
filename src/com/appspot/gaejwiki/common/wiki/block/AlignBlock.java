@@ -19,15 +19,26 @@ LEFT:、CENTER:、RIGHT:は、他のブロック要素を子要素にすることができません。
  */
 public class AlignBlock extends YesChildNoAddlineBlockBase {
 
+	@Override
+	protected String cutData(String data) {
+		return new Sub().cutData(data);
+	}
+	
+	static public class Sub {
+		public String cutData(String data) {
+			if (data == null) {
+				return null;
+			}
+			
+			return (data.charAt(0) == LEFT) ? data.substring(LEFTFORMAT.length(), data.length()) : 
+					(data.charAt(0) == RIGHT) ? data.substring(RIGHTFORMAT.length(), data.length()) :
+					(data.charAt(0) == CENTER) ? data.substring(CENTERFORMAT.length(), data.length()) : null;
+		}
+	}
+	
 	static public class Checker implements WikiObjectBlockI.Checker {
 
-		/**
-		 * 配置ブロックかどうかチェックする
-		 * 配置要素が一文字目であれば、配置ブロックとする
-		 * それ以外は違う
-		 * @param line 一行分の文字列
-		 * @return 配置ブロックであればtrue
-		 */
+		@Override
 		public boolean isThis(String line) {
 			if (line == null || line.length() == 0) {
 				return false;

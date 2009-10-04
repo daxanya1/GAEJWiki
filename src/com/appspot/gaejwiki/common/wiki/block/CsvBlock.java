@@ -24,15 +24,24 @@ import com.appspot.gaejwiki.common.wiki.block.base.YesChildNoAddlineBlockBase;
  */
 public class CsvBlock extends YesChildNoAddlineBlockBase {
 
+	@Override
+	protected String cutData(String data) {
+		return new Sub().cutData(data);
+	}
+	
+	static public class Sub {
+		public String cutData(String data) {
+			if (data == null) {
+				return null;
+			}
+			
+			return data.substring(1, data.length());
+		}
+	}
+
 	static public class Checker implements WikiObjectBlockI.Checker {
 		
-		/**
-		 * CSVどうかチェックする
-		 * CSV要素が一文字目であれば、CSVとする
-		 * それ以外は違う
-		 * @param line 一行分の文字列
-		 * @return CSVであればtrue
-		 */
+		@Override
 		public boolean isThis(String line) {
 			if (line == null || line.length() == 0) {
 				return false;

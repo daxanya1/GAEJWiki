@@ -22,15 +22,24 @@ import com.appspot.gaejwiki.common.wiki.block.base.YesChildNoAddlineBlockBase;
  */
 public class HashBlock extends YesChildNoAddlineBlockBase {
 
+	@Override
+	protected String cutData(String data) {
+		return new Sub().cutData(data);
+	}
+	
+	static public class Sub {
+		public String cutData(String data) {
+			if (data == null) {
+				return null;
+			}
+			
+			return data.substring(1, data.length());
+		}
+	}
+	
 	static public class Checker implements WikiObjectBlockI.Checker {
 		
-		/**
-		 * #Œn‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚·‚é
-		 * #Œn—v‘f‚ªˆê•¶š–Ú‚Å‚ ‚ê‚ÎA#Œn‚Æ‚·‚é
-		 * ‚»‚êˆÈŠO‚Íˆá‚¤
-		 * @param line ˆês•ª‚Ì•¶š—ñ
-		 * @return #Œn‚Å‚ ‚ê‚Îtrue
-		 */
+		@Override
 		public boolean isThis(String line) {
 			if (line == null || line.length() == 0) {
 				return false;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
+import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 
 
@@ -18,10 +20,12 @@ import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
  *
  * --
  */
-public class ListBlockBase implements WikiObjectBlockI {
+public abstract class ListBlockBase implements WikiObjectBlockI {
 
 	private WikiObjectBlockI parent = null;
 	private List<String> rawlist = new ArrayList<String>();
+	private List<WikiObjectInlineI> inlinelist = new ArrayList<WikiObjectInlineI>();
+	
 	private List<WikiObjectBlockI> childlist = new ArrayList<WikiObjectBlockI>();
 	
 	@Override
@@ -98,5 +102,28 @@ public class ListBlockBase implements WikiObjectBlockI {
 		}
 		return sb.toString();
 	}
+
+	@Override
+	public void paserInline(WikiInlineParser parser) {
+		if (parser == null) {
+			return;
+		}
+		
+		List<String> cutlist = cutDataList(rawlist);
+		
+		for (String str : cutlist) {
+			inlinelist.addAll(parser.parseInline(str));
+		}
+		for (WikiObjectBlockI wikiobj : childlist) {
+			wikiobj.paserInline(parser);
+		}
+	}
+	
+	/**
+	 * ブロックの先頭部分を切る
+	 * @param datalist
+	 * @return 先頭部分を切った文字列の配列
+	 */
+	abstract protected List<String> cutDataList(List<String> datalist);
 
 }

@@ -3,7 +3,6 @@ package com.appspot.gaejwiki.common.wiki.inline.base;
 import java.util.List;
 
 import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
-import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineFactory;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 public abstract class ParentableInlineBase implements WikiObjectInlineI {
@@ -23,12 +22,12 @@ public abstract class ParentableInlineBase implements WikiObjectInlineI {
 	}
 	
 	@Override
-	public void set(String str, WikiObjectInlineFactory factory) {
+	public void set(String str, WikiInlineParser parser) {
 		rawdata = str;
 		// Ä‹Aˆ—‚ğs‚¤
 		String line = new Util().matchSet(rawdata, getPattern());
 		if (line != null) {
-			childlist = new WikiInlineParser().parseInline(factory, line);
+			childlist = parser.parseInline(line);
 		}
 	}
 

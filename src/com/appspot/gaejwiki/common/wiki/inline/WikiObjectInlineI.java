@@ -47,7 +47,7 @@ public interface WikiObjectInlineI {
 	 * @param str ’Ç‰Á‚·‚é•¶š
 	 * @param factory TODO
 	 */
-	void set(String str, WikiObjectInlineFactory factory);
+	void set(String str, WikiInlineParser parser);
 	
 	/**
 	 * e‚ğİ’è‚·‚é

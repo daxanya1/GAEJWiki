@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
+import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 
 
@@ -22,6 +24,7 @@ public class SameAddBlockBase implements WikiObjectBlockI {
 
 	private WikiObjectBlockI parent = null;
 	private List<String> rawlist = new ArrayList<String>();
+	private List<WikiObjectInlineI> inlinelist = new ArrayList<WikiObjectInlineI>();
 	
 	@Override
 	public void addLine(String str) {
@@ -85,5 +88,17 @@ public class SameAddBlockBase implements WikiObjectBlockI {
 			sb.append("\n");
 		}
 		return sb.toString();
+	}
+	
+	@Override
+	public void paserInline(WikiInlineParser parser) {
+		if (parser == null) {
+			return;
+		}
+		
+		for (String str : rawlist) {
+			// ここで頭部分のカットが必要
+			inlinelist.addAll(parser.parseInline(str));
+		}
 	}
 }

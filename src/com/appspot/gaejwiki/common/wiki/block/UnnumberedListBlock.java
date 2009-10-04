@@ -1,5 +1,8 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.appspot.gaejwiki.common.wiki.block.base.ListBlockBase;
 
 /**
@@ -19,16 +22,21 @@ import com.appspot.gaejwiki.common.wiki.block.base.ListBlockBase;
  */
 public class UnnumberedListBlock extends ListBlockBase {
 
+	@Override
+	protected List<String> cutDataList(List<String> datalist) {
+		List<String> list = new ArrayList<String>();
+		if (datalist == null) {
+			return list;
+		}
+		
+		
+		
+		return list;
+	}
+	
 	static public class Checker implements WikiObjectBlockI.Checker {
 
-		/**
-		 * 番号なしリストどうかチェックする
-		 * 先に水平線かどうかを調べる
-		 * 水平線でなければ、NUMBEREDLIST要素かUNNUMBERED要素が一文字目であれば、リストとする
-		 * それ以外は違う
-		 * @param line 一行分の文字列
-		 * @return リストであればtrue
-		 */
+		@Override
 		public boolean isThis(String line) {
 			if (line == null || line.length() == 0) {
 				return false;

@@ -1,5 +1,7 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
+
 public interface WikiObjectBlockI {
 
 	public static final char PARAGRAPH = '~';
@@ -92,9 +94,19 @@ public interface WikiObjectBlockI {
 	WikiObjectBlockI getParent();
 	
 	/**
-	 * 自分自身かどうかをチェックする
+	 * ブロック内文字列をパースしてInline配列にする。
+	 * @param parser
 	 */
+	void paserInline(WikiInlineParser parser);
+	
+
 	static interface Checker {
+		
+		/**
+		 * 自分のブロック条件に合っているかどうかをチェックする
+		 * @param line チェック対象文字列
+		 * @return 自分のブロック条件にあっていればtrue
+		 */
 		boolean isThis(String line);
 	}
 }

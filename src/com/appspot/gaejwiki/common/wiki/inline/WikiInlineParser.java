@@ -11,14 +11,28 @@ public class WikiInlineParser {
 
 	private static final Logger logger = Logger.getLogger(WikiInlineParser.class.getName());
 
+	private WikiObjectInlineFactory factory = null;
+	private WikiObjectBlockInfo info = null;
+	
+	public void setWikiObjectInlineFactory(WikiObjectInlineFactory factory) {
+		this.factory = factory;
+	}
+	
+	public void setWikiObjectBlockInfo(WikiObjectBlockInfo info) {
+		this.info = info;
+	}
 	
 	/**
 	 * 文字列リストから、WikiObjectIのリストを作って返す
 	 * @param linelist
 	 * @return
 	 */
-	public List<WikiObjectInlineI> parseInline(WikiObjectInlineFactory factory, String line) {
+	public List<WikiObjectInlineI> parseInline(String line) {
 		List<WikiObjectInlineI> wikilist = new ArrayList<WikiObjectInlineI>();
+		if (factory == null || info == null) {
+			logger.fine("wikiinlineparser factory or info is null");
+			return wikilist;
+		}
 
 		if (line == null || line.length() == 0) {
 			logger.fine("wikiinlineparser line is null");
@@ -56,13 +70,21 @@ public class WikiInlineParser {
 				}
 				
 				// ここでinlineにセットすると同時に、再帰的にinlineの中をパースする
-				inline.set(inlinestr, factory);
+				inline.set(inlinestr, this);
 				wikilist.add(inline);
 			}
 			
 			// 今追加した部分をactivelineからはずして、繰り返す
-			activeline = activeline.substring(length, activeline.length()-length);
+			activeline = activeline.substring(length, activeline.length());
 		}
+		
+		// ここで最後にCharacterに貯まっていたものが残っていたら登録
+		if (charactersb.length() > 0) {
+			CharacterInline charainline = new CharacterInline();
+			charainline.set(charactersb.toString(), null);
+			wikilist.add(charainline);
+		}
+
 		return wikilist;
 	}
 	

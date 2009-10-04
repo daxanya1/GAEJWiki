@@ -134,7 +134,7 @@ public class AmpersandChildInline implements WikiObjectInlineI  {
 	}
 	
 	@Override
-	public void set(String str, WikiObjectInlineFactory factory) {
+	public void set(String str, WikiInlineParser parser) {
 		rawdata = str;
 		// Ä‹Aˆ—‚ğs‚¤
 		new Sub().matchSet(rawdata);

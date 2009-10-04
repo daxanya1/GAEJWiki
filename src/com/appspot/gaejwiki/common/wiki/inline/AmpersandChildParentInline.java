@@ -61,12 +61,12 @@ public class AmpersandChildParentInline implements WikiObjectInlineI {
 	}
 	
 	@Override
-	public void set(String str, WikiObjectInlineFactory factory) {
+	public void set(String str, WikiInlineParser parser) {
 		rawdata = str;
 		// Ä‹Aˆ—‚ğs‚¤
 		String line = new Sub().matchSet(rawdata);
 		if (line != null) {
-			childlist = new WikiInlineParser().parseInline(factory, line);
+			childlist = parser.parseInline(line);
 		}
 	}
 	
