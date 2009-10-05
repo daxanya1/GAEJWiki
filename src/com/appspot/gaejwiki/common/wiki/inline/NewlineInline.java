@@ -20,8 +20,18 @@ import com.appspot.gaejwiki.common.wiki.inline.base.OneCharacterInlineBase;
 public class NewlineInline extends OneCharacterInlineBase {
 
 	@Override
-	public String toDebugString() {
+	public String toHtmlString() {
 		return "<br />";
+	}
+	
+	@Override
+	public String toDebugString() {
+		return toHtmlString();
+	}
+	
+	@Override
+	public String toString() {
+		return "~";
 	}
 	
 	/**

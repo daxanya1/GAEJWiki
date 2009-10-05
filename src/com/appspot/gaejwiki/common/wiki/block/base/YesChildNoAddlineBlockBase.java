@@ -1,11 +1,6 @@
 package com.appspot.gaejwiki.common.wiki.block.base;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
-import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
-import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 
 
@@ -24,7 +19,6 @@ public abstract class YesChildNoAddlineBlockBase implements WikiObjectBlockI {
 
 	private WikiObjectBlockI parent = null;
 	private String rawdata = new String("");
-	private List<WikiObjectInlineI> inlinelist = new ArrayList<WikiObjectInlineI>();
 	
 	@Override
 	public void addLine(String str) {
@@ -82,19 +76,15 @@ public abstract class YesChildNoAddlineBlockBase implements WikiObjectBlockI {
 		return rawdata + "\n";
 	}
 	
-	@Override
-	public void paserInline(WikiInlineParser parser) {
-		if (parser == null) {
-			return;
-		}
-		
-		inlinelist.addAll(parser.parseInline(cutData(rawdata)));
-	}
 	
-	/**
-	 * ブロックの先頭部分を切る
-	 * @param data
-	 * @return 先頭部分を切った文字列
-	 */
-	abstract protected String cutData(String data);
+	@Override
+	public int getLevel() {
+		// level設定はないので、必ず-1を返す
+		return -1;
+	}
+
+	protected String getRawData() {
+		return rawdata;
+	}
+
 }

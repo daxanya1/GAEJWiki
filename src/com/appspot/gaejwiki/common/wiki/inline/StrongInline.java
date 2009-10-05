@@ -19,18 +19,18 @@ import com.appspot.gaejwiki.common.wiki.inline.base.ParentableInlineBase;
 public class StrongInline extends ParentableInlineBase {
 
 	@Override
-	public String toDebugString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("strong");
-		sb.append("|");
-		if (getChildList() != null) {
-			for (WikiObjectInlineI inline : getChildList()) {
-				sb.append("c:/");
-				sb.append(inline.toDebugString());
-				sb.append("/:c");
-			}
-		}
-		return sb.toString();
+	public String getDebugStringHeader() {
+		return "strong";
+	}
+
+	@Override
+	public String toHtmlStringHeader() {
+		return "<strong>";
+	}
+
+	@Override
+	public String toHtmlStringFooter() {
+		return "</strong>";
 	}
 
 	@Override

@@ -71,19 +71,21 @@ public class AmpersandChildParentInline implements WikiObjectInlineI {
 	}
 	
 	@Override
+	public String toString() {
+		return "";
+	}
+	
+	@Override
+	public String toHtmlString() {
+		return "";
+	}
+	
+	@Override
 	public String toDebugString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append(ampersandtype);
 		sb.append("|");
-		sb.append(ampersandparam);
-		sb.append("|");
-		if (childlist != null) {
-			for (WikiObjectInlineI inline : childlist) {
-				sb.append("c:/");
-				sb.append(inline.toDebugString());
-				sb.append("/:c");
-			}
-		}
+		sb.append(new Util().toDebugString(ampersandparam, childlist));
 		return sb.toString();
 	}
 

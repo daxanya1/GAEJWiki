@@ -1,6 +1,9 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
+import com.appspot.gaejwiki.common.wiki.block.AlignBlock.Util;
 import com.appspot.gaejwiki.common.wiki.block.base.YesChildNoAddlineBlockBase;
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
+import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 
 /**
@@ -25,20 +28,19 @@ import com.appspot.gaejwiki.common.wiki.block.base.YesChildNoAddlineBlockBase;
 public class CsvBlock extends YesChildNoAddlineBlockBase {
 
 	@Override
-	protected String cutData(String data) {
-		return new Sub().cutData(data);
+	public String toHtmlString() {
+		return "";
 	}
 	
-	static public class Sub {
-		public String cutData(String data) {
-			if (data == null) {
-				return null;
-			}
-			
-			return data.substring(1, data.length());
+	@Override
+	public void paserInline(WikiInlineParser parser) {
+		if (parser == null) {
+			return;
 		}
+		
+		String rawdata = getRawData();
 	}
-
+	
 	static public class Checker implements WikiObjectBlockI.Checker {
 		
 		@Override
@@ -47,7 +49,6 @@ public class CsvBlock extends YesChildNoAddlineBlockBase {
 				return false;
 			}
 			
-			// CSVóvëfÇ™àÍï∂éöñ⁄Ç≈Ç†ÇÍÇŒÅACSVÇ∆Ç∑ÇÈ
 			return (line.charAt(0) == CSV) ? true : false;
 		}
 	}

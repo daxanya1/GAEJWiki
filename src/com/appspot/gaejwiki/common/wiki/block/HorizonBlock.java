@@ -1,6 +1,8 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
+import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI.Util;
 import com.appspot.gaejwiki.common.wiki.block.base.NoChildParentBlockBase;
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 
 
 
@@ -21,22 +23,32 @@ import com.appspot.gaejwiki.common.wiki.block.base.NoChildParentBlockBase;
  */
 public class HorizonBlock extends NoChildParentBlockBase {
 
+	@Override
+	public String toHtmlString() {
+		return "<hr class=\"full_hr\" />" + new Util().getLineSeparator();
+	}
+	
+	@Override
+	public int getLevel() {
+		return -1;
+	}
+	
 	static public class Checker implements WikiObjectBlockI.Checker {
 		
-		/**
-		 * 水平線かどうかチェックする
-		 * 水平線要素があれば、水平線とする
-		 * それ以外は違う
-		 * @param line 一行分の文字列
-		 * @return 水平線であればtrue
-		 */
+		@Override
 		public boolean isThis(String line) {
-			if (line == null || line.length() < 4) {
+			if (line == null || line.length() < HORIZON.length()) {
 				return false;
 			}
 			
-			// ----だったらtrue
 			return (HORIZON.equals(line.substring(0, HORIZON.length()))) ? true : false;
 		}
 	}
+
+	@Override
+	public void paserInline(WikiInlineParser parser) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

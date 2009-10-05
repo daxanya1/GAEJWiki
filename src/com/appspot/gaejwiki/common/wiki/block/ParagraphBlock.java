@@ -1,6 +1,11 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.appspot.gaejwiki.common.wiki.block.base.SameAddBlockBase;
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
+import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 /**
  * WikiObject
@@ -22,15 +27,44 @@ import com.appspot.gaejwiki.common.wiki.block.base.SameAddBlockBase;
  */
 public class ParagraphBlock extends SameAddBlockBase {
 
+	private List<WikiObjectInlineI> inlinelist = new ArrayList<WikiObjectInlineI>();
+	
+	@Override
+	public String toHtmlString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<p>");
+		for (WikiObjectInlineI inline : inlinelist) {
+			sb.append(inline.toHtmlString());
+		}
+		sb.append("</p>");
+		sb.append(new Util().getLineSeparator());
+		return sb.toString();
+	}
+	
+	@Override
+	public void paserInline(WikiInlineParser parser) {
+		
+		List<String> datalist = getRawlist();
+		if (datalist == null || datalist.size() == 0) {
+			return;
+		}
+
+		StringBuffer sb = new StringBuffer();
+		boolean first = true;
+		for (String line : datalist) {
+			if (!first) { sb.append(new Util().getLineSeparator()); } else { first = false; }
+			sb.append(line);
+		}
+		
+		inlinelist.addAll(parser.parseInline(sb.toString()));
+	}
+
 	
 	static public class Checker implements WikiObjectBlockI.Checker {
 		
-		/**
-		 * パラグラフのblockであるとする。
-		 * @param line　一行分の文字列
-		 * @return 必ずtrue
-		 */
+		@Override
 		public boolean isThis(String line) {
+			// 判定せずにtrueを返す
 			return true;
 		}
 	}

@@ -22,9 +22,8 @@ public abstract class OneCharacterInlineBase implements WikiObjectInlineI {
 	public void setParent(WikiObjectInlineI wikiobject) {
 		parent = wikiobject;
 	}
-
-	@Override
-	public String toDebugString() {
+	
+	protected String getRawData() {
 		return rawdata;
 	}
 

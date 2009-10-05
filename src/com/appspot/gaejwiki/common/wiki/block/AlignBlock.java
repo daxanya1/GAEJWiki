@@ -1,6 +1,11 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
-import com.appspot.gaejwiki.common.wiki.block.base.YesChildNoAddlineBlockBase;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.appspot.gaejwiki.common.wiki.block.base.YesChildAddlineBlockBase;
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
+import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 /**
  * WikiObject
@@ -17,22 +22,64 @@ LEFT:、CENTER:、RIGHT:は、他のブロック要素を子要素にすることができません。
  *
  * --
  */
-public class AlignBlock extends YesChildNoAddlineBlockBase {
+public class AlignBlock extends YesChildAddlineBlockBase {
 
+	private List<WikiObjectInlineI> inlinelist = new ArrayList<WikiObjectInlineI>();
+	private char aligntype;
+	
+	
 	@Override
-	protected String cutData(String data) {
-		return new Sub().cutData(data);
+	public String toHtmlString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<div style=\"text-align:");
+		switch(aligntype) {
+		case LEFT:	
+			sb.append("left");
+			break;
+		case RIGHT:	
+			sb.append("right");
+			break;
+		case CENTER:	
+			sb.append("center");
+			break;
+		default: break;
+		}
+		sb.append("\">");
+		for (WikiObjectInlineI inline : inlinelist) {
+			sb.append(inline.toHtmlString());
+		}
+		sb.append("</div>");
+		sb.append(new Util().getLineSeparator());
+		return sb.toString();
 	}
 	
-	static public class Sub {
-		public String cutData(String data) {
-			if (data == null) {
-				return null;
-			}
-			
-			return (data.charAt(0) == LEFT) ? data.substring(LEFTFORMAT.length(), data.length()) : 
-					(data.charAt(0) == RIGHT) ? data.substring(RIGHTFORMAT.length(), data.length()) :
-					(data.charAt(0) == CENTER) ? data.substring(CENTERFORMAT.length(), data.length()) : null;
+	@Override
+	public void paserInline(WikiInlineParser parser) {
+		if (parser == null) {
+			return;
+		}
+		
+		String rawdata = getRawData();
+		Util util = new Util();
+		aligntype = util.getType(rawdata);
+		inlinelist = parser.parseInline(util.cutFrontChar(rawdata));
+	}
+	
+	public char getAlignType() {
+		return aligntype;
+	}
+	
+	static public class Util extends WikiObjectBlockI.Util {
+		public char getType(String data) {
+			return (data.charAt(0) == LEFT) ? LEFT :
+				(data.charAt(0) == RIGHT) ? RIGHT :
+				(data.charAt(0) == CENTER) ? CENTER : null;
+		}
+		
+		public String cutFrontChar(String data) {
+			return (data.charAt(0) == LEFT) ? cutFrontChar(data, LEFTFORMAT.length()) : 
+				(data.charAt(0) == RIGHT) ? cutFrontChar(data, RIGHTFORMAT.length()) : 
+				(data.charAt(0) == CENTER) ? cutFrontChar(data, CENTERFORMAT.length()) :  null;
 		}
 	}
 	

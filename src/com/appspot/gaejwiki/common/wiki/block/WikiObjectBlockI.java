@@ -1,6 +1,10 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
+import java.util.List;
+
+import com.appspot.gaejwiki.common.text.TextUtils;
 import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
+import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 public interface WikiObjectBlockI {
 
@@ -26,7 +30,10 @@ public interface WikiObjectBlockI {
 	public static final String CENTERFORMAT = "CENTER:";
 	public static final String LEFTFORMAT = "LEFT:";
 	public static final String RIGHTFORMAT = "RIGHT:";
-	
+	public static final String HASHFORMATPATTERN1 = "^#(contents|hr|br|clear|comment|pcomment|article)$";
+	public static final String HASHFORMATPATTERN2 = "^#(ref)\\((.+)\\)$";
+	public static final String HASHFORMATPATTERN3 = "^#(vote)\\((.+)\\)$";
+
 	/**
 	 * 行を追加する。（一行目も含む）
 	 * @param str
@@ -76,10 +83,16 @@ public interface WikiObjectBlockI {
 	boolean isReset();
 	
 	/**
-	 * Wikiフォーマット用の文字列を返す。
+	 * シンプルな（タグのついていない）文字列を返す。
 	 * @return
 	 */
 	String toString();
+	
+	/**
+	 * HTMLフォーマット用の文字列を返す。
+	 * @return
+	 */
+	String toHtmlString();
 	
 	/**
 	 * Debug用文字列を返す。
@@ -99,6 +112,81 @@ public interface WikiObjectBlockI {
 	 */
 	void paserInline(WikiInlineParser parser);
 	
+	/**
+	 * レベルの概念があるブロックについてレベルを返す。
+	 * レベルの概念がないブロックについては-1を返す
+	 * @return レベルを返す。
+	 */
+	int getLevel();
+	
+	
+	static public class Util {
+		
+		/**
+		 * 行の先頭を切って返す
+		 * @param data
+		 * @return
+		 */
+		public String cutFrontChar(String data, int length) {
+			if (data == null) {
+				return null;
+			}
+			
+			return data.substring(length, data.length());
+		}
+		
+		/**
+		 * その文字が先頭から連続でどれだけ含まれているかを返す
+		 * レベルは最大３までなので、３つ以上の場合、３を返す
+		 * @param data 文字列
+		 * @param c チェックする文字
+		 * @return 先頭にcがなければ-1、先頭にcがあれば連続する数を返す
+		 */
+		public int checkLevel(String data, char c) {
+			if (data == null) {
+				return -1;
+			}
+			
+			if (data.length() == 0 || data.charAt(0) != c) {
+				return -1;
+			}
+			
+			int count = 1;
+			for (int i = 1; i < 3; i++) {
+				if (data.charAt(i) != c) {
+					break;
+				}
+				count++;
+			}
+			return count;
+		}
+		
+		/**
+		 * inlineとchildのtoHtmlStringを呼び出して、StringBufferに詰めて返す
+		 * @param inlinelist WikiObjectInlineIのリスト
+		 * @param childlist WikiObjectBlockIのリスト
+		 * @return toHtmlString文字列
+		 */
+		public String toHtmlString(List<WikiObjectInlineI> inlinelist, List<WikiObjectBlockI> childlist) {
+			StringBuffer sb = new StringBuffer();
+			if (inlinelist != null) {
+				for (WikiObjectInlineI inline : inlinelist) {
+					sb.append(inline.toHtmlString());
+				}
+			}
+			if (childlist != null) {
+				for (WikiObjectBlockI wikiobj : childlist) {
+					sb.append(wikiobj.toHtmlString());
+				}
+			}
+			return sb.toString();
+		}
+		
+		public String getLineSeparator() {
+			return TextUtils.getLineSeparator();
+		}
+	}
+
 
 	static interface Checker {
 		

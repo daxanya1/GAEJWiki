@@ -17,20 +17,20 @@ import com.appspot.gaejwiki.common.wiki.inline.base.ParentableInlineBase;
 
 public class ItalicInline extends ParentableInlineBase {
 
-	
+
 	@Override
-	public String toDebugString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("italic");
-		sb.append("|");
-		if (getChildList() != null) {
-			for (WikiObjectInlineI inline : getChildList()) {
-				sb.append("c:/");
-				sb.append(inline.toDebugString());
-				sb.append("/:c");
-			}
-		}
-		return sb.toString();
+	public String getDebugStringHeader() {
+		return "italic";
+	}
+
+	@Override
+	public String toHtmlStringHeader() {
+		return "<em>";
+	}
+
+	@Override
+	public String toHtmlStringFooter() {
+		return "</em>";
 	}
 
 	@Override
@@ -47,4 +47,5 @@ public class ItalicInline extends ParentableInlineBase {
 			return new Util().getRegexMatcherLength(str, ITALICFORMATPATTERN);
 		}
 	}
+
 }

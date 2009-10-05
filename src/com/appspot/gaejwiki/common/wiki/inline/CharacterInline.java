@@ -1,5 +1,6 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
+import com.appspot.gaejwiki.common.text.TextUtils;
 import com.appspot.gaejwiki.common.wiki.inline.base.OneCharacterInlineBase;
 
 /**
@@ -17,6 +18,21 @@ import com.appspot.gaejwiki.common.wiki.inline.base.OneCharacterInlineBase;
 
 public class CharacterInline extends OneCharacterInlineBase {
 
+	@Override
+	public String toHtmlString() {
+		return TextUtils.escapeHtmlString(getRawData());
+	}
+
+	@Override
+	public String toDebugString() {
+		return toString();
+	}
+	
+	@Override
+	public String toString() {
+		return getRawData();
+	}
+	
 	/**
 	 * •¶Žš—ñ‚ð‚P•¶Žš‚Æ‚·‚é
 	 */

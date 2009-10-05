@@ -33,7 +33,7 @@ public class WikiObjectInlineFactoryTest {
 		list.add("[[paFge]]");
 		list.add("[[page]]test");
 		// 15 - 17
-		list.add("%1% % ");
+		list.add("%%1%% %% ");
 		list.add("'' ' ''");
 		list.add("WiWiWWiiiNAAAame2");
 		list.add("[:[paFge]]");

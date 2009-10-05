@@ -138,7 +138,16 @@ public class AmpersandChildInline implements WikiObjectInlineI  {
 		rawdata = str;
 		// Ä‹Aˆ—‚ğs‚¤
 		new Sub().matchSet(rawdata);
-
+	}
+	
+	@Override
+	public String toString() {
+		return "";
+	}
+	
+	@Override
+	public String toHtmlString() {
+		return "";
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
+import com.appspot.gaejwiki.common.wiki.common.WikiDefine;
 import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
 
 /**
@@ -18,16 +19,40 @@ import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
 ページ名は、他のインライン要素の子要素になることができます。
 ページ名は、他のインライン要素を子要素にはできません。
  *
+ *
+ * 内部動作
+ * ページがあるかないかの確認は、inlineのパース時に確認し、ない場合はフラグをセットしておきます。
+ * フラグがセットされている場合、?の文字を付加します。
  */
 
 public class PageInline extends ChildOnlyInlineBase {
 
+	private boolean existpage = false;
+	
+	@Override
+	public String toHtmlString() {
+		StringBuffer sb = new StringBuffer();
+		if (existpage) {
+			sb.append(new Sub().getExistHtmlString(toString()));
+		} else {
+			sb.append(new Sub().getNonExistHtmlString(toString()));
+		}
+		return sb.toString();
+	}
+	
+
+	@Override
+	protected void checkPage(WikiInlineParser parser) {
+		existpage = parser.checkPage(toString());
+		
+	}
+	
 	@Override
 	public String toDebugString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("page");
 		sb.append("|");
-		sb.append(getData());
+		sb.append(toString());
 		return sb.toString();
 	}
 	
@@ -36,13 +61,12 @@ public class PageInline extends ChildOnlyInlineBase {
 		return PAGEFORMATPATTERN;
 	}
 	
-	/**
-	 * ページ名かどうか確認
-	 */
 	static public class Checker implements WikiObjectInlineI.Checker {
 
+		@Override
 		public int getMatchLength(String str) {
 			return new Util().getRegexMatcherLength(str, PAGEFORMATPATTERN);
 		}
 	}
+
 }

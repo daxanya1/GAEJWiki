@@ -18,19 +18,20 @@ import com.appspot.gaejwiki.common.wiki.inline.base.ParentableInlineBase;
 public class StrikeInline extends ParentableInlineBase {
 
 	@Override
-	public String toDebugString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("strike");
-		sb.append("|");
-		if (getChildList() != null) {
-			for (WikiObjectInlineI inline : getChildList()) {
-				sb.append("c:/");
-				sb.append(inline.toDebugString());
-				sb.append("/:c");
-			}
-		}
-		return sb.toString();
+	public String getDebugStringHeader() {
+		return "strike";
 	}
+
+	@Override
+	public String toHtmlStringHeader() {
+		return "<del>";
+	}
+	
+	@Override
+	public String toHtmlStringFooter() {
+		return "</del>";
+	}
+
 
 	@Override
 	public String getPattern() {

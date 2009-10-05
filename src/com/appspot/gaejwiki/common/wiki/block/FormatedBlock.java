@@ -1,6 +1,10 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.appspot.gaejwiki.common.wiki.block.base.SameAddBlockBase;
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 
 /**
  * WikiObject
@@ -16,26 +20,48 @@ import com.appspot.gaejwiki.common.wiki.block.base.SameAddBlockBase;
  * 
  * --
  * 
+ * 
  * @author daxanya
  *
  */
 public class FormatedBlock extends SameAddBlockBase  {
 
+	private List<String> cutlist = new ArrayList<String>();
+	
+	@Override
+	public String toHtmlString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<pre>");
+		for (int i=0; i<cutlist.size()-1;i++) {
+			sb.append(cutlist.get(i));
+			sb.append(new Util().getLineSeparator());
+		}
+		sb.append(cutlist.get(cutlist.size()-1));
+		sb.append("</pre>");
+		sb.append(new Util().getLineSeparator());
+		return sb.toString();
+	}
+	
+	@Override
+	public void paserInline(WikiInlineParser parser) {
+		List<String> datalist = getRawlist();
+		if (datalist == null || datalist.size() == 0) {
+			return;
+		}
+
+		for (int i = 0; i < datalist.size(); i++) {
+			cutlist.add(new Util().cutFrontChar(datalist.get(i), 1));
+		}
+	}
+	
 	static public class Checker implements WikiObjectBlockI.Checker {
 		
-		/**
-		 * 整形済み文字列かどうかチェックする
-		 * FORMATED要素が一文字目であれば、整形済み文字列とする
-		 * それ以外は違う
-		 * @param line 一行分の文字列
-		 * @return 整形済み文字列であればtrue
-		 */
+		@Override
 		public boolean isThis(String line) {
 			if (line == null || line.length() == 0) {
 				return false;
 			}
 			
-			// FORMATED要素が一文字目であれば、整形済み文字列とする
 			return (line.charAt(0) == FORMATED) ? true : false;
 		}
 	}

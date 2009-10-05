@@ -30,11 +30,49 @@ public abstract class ParentableInlineBase implements WikiObjectInlineI {
 			childlist = parser.parseInline(line);
 		}
 	}
+	
+	@Override
+	public String toDebugString() {
+		return new Util().toDebugString(getDebugStringHeader(), getChildList());
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		if (childlist != null) {
+			for (WikiObjectInlineI inline : childlist) {
+				sb.append(inline.toString());
+			}
+		}
+		return sb.toString();
+	}
+	
+	@Override
+	public String toHtmlString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(toHtmlStringHeader());
+		for (WikiObjectInlineI inline : getChildList()) {
+			sb.append(inline.toHtmlString());
+		}
+		sb.append(toHtmlStringFooter());
+		return sb.toString();
+	}
 
 	public List<WikiObjectInlineI> getChildList() {
 		return childlist;
 	}
+	
+	protected String getRawData() {
+		return rawdata;
+	}
 
-	public abstract String getPattern();
+	abstract public String getPattern();
 
+	abstract public String getDebugStringHeader();
+	
+	abstract public String toHtmlStringHeader();
+	
+	abstract public String toHtmlStringFooter();
+	
+	
 }

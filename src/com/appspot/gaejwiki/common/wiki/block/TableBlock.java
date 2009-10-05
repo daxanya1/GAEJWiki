@@ -1,6 +1,11 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.appspot.gaejwiki.common.wiki.block.base.SameAddBlockBase;
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
+import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 /**
  * WikiObject
@@ -43,22 +48,36 @@ SIZE(サイズ):
  */
 public class TableBlock extends SameAddBlockBase {
 
+	private List<List<WikiObjectInlineI>> inlinelistlist = new ArrayList<List<WikiObjectInlineI>>();
+	
+
+	@Override
+	public String toHtmlString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public void paserInline(WikiInlineParser parser) {
+		
+		List<String> datalist = getRawlist();
+		if (datalist == null || datalist.size() == 0) {
+			return;
+		}
+
+		// セルを区切って、その後それぞれをパースする必要がある。
+	}
+	
 	static public class Checker implements WikiObjectBlockI.Checker {
 
-		/**
-		 * Tableかどうかチェックする
-		 * TABLE要素が一文字目であれば、Tableとする
-		 * それ以外は違う
-		 * @param line 一行分の文字列
-		 * @return Tableであればtrue
-		 */
+		@Override
 		public boolean isThis(String line) {
 			if (line == null || line.length() == 0) {
 				return false;
 			}
 			
-			// TABLE要素が一文字目であれば、Tableとする
 			return (line.charAt(0) == TABLE) ? true : false;
 		}
 	}
+
 }

@@ -69,9 +69,22 @@ public class WikiObjectBlockFactoryTest {
 		assertEquals(blocklist.get(count++).getClass().getName(), HorizonBlock.class.getName());
 		assertEquals(blocklist.get(count++).getClass().getName(), AlignBlock.class.getName());
 		assertEquals(blocklist.get(count++).getClass().getName(), AlignBlock.class.getName());
-		// 35-38
+		// 35-39
 		assertEquals(blocklist.get(count++).getClass().getName(), AlignBlock.class.getName());
 		assertEquals(blocklist.get(count++).getClass().getName(), AlignBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), ParagraphBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), ParagraphBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), ParagraphBlock.class.getName());
+		// 40-44
+		assertEquals(blocklist.get(count++).getClass().getName(), HashBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), HashBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), HashBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), HashBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), HashBlock.class.getName());
+		// 45-49
+		assertEquals(blocklist.get(count++).getClass().getName(), HashBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), HashBlock.class.getName());
+		assertEquals(blocklist.get(count++).getClass().getName(), HashBlock.class.getName());
 		assertEquals(blocklist.get(count++).getClass().getName(), ParagraphBlock.class.getName());
 		assertEquals(blocklist.get(count++).getClass().getName(), ParagraphBlock.class.getName());
 	}

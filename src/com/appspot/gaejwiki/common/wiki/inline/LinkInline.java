@@ -89,6 +89,16 @@ public class LinkInline  implements WikiObjectInlineI {
 	}
 	
 	@Override
+	public String toString() {
+		return "";
+	}
+	
+	@Override
+	public String toHtmlString() {
+		return "";
+	}
+	
+	@Override
 	public String toDebugString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append(new Boolean(urlflag).toString());

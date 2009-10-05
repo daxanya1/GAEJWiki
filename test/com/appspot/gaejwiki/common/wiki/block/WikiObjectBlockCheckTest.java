@@ -49,7 +49,7 @@ public class WikiObjectBlockCheckTest {
 		list.add("--リスト2");
 		list.add("---リスト3");
 		list.add("//コメント");
-		list.add("#コンテンツ");
+		list.add("#contents");
 		// 20 - 24
 		list.add(":定義");
 		list.add("|Table");
@@ -68,11 +68,24 @@ public class WikiObjectBlockCheckTest {
 		list.add("-----");
 		list.add("CENTER:t");
 		list.add("LEFT:tt");
-		// 35 - 38
+		// 35 - 39
 		list.add("LEFT::");
 		list.add("RIGHT:tt");
 		list.add("RiGHT:tt");
 		list.add("CENTER");
+		list.add("#contentst");
+		// 40 - 44
+		list.add("#br");
+		list.add("#hr");
+		list.add("#ref(1,2)");
+		list.add("#vote(1,2,3)");
+		list.add("#article");
+		// 45 - 49
+		list.add("#clear");
+		list.add("#comment");
+		list.add("#pcomment");
+		list.add("#ref");
+		list.add("#vote");
 		
 		return list;
 	}
@@ -264,7 +277,7 @@ public class WikiObjectBlockCheckTest {
 		}
 		
 		for (int i = 0; i<blist.size(); i++) {
-			if (i == 19) {
+			if (i == 19 || (i >= 40 && i <= 47)) {
 				assertTrue(blist.get(i).booleanValue());
 			} else {
 				assertFalse("" + i, blist.get(i).booleanValue());

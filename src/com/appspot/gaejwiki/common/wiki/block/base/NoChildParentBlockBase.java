@@ -1,11 +1,6 @@
 package com.appspot.gaejwiki.common.wiki.block.base;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
-import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
-import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 
 
@@ -20,10 +15,9 @@ import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
  *
  * --
  */
-public class NoChildParentBlockBase implements WikiObjectBlockI {
+public abstract class NoChildParentBlockBase implements WikiObjectBlockI {
 
 	private String data = new String("");
-	private List<WikiObjectInlineI> inlinelist = new ArrayList<WikiObjectInlineI>();
 	
 	@Override
 	public void addLine(String str) {
@@ -84,15 +78,5 @@ public class NoChildParentBlockBase implements WikiObjectBlockI {
 	public String toDebugString() {
 		return data + "\n";
 	}
-	
-	@Override
-	public void paserInline(WikiInlineParser parser) {
-		if (parser == null) {
-			return;
-		}
-		
-		// ここで頭部分のカットが必要
-		inlinelist.addAll(parser.parseInline(data));
 
-	}
 }

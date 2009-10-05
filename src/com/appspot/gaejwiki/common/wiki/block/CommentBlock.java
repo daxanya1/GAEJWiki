@@ -1,6 +1,7 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
 import com.appspot.gaejwiki.common.wiki.block.base.NoChildParentBlockBase;
+import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 
 
 /**
@@ -21,22 +22,36 @@ import com.appspot.gaejwiki.common.wiki.block.base.NoChildParentBlockBase;
  */
 public class CommentBlock extends NoChildParentBlockBase {
 
-	/**
-	 * コメント行かどうか確認
-	 * @param line
-	 * @return コメント行ならtrue
-	 */
+	
+	@Override
+	public String toHtmlString() {
+		// パース対象とならない
+		assert(false);
+		return null;
+	}
+	
+	@Override
+	public void paserInline(WikiInlineParser parser) {
+		// なにもしない
+	}
+	
+	@Override
+	public int getLevel() {
+		return -1;
+	}
+	
 	static public class Checker implements WikiObjectBlockI.Checker {
 		
+		@Override
 		public boolean isThis(String line) {
-			// ２文字以下ならコメントではない
-			if (line == null || line.length() < 2) {
+			// COMMENT.length()以下ならコメントではない
+			if (line == null || line.length() < COMMENT.length()) {
 				return false;
 			}
 			
-			// ２文字目まで調べて、//だったらtrue
-			String checkstr = line.substring(0, 2);
+			String checkstr = line.substring(0, COMMENT.length());
 			return (COMMENT.equals(checkstr)) ? true : false;
 		}
 	}
+
 }

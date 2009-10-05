@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.appspot.gaejwiki.common.wiki.block.HeadlineBlock;
+import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI.Util;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineFactory.WikiObjectInlineIPair;
 
 
@@ -13,6 +15,8 @@ public class WikiInlineParser {
 
 	private WikiObjectInlineFactory factory = null;
 	private WikiObjectBlockInfo info = null;
+	private List<NoteInline> notelist = new ArrayList<NoteInline>();
+	private List<HeadlineBlock> contentslist = new ArrayList<HeadlineBlock>();
 	
 	public void setWikiObjectInlineFactory(WikiObjectInlineFactory factory) {
 		this.factory = factory;
@@ -86,6 +90,59 @@ public class WikiInlineParser {
 		}
 
 		return wikilist;
+	}
+
+	/**
+	 * note情報については、parse時にnoteを登録しておき、note番号を返す
+	 * html生成時にnote情報として使う
+	 * @param noteInline
+	 * @return note番号(1はじまり)
+	 */
+	public int addNote(NoteInline note) {
+		notelist.add(note);
+		return notelist.size();
+	}
+
+	/**
+	 * note情報を返す
+	 * @return note情報のHtmlフォーマット
+	 */
+	public String toNoteHtmlString() {
+		if (notelist == null || notelist.size() == 0) {
+			return "";
+		}
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("<div id=\"note\">");
+		sb.append("<hr class=\"note_hr\" />");
+		boolean first = true;
+		for (NoteInline note : notelist) {
+			if (!first) { sb.append(new Util().getLineSeparator()); } else { first = false; }
+			sb.append(note.toNoteHtmlString());
+		}
+		sb.append("</div>");
+		return sb.toString();
+	}
+
+	/**
+	 * Headline(contents)を格納してidを返す
+	 * @param headlineblock
+	 * @return contents番号(0はじまり)
+	 */
+	public int addHeadline(HeadlineBlock headlineblock) {
+		contentslist.add(headlineblock);
+		// 返すIDは0はじまりにする。
+		return contentslist.size() - 1;
+	}
+
+	/**
+	 * ページ名が存在していればtrueを返す
+	 * @param pagename
+	 * @return ページ名が存在していればtrue
+	 */
+	public boolean checkPage(String pagename) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

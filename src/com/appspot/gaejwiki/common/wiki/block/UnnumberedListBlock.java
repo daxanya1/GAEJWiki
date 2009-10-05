@@ -1,6 +1,5 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.appspot.gaejwiki.common.wiki.block.base.ListBlockBase;
@@ -23,15 +22,20 @@ import com.appspot.gaejwiki.common.wiki.block.base.ListBlockBase;
 public class UnnumberedListBlock extends ListBlockBase {
 
 	@Override
-	protected List<String> cutDataList(List<String> datalist) {
-		List<String> list = new ArrayList<String>();
-		if (datalist == null) {
-			return list;
-		}
-		
-		
-		
-		return list;
+	protected String toHtmlStringFooter() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected String toHtmlStringHeader() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	protected String cutBlockChar(List<String> datalist) {
+		return new Util().cutBlockCharListBlockBase(this, datalist, UNNUMBEREDLIST);
 	}
 	
 	static public class Checker implements WikiObjectBlockI.Checker {
@@ -47,8 +51,8 @@ public class UnnumberedListBlock extends ListBlockBase {
 				return false;
 			}
 			
-			// NUMBEREDLIST要素かUNNUMBEREDLIST要素が一文字目であれば、リストとする
 			return (line.charAt(0) == UNNUMBEREDLIST) ? true : false;
 		}
 	}
+
 }

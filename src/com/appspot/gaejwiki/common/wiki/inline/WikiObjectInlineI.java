@@ -1,7 +1,10 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.appspot.gaejwiki.common.text.TextUtils;
 
 
 public interface WikiObjectInlineI {
@@ -15,7 +18,7 @@ public interface WikiObjectInlineI {
 	
 	public static final String WIKINAMEFORMATPATTERN = "^([A-Z]+[a-z]+[A-Z]+[a-z]+)";
 	public static final String NOTEFORMATPATTERN = "^\\(\\((.+)\\)\\)";
-	public static final String STRIKEFORMATPATTERN = "^%(.+)%";
+	public static final String STRIKEFORMATPATTERN = "^%%(.+)%%";
 	public static final String STRONGFORMATPATTERN = "^''(.+)''";
 	public static final String ITALICFORMATPATTERN = "^'''(.+)'''";
 	
@@ -56,10 +59,16 @@ public interface WikiObjectInlineI {
 	void setParent(WikiObjectInlineI wikiobject);
 	
 	/**
-	 * Wikiフォーマット用の文字列を返す。
+	 * シンプルな（タグのついていない）文字列を返す。
 	 * @return
 	 */
 	String toString();
+	
+	/**
+	 * HTMLフォーマット用の文字列を返す。
+	 * @return
+	 */
+	String toHtmlString();
 	
 	/**
 	 * Debug用文字列を返す。
@@ -89,6 +98,24 @@ public interface WikiObjectInlineI {
 			}
 			
 			return null;
+		}
+		
+		public String toDebugString(String name, List<WikiObjectInlineI> childlist) {
+			StringBuffer sb = new StringBuffer();
+			sb.append(name);
+			sb.append("|");
+			if (childlist != null) {
+				for (WikiObjectInlineI inline : childlist) {
+					sb.append("c:/");
+					sb.append(inline.toDebugString());
+					sb.append("/:c");
+				}
+			}
+			return sb.toString();			
+		}
+		
+		public String getLineSeparator() {
+			return TextUtils.getLineSeparator();
 		}
 	}
 	
@@ -124,4 +151,5 @@ public interface WikiObjectInlineI {
 			}
 		}
 	}
+
 }

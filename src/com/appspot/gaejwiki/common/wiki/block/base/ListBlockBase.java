@@ -25,6 +25,7 @@ public abstract class ListBlockBase implements WikiObjectBlockI {
 	private WikiObjectBlockI parent = null;
 	private List<String> rawlist = new ArrayList<String>();
 	private List<WikiObjectInlineI> inlinelist = new ArrayList<WikiObjectInlineI>();
+	private int level;
 	
 	private List<WikiObjectBlockI> childlist = new ArrayList<WikiObjectBlockI>();
 	
@@ -109,14 +110,29 @@ public abstract class ListBlockBase implements WikiObjectBlockI {
 			return;
 		}
 		
-		List<String> cutlist = cutDataList(rawlist);
+		inlinelist.addAll(parser.parseInline(cutBlockChar(rawlist)));
 		
-		for (String str : cutlist) {
-			inlinelist.addAll(parser.parseInline(str));
-		}
 		for (WikiObjectBlockI wikiobj : childlist) {
 			wikiobj.paserInline(parser);
 		}
+	}
+	
+	@Override
+	public int getLevel() {
+		return level;
+	}
+	
+	@Override
+	public String toHtmlString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(toHtmlStringHeader());
+		sb.append(new Util().toHtmlString(inlinelist, childlist));
+		sb.append(toHtmlStringFooter());
+		return sb.toString();
+	}
+	
+	protected void setLevel(int level) {
+		this.level = level;
 	}
 	
 	/**
@@ -124,6 +140,46 @@ public abstract class ListBlockBase implements WikiObjectBlockI {
 	 * @param datalist
 	 * @return 先頭部分を切った文字列の配列
 	 */
-	abstract protected List<String> cutDataList(List<String> datalist);
+	abstract protected String cutBlockChar(List<String> datalist);
+	
+	/**
+	 * HtmlStringのヘッダを返す
+	 * @return
+	 */
+	abstract protected String toHtmlStringHeader();
+	
+	/**
+	 * HtmlStringのフッタを返す
+	 * @return
+	 */
+	abstract protected String toHtmlStringFooter();
 
+
+	public static class Util extends WikiObjectBlockI.Util {
+		
+		/**
+		 * datalistからブロック文字を取り除いて、レベルを設定して、文字列にして返す
+		 * @param block ListBlockBaseのObject
+		 * @param datalist 文字列リスト
+		 * @param blockchar Blockのカットするべき文字
+		 * @return datalistから生成される文字列
+		 */
+		public String cutBlockCharListBlockBase(ListBlockBase block, List<String> datalist, char blockchar) {
+			if (datalist == null || datalist.size() == 0) {
+				return null;
+			}
+
+			// listの最初だけブロックで、以下の行は通常行なので削らない
+			StringBuffer sb = new StringBuffer();
+			String datalistfirststr = datalist.get(0);
+			block.setLevel(checkLevel(datalistfirststr, blockchar));
+			sb.append(cutFrontChar(datalistfirststr, block.getLevel()));
+			
+			for (int i = 1; i < datalist.size(); i++) {
+				sb.append(datalist.get(i));
+			}
+			
+			return sb.toString();
+		}
+	}
 }

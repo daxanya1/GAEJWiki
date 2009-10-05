@@ -116,8 +116,8 @@ public class WikiBlockParserTest {
 		list.add("< test6");
 		list.add("test7");
 		list.add("test8");
-		list.add("#test9");
-		list.add("#test10");
+		list.add("#hr");
+		list.add("#br");
 		
 		return list;
 	}
@@ -134,7 +134,7 @@ public class WikiBlockParserTest {
 		assertEquals(((WikiObjectBlockI)wikilist.get(0)).toDebugString(), "test1\n");
 		assertEquals(((WikiObjectBlockI)wikilist.get(1)).toDebugString(), ">test2\n/c: test3\n test4\n:c/");
 		assertEquals(((WikiObjectBlockI)wikilist.get(2)).toDebugString(), "*test5\n");
-		assertEquals(((WikiObjectBlockI)wikilist.get(3)).toDebugString(), "< test6\ntest7\ntest8\n/c:#test9\n:c//c:#test10\n:c/");
+		assertEquals(((WikiObjectBlockI)wikilist.get(3)).toDebugString(), "< test6\ntest7\ntest8\n/c:#hr\n:c//c:#br\n:c/");
 	}
 	
 	public List<String> prepareWikiTestList6() {
@@ -147,9 +147,9 @@ public class WikiBlockParserTest {
 		list.add(" test6");
 		list.add("test7");
 		list.add("test8");
-		list.add("#test9");
+		list.add("#br");
 		list.add("//test");
-		list.add("#test10");
+		list.add("#hr");
 		
 		return list;
 	}
@@ -168,8 +168,8 @@ public class WikiBlockParserTest {
 		assertEquals(((WikiObjectBlockI)wikilist.get(2)).toDebugString(), "*test5\n");
 		assertEquals(((WikiObjectBlockI)wikilist.get(3)).toDebugString(), " test6\n");
 		assertEquals(((WikiObjectBlockI)wikilist.get(4)).toDebugString(), "test7\ntest8\n");
-		assertEquals(((WikiObjectBlockI)wikilist.get(5)).toDebugString(), "#test9\n");
-		assertEquals(((WikiObjectBlockI)wikilist.get(6)).toDebugString(), "#test10\n");
+		assertEquals(((WikiObjectBlockI)wikilist.get(5)).toDebugString(), "#br\n");
+		assertEquals(((WikiObjectBlockI)wikilist.get(6)).toDebugString(), "#hr\n");
 	}
 	
 	

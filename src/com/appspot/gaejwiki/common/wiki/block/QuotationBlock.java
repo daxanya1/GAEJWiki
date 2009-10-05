@@ -1,6 +1,5 @@
 package com.appspot.gaejwiki.common.wiki.block;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.appspot.gaejwiki.common.wiki.block.base.ListBlockBase;
@@ -25,16 +24,41 @@ import com.appspot.gaejwiki.common.wiki.block.base.ListBlockBase;
  */
 public class QuotationBlock extends ListBlockBase{
 
+	/* QUOTATION:true UNQUOTATION:false */
+	private boolean quoteunquote = false;
+	
 	@Override
-	protected List<String> cutDataList(List<String> datalist) {
-		List<String> list = new ArrayList<String>();
-		if (datalist == null) {
-			return list;
+	protected String toHtmlStringFooter() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected String toHtmlStringHeader() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected String cutBlockChar(List<String> datalist) {
+		if (datalist == null || datalist.size() == 0) {
+			return null;
 		}
-		
-		
-		
-		return list;
+		if (datalist.get(0).charAt(0) == QUOTATION) {
+			quoteunquote = true;
+			return new Util().cutBlockCharListBlockBase(this, datalist, QUOTATION);
+		} else {
+			quoteunquote = false;
+			return new Util().cutBlockCharListBlockBase(this, datalist, UNQUOTATION);
+		}
+	}
+	
+	/**
+	 * QUOTATIONかUNQUOTATIONかを返す
+	 * @return QUOTATION:true UNQUOTATION:false
+	 */
+	public boolean isQuote() {
+		return quoteunquote;
 	}
 	
 	static public class Checker implements WikiObjectBlockI.Checker {
@@ -45,7 +69,6 @@ public class QuotationBlock extends ListBlockBase{
 				return false;
 			}
 			
-			// QUOTATION要素かUNQUOTATION要素が一文字目であれば、引用とする
 			return (line.charAt(0) == QUOTATION || line.charAt(0) == UNQUOTATION) ? true : false;
 		}
 	}

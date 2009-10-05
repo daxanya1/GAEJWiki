@@ -1,16 +1,12 @@
 package com.appspot.gaejwiki.common.wiki.block.base;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
-import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI.Util;
 
 
 
 /**
  * WikiObject
- * 同系統のブロックが連続していれば、行追加できる
+ * 子供にはなれるし行追加ができる
  * @author daxanya
  * 
  * --
@@ -19,14 +15,17 @@ import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI.Util;
  *
  * --
  */
-public abstract class SameAddBlockBase implements WikiObjectBlockI {
+public abstract class YesChildAddlineBlockBase implements WikiObjectBlockI {
 
 	private WikiObjectBlockI parent = null;
-	private List<String> rawlist = new ArrayList<String>();
+	private StringBuffer rawdata = new StringBuffer();
 	
 	@Override
 	public void addLine(String str) {
-		rawlist.add(str);
+		if (rawdata.length() > 0) {
+			rawdata.append(new Util().getLineSeparator());
+		}
+		rawdata.append(str);
 	}
 	
 	@Override
@@ -41,7 +40,7 @@ public abstract class SameAddBlockBase implements WikiObjectBlockI {
 	
 	@Override
 	public boolean isSameBlockAddLine() {
-		return true;
+		return false;
 	}
 	
 	@Override
@@ -53,7 +52,7 @@ public abstract class SameAddBlockBase implements WikiObjectBlockI {
 	public boolean isReset() {
 		return false;
 	}
-
+	
 	@Override
 	public String toString() {
 		return null;
@@ -73,25 +72,22 @@ public abstract class SameAddBlockBase implements WikiObjectBlockI {
 	public void setParent(WikiObjectBlockI wikiobject) {
 		parent = wikiobject;
 	}
-	
-	protected List<String> getRawlist() {
-		return rawlist;
-	}
+
 
 	@Override
 	public String toDebugString() {
-		StringBuffer sb = new StringBuffer();
-		for (String str : rawlist) {
-			sb.append(str);
-			sb.append(new Util().getLineSeparator());
-		}
-		return sb.toString();
+		return rawdata + "\n";
 	}
+	
 	
 	@Override
 	public int getLevel() {
 		// level設定はないので、必ず-1を返す
 		return -1;
+	}
+
+	protected String getRawData() {
+		return rawdata.toString();
 	}
 
 }
