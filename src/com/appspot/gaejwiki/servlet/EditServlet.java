@@ -1,4 +1,4 @@
-package com.appspot.gaejwiki;
+package com.appspot.gaejwiki.servlet;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,7 +15,7 @@ import com.appspot.gaejwiki.common.xml.PtParam;
 import com.appspot.gaejwiki.common.xml.PtXmlParser;
 
 @SuppressWarnings("serial")
-public class GAEJWikiServlet extends HttpServlet {
+public class EditServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 		
 		String templatepath = new String("template/index.pt");
@@ -45,6 +45,6 @@ public class GAEJWikiServlet extends HttpServlet {
 		}
 	        
 		resp.setContentType("text/plain");
-		resp.getWriter().println("Hello, world");
+		resp.getWriter().println("Hello, world edit");
 	}
 }

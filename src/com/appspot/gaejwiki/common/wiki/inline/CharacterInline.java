@@ -20,7 +20,7 @@ public class CharacterInline extends OneCharacterInlineBase {
 
 	@Override
 	public String toHtmlString() {
-		return TextUtils.escapeHtmlString(getRawData());
+		return new TextUtils().escapeHtmlString(getRawData());
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.List;
 import com.appspot.gaejwiki.common.text.TextUtils;
 import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
+import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
 public interface WikiObjectBlockI {
 
@@ -183,7 +184,7 @@ public interface WikiObjectBlockI {
 		}
 		
 		public String getLineSeparator() {
-			return TextUtils.getLineSeparator();
+			return DomainParameter.getDomainParameter().getLineSeparator();
 		}
 	}
 

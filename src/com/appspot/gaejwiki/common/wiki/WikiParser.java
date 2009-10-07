@@ -2,13 +2,13 @@ package com.appspot.gaejwiki.common.wiki;
 
 import java.util.List;
 
-import com.appspot.gaejwiki.common.text.TextUtils;
 import com.appspot.gaejwiki.common.wiki.block.WikiBlockParser;
 import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockFactory;
 import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
 import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectBlockInfo;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineFactory;
+import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
 public class WikiParser {
 
@@ -21,7 +21,7 @@ public class WikiParser {
 			return null;
 		}
 		
-		String[] strlist = str.split(TextUtils.getLineSeparator());
+		String[] strlist = str.split(DomainParameter.getDomainParameter().getLineSeparator());
 		List<String> linelist = java.util.Arrays.asList(strlist);
 		
 		WikiObjectBlockFactory blockfactory = new WikiObjectBlockFactory();

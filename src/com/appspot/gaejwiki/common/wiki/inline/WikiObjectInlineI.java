@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.appspot.gaejwiki.common.text.TextUtils;
+import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
 
 public interface WikiObjectInlineI {
@@ -115,7 +116,7 @@ public interface WikiObjectInlineI {
 		}
 		
 		public String getLineSeparator() {
-			return TextUtils.getLineSeparator();
+			return DomainParameter.getDomainParameter().getLineSeparator();
 		}
 	}
 	

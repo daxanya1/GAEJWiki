@@ -3,12 +3,11 @@ package com.appspot.gaejwiki.common.wiki.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.appspot.gaejwiki.common.wiki.block.AlignBlock.Util;
 import com.appspot.gaejwiki.common.wiki.block.base.NoChildParentBlockBase;
-import com.appspot.gaejwiki.common.wiki.common.WikiDefine;
 import com.appspot.gaejwiki.common.wiki.inline.NewlineInline;
 import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
+import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
 
 
@@ -71,6 +70,7 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 			StringBuffer sb = new StringBuffer();
 			
 			String idstr = new Integer(contentsid).toString();
+			DomainParameter domainparam = DomainParameter.getDomainParameter();
 			
 			// level1Ç™h2ÅAlevel2Ç™h3ÅAlevel3Ç™h4Ç∆Ç»ÇÈÇΩÇﬂÅA1ë´Ç∑
 			String levelstr = new Integer(level + 1).toString();
@@ -84,7 +84,7 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 				}
 			}
 			sb.append("  <a class=\"anchor_super\" id=\"id" + idstr + "\" ");
-			sb.append("href=\"" + WikiDefine.INDEXPATH + "?ref#id" + idstr + "\" title=\"id" + idstr + "\">&dagger;</a></h" + levelstr + ">");
+			sb.append("href=\"" + domainparam.get(DomainParameter.VIEWURL) + "?ref#id" + idstr + "\" title=\"id" + idstr + "\">&dagger;</a></h" + levelstr + ">");
 			sb.append(new Util().getLineSeparator());
 			return sb.toString();
 		}

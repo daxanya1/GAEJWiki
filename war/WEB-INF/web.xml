@@ -5,16 +5,32 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
-		<servlet-name>GAEJWiki</servlet-name>
-		<servlet-class>com.appspot.gaejwiki.GAEJWikiServlet</servlet-class>
+		<servlet-name>READ</servlet-name>
+		<servlet-class>com.appspot.gaejwiki.servlet.ReadServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>EDIT</servlet-name>
+		<servlet-class>com.appspot.gaejwiki.servlet.EditServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>GAEJWiki</servlet-name>
-		<url-pattern>/index/*</url-pattern>
+		<servlet-name>EDIT</servlet-name>
+		<url-pattern>/edit/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>GAEJWiki</servlet-name>
-		<url-pattern>/index</url-pattern>
+		<servlet-name>EDIT</servlet-name>
+		<url-pattern>/edit*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>READ</servlet-name>
+		<url-pattern>/view/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>READ</servlet-name>
+		<url-pattern>/view*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>READ</servlet-name>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

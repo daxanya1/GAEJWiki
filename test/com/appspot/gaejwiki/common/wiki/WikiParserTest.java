@@ -1,8 +1,11 @@
 package com.appspot.gaejwiki.common.wiki;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.Before;
+
+import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
 
 public class WikiParserTest {
@@ -10,6 +13,17 @@ public class WikiParserTest {
 	public WikiParser getTestWikiParser() {
 		return new WikiParser() {
 		};
+	}
+	
+	@Before
+	public void initDomainParameter() {
+		DomainParameter domainparam = DomainParameter.getDomainParameter();
+		domainparam.putUnitTestOnly(DomainParameter.DOMAINURL, "gaejwiki.appspot.com");
+		domainparam.putUnitTestOnly(DomainParameter.VIEWURL, "/view");
+		domainparam.putUnitTestOnly(DomainParameter.VIEWTEMPLATE, "/template/view.pt");
+		domainparam.putUnitTestOnly(DomainParameter.EDITURL, "/edit");
+		domainparam.putUnitTestOnly(DomainParameter.EDITTEMPLATE, "/template/edit.pt");
+		domainparam.putUnitTestOnly(DomainParameter.LINESEPARATOR, "\n");
 	}
 	
 	@Test
@@ -60,7 +74,7 @@ public class WikiParserTest {
 		// inline:•¶Žš,Page
 		
 		String str = "test1\n*test2%%test3%%[[test4]]&br~\ntest5\n*test6\ntest7\n**test8\ntest9\n***test10\ntest11\n#br\ntest12[[test13]]";
-		String resultstr = "<p>test1</p>\n<h2 id=\"content_1_0\">test2<del>test3</del><span class=\"noexists\">test4<a href=\"index.php?cmd=edit&amp;page=test4&amp;refer=ref\">?</a></span>&amp;br~  <a class=\"anchor_super\" id=\"id0\" href=\"index.php?ref#id0\" title=\"id0\">&dagger;</a></h2>\n<p>test5</p>\n<div class=\"jumpmenu\"><a href=\"#navigator\">&uarr;</a></div><h2 id=\"content_1_1\">test6  <a class=\"anchor_super\" id=\"id1\" href=\"index.php?ref#id1\" title=\"id1\">&dagger;</a></h2>\n<p>test7</p>\n<div class=\"jumpmenu\"><a href=\"#navigator\">&uarr;</a></div><h3 id=\"content_1_2\">test8  <a class=\"anchor_super\" id=\"id2\" href=\"index.php?ref#id2\" title=\"id2\">&dagger;</a></h3>\n<p>test9</p>\n<div class=\"jumpmenu\"><a href=\"#navigator\">&uarr;</a></div><h4 id=\"content_1_3\">test10  <a class=\"anchor_super\" id=\"id3\" href=\"index.php?ref#id3\" title=\"id3\">&dagger;</a></h4>\n<p>test11</p>\n<div class=\"spacer\">&nbsp;</div>\n<p>test12<span class=\"noexists\">test13<a href=\"index.php?cmd=edit&amp;page=test13&amp;refer=ref\">?</a></span></p>\n";
+		String resultstr = "<p>test1</p>\n<h2 id=\"content_1_0\">test2<del>test3</del><span class=\"noexists\">test4<a href=\"/edit?page=test4&amp;refer=ref\">?</a></span>&amp;br~  <a class=\"anchor_super\" id=\"id0\" href=\"/view?ref#id0\" title=\"id0\">&dagger;</a></h2>\n<p>test5</p>\n<div class=\"jumpmenu\"><a href=\"#navigator\">&uarr;</a></div><h2 id=\"content_1_1\">test6  <a class=\"anchor_super\" id=\"id1\" href=\"/view?ref#id1\" title=\"id1\">&dagger;</a></h2>\n<p>test7</p>\n<div class=\"jumpmenu\"><a href=\"#navigator\">&uarr;</a></div><h3 id=\"content_1_2\">test8  <a class=\"anchor_super\" id=\"id2\" href=\"/view?ref#id2\" title=\"id2\">&dagger;</a></h3>\n<p>test9</p>\n<div class=\"jumpmenu\"><a href=\"#navigator\">&uarr;</a></div><h4 id=\"content_1_3\">test10  <a class=\"anchor_super\" id=\"id3\" href=\"/view?ref#id3\" title=\"id3\">&dagger;</a></h4>\n<p>test11</p>\n<div class=\"spacer\">&nbsp;</div>\n<p>test12<span class=\"noexists\">test13<a href=\"/edit?page=test13&amp;refer=ref\">?</a></span></p>\n";
 		WikiParser parser = getTestWikiParser();
 		String result = parser.parse(str);
 		String noteresult = parser.toNoteHtmlString();

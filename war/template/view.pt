@@ -3,8 +3,9 @@
 	<phtml name="header">
 		<param key="title"></param>
 	</phtml>
-	<phtml name="wikidata">
-		<param key="wiki"></param>
+	<phtml name="body">
+		<param key="menu"></param>
+		<param key="body"></param>
 	</phtml>
 	<phtml name="footer"></phtml>
 </pt>

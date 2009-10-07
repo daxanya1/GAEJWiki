@@ -1,8 +1,8 @@
 package com.appspot.gaejwiki.common.wiki.inline.base;
 
-import com.appspot.gaejwiki.common.wiki.common.WikiDefine;
 import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
+import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
 public abstract class ChildOnlyInlineBase implements WikiObjectInlineI {
 
@@ -59,10 +59,11 @@ public abstract class ChildOnlyInlineBase implements WikiObjectInlineI {
 		}
 		
 		public String getNonExistHtmlString(String name) {
+			DomainParameter domainparam = DomainParameter.getDomainParameter();
 			StringBuffer sb = new StringBuffer();
 			sb.append("<span class=\"noexists\">");
 			sb.append(name);
-			sb.append("<a href=\"" + WikiDefine.INDEXPATH + "?cmd=edit&amp;page=" + name + "&amp;refer=ref\">?</a></span>");
+			sb.append("<a href=\"" + domainparam.get(DomainParameter.EDITURL) + "?page=" + name + "&amp;refer=ref\">?</a></span>");
 			return sb.toString();
 		}
 	}

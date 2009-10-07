@@ -1,6 +1,5 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
-import com.appspot.gaejwiki.common.wiki.common.WikiDefine;
 import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
 
 /**

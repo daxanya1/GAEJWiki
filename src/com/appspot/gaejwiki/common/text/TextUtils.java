@@ -2,12 +2,7 @@ package com.appspot.gaejwiki.common.text;
 
 public class TextUtils {
 
-	static public String getLineSeparator() {
-		// return System.getProperty("line.separator");
-		return "\n";
-	}
-	
-	static public String escapeHtmlString(String line) {
+	public String escapeHtmlString(String line) {
 		if (line == null || line.length() == 0) {
 			return line;
 		}
