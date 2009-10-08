@@ -1,3 +1,19 @@
+/**
+ Copyright 2009 GAEJWiki Team.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 package com.appspot.gaejwiki.domain.urlparam;
 
 import java.io.UnsupportedEncodingException;
@@ -10,6 +26,10 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ *
+ * @author Ryuichi Danno
+ */
 public class ParamParser {
 
 	public static final String PAGEKEY = "PAGE";
@@ -94,7 +114,7 @@ public class ParamParser {
 		 *　ValueがStringの場合、そのままput, String[]の場合、一番目のみput, それ以外はtoString()の値をput
 		 *
 		 * @param map Map<?,?>型のMap
-		 * @return <String,String>のMapに整理して返す mapがnullならnullを返す
+		 * @return <String,String>のMapに整理して返す
 		 */
 		public Map<String, String> arrangeMap(Map<?,?> map) {
 			if (map == null) {
