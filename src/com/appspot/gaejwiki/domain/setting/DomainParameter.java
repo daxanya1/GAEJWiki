@@ -39,6 +39,7 @@ public class DomainParameter {
 	public static final String EDITURL = "editurl";
 	public static final String VIEWTEMPLATE = "viewtemplate";
 	public static final String EDITTEMPLATE = "edittemplate";
+	public static final String TIMEZONE = "timezone";
 	public static final String LINESEPARATOR = "line.separator";
 	
 	private Map<String, String> parammap = new HashMap<String, String>();
@@ -54,6 +55,7 @@ public class DomainParameter {
 		sub.putMap(EDITURL, parammap);
 		sub.putMap(VIEWTEMPLATE, parammap);
 		sub.putMap(EDITTEMPLATE, parammap);
+		sub.putMap(TIMEZONE, parammap);
 		// parammap.put(LINESEPARATOR, System.getProperty(LINESEPARATOR));
 		parammap.put(LINESEPARATOR, "\n");
 	}

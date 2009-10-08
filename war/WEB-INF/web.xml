@@ -6,7 +6,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
 		<servlet-name>READ</servlet-name>
-		<servlet-class>com.appspot.gaejwiki.servlet.ReadServlet</servlet-class>
+		<servlet-class>com.appspot.gaejwiki.servlet.ViewServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>EDIT</servlet-name>

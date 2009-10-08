@@ -35,7 +35,7 @@ import com.appspot.gaejwiki.domain.urlparam.ParamParser;
  * @author Ryuichi Danno
  */
 @SuppressWarnings("serial")
-public class ReadServlet extends HttpServlet {
+public class ViewServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 		new Sub().exec(req, resp);
 	}
