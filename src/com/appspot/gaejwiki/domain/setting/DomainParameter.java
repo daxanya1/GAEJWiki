@@ -20,8 +20,8 @@ public class DomainParameter {
 	// --
 	
 	public static final String DOMAINURL = "domain";
-	public static final String VIEWURL = "view";
-	public static final String EDITURL = "edit";
+	public static final String VIEWURL = "viewurl";
+	public static final String EDITURL = "editurl";
 	public static final String VIEWTEMPLATE = "viewtemplate";
 	public static final String EDITTEMPLATE = "edittemplate";
 	public static final String LINESEPARATOR = "line.separator";

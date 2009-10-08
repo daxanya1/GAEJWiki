@@ -28,7 +28,7 @@ public class ReadServlet extends HttpServlet {
 			DomainParameter domain = DomainParameter.getDomainParameter();
 			
 			// パラメータを分析
-			Map<String, String> bodyparam = new ParamParser().parseUrl(req);
+			Map<String, String> bodyparam = new ParamParser().parseUrl(req, domain.get(DomainParameter.VIEWURL));
 			
 			// ページをロード（カウンタを増やす）
 			// ページをパースしてHTMLにする（Memcacheに入っていれば取り出す）

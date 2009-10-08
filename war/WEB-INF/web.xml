@@ -17,16 +17,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/edit/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>EDIT</servlet-name>
-		<url-pattern>/edit*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>READ</servlet-name>
 		<url-pattern>/view/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>READ</servlet-name>
-		<url-pattern>/view*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>READ</servlet-name>
