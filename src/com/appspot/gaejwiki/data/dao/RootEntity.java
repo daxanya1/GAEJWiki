@@ -1,6 +1,7 @@
 package com.appspot.gaejwiki.data.dao;
 
 
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
@@ -60,7 +61,10 @@ public class RootEntity {
 	            RootEntity root = pm.getObjectById(RootEntity.class, key);
 				count = root.getCount()+1;
 				root.setCount(count);
+				pm.makePersistent(root);
 				pm.currentTransaction().commit();
+	        } catch (Exception e) {
+			   	return -1;
 	        } finally {
 	        	if(pm.currentTransaction().isActive()){
 	    			pm.currentTransaction().rollback();

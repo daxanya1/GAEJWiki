@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import javax.jdo.JDOException;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -252,8 +253,11 @@ public class WikiInfo {
 		    	Calendar cal = Calendar.getInstance();
 		    	info.setUpdatedate(cal.getTime());
 		    	info.setCounterupdatedate(cal.getTime());
+		    	pm.makePersistent(info);
 				pm.currentTransaction().commit();
 				return info;
+	        } catch (Exception e) {
+	        	return null;
 	        } finally {
 	        	if(pm.currentTransaction().isActive()){
 	    			pm.currentTransaction().rollback();
