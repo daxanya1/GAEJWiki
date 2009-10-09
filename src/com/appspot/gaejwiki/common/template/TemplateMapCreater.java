@@ -15,14 +15,18 @@
  */
 package com.appspot.gaejwiki.common.template;
 
-import java.util.Map;
+import com.appspot.gaejwiki.domain.page.PageParam;
 
 public class TemplateMapCreater {
 
-	public Map<String, String> createMenuBodyMap(Map<String, String> bodyparam,
-			String bodypage, String menupage) {
-		// TODO Auto-generated method stub
-		return null;
+	public TemplateReplaceMap createMenuBodyMap(PageParam bodyparam, String bodypage, String menupage) {
+
+		TemplateReplaceMap templateparam = new TemplateReplaceMap();
+		templateparam.put(TemplateReplaceMap.KEY_BODY, bodypage);
+		templateparam.put(TemplateReplaceMap.KEY_MENU, menupage);
+		templateparam.put(TemplateReplaceMap.KEY_TITLE, bodypage);
+		
+		return templateparam;
 	}
 
 }

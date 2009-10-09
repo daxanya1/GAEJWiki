@@ -11,6 +11,7 @@
 		<property name="com.appspot.gaejwiki.viewtemplate" value="/template/view.pt"/>
 		<property name="com.appspot.gaejwiki.editurl" value="edit/"/>
 		<property name="com.appspot.gaejwiki.edittemplate" value="/template/edit.pt"/>
+		<property name="com.appspot.gaejwiki.defaultpage" value="welcome"/>
 		<property name="com.appspot.gaejwiki.timezone" value="Asia/Tokyo"/>
 	</system-properties>
 		

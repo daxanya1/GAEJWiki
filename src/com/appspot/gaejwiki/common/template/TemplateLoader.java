@@ -17,8 +17,41 @@ package com.appspot.gaejwiki.common.template;
 
 public class TemplateLoader {
 
-	public String loadTemplate(String string) {
-		// TODO Auto-generated method stub
+	/**
+	 * @param string
+	 * @return
+	 */
+	public TemplateData loadTemplate(String string) {
+		/*
+		String templatepath = new String("template/index.pt");
+		StringBuffer sb = new StringBuffer();
+		
+        try {
+            FileReader in = new FileReader(templatepath);
+            BufferedReader br = new BufferedReader(in);
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            br.close();
+            in.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+		BitXmlParser xParser1 = new BitXmlParser();
+		PtXmlParser parser = new PtXmlParser();
+		xParser1.setListener( parser );
+		xParser1.parseSax( sb.toString() );
+		List<PtParam> list = parser.getList();
+		
+		for (PtParam str : list) {
+			System.out.println(str);
+		}
+	        
+		resp.setContentType("text/plain");
+		resp.getWriter().println("Hello, world read");
+		*/
 		return null;
 	}
 

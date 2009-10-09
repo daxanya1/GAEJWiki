@@ -40,7 +40,12 @@ public class DomainParameter {
 	public static final String VIEWTEMPLATE = "viewtemplate";
 	public static final String EDITTEMPLATE = "edittemplate";
 	public static final String TIMEZONE = "timezone";
+	public static final String DEFAULTPAGENAME = "defaultpage";
+	public static final String DEFAULTPAGEHTML = "defaultpagehtml";
 	public static final String LINESEPARATOR = "line.separator";
+	
+	private static final String DEFAULTPAGENAME_NOTSET_DEFAULT = "welcome";
+	private static final String DEFAULTPAGEHTML_DEFAULT = "<div>ページが登録されていません。ページを作成してください。リンク?</div>";
 	
 	private Map<String, String> parammap = new HashMap<String, String>();
 	
@@ -56,8 +61,13 @@ public class DomainParameter {
 		sub.putMap(VIEWTEMPLATE, parammap);
 		sub.putMap(EDITTEMPLATE, parammap);
 		sub.putMap(TIMEZONE, parammap);
+		sub.putMap(DEFAULTPAGENAME, parammap);
+		if (parammap.get(DEFAULTPAGENAME) == null) {
+			parammap.put(DEFAULTPAGENAME, DEFAULTPAGENAME_NOTSET_DEFAULT);
+		}
 		// parammap.put(LINESEPARATOR, System.getProperty(LINESEPARATOR));
 		parammap.put(LINESEPARATOR, "\n");
+		parammap.put(DEFAULTPAGEHTML, DEFAULTPAGEHTML_DEFAULT);
 	}
 	
 	public String get(String key) {
@@ -75,6 +85,10 @@ public class DomainParameter {
 	
 	public String getLineSeparator() {
 		return get(LINESEPARATOR);
+	}
+	
+	public String getDefaultViewURL() {
+		return get(VIEWURL) + get(DEFAULTPAGENAME);
 	}
 	
 	public static class Sub {

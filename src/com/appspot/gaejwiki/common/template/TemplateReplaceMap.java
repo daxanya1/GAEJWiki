@@ -13,16 +13,21 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+
 package com.appspot.gaejwiki.common.template;
 
-import java.util.Map;
+import java.util.HashMap;
 
-public class TemplateMapper {
+/**
+ *
+ * @author Ryuichi Danno
+ */
+@SuppressWarnings("serial")
+public class TemplateReplaceMap extends HashMap<String, String>{
 
-	public String mappingTemplate(String readtemplate,
-			Map<String, String> templatemap) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public static final String KEY_BODY = "BODY";
+	public static final String KEY_MENU = "MENU";
+	public static final String KEY_TITLE = "TITLE";
+	
 
 }

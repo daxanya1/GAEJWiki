@@ -13,26 +13,21 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package com.appspot.gaejwiki.domain.menu;
 
-import com.appspot.gaejwiki.domain.page.PageParam;
+package com.appspot.gaejwiki.common.template;
+
+import java.util.HashMap;
 
 /**
  *
  * @author Ryuichi Danno
  */
-public class MenuMaker {
+@SuppressWarnings("serial")
+public class TemplateData extends HashMap<String, String>{
 
-	private static final String MENUPAGENAME = "menu";
+	public static final String KEY_BODY = "BODY";
+	public static final String KEY_MENU = "MENU";
+	public static final String KEY_TITLE = "TITLE";
 	
-	/**
-	 * メニュー用ページパラメータを作成して返す
-	 * @return メニュー用ページパラメータ
-	 */
-	public PageParam getMenuParam() {
-		PageParam pageparam = new PageParam();
-		pageparam.put(PageParam.PAGEKEY, MENUPAGENAME);
-		return pageparam;
-	}
 
 }

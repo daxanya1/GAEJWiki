@@ -16,7 +16,6 @@
 package com.appspot.gaejwiki.servlet;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.appspot.gaejwiki.common.template.TemplateLoader;
 import com.appspot.gaejwiki.common.template.TemplateMapCreater;
-import com.appspot.gaejwiki.common.template.TemplateMapper;
+import com.appspot.gaejwiki.common.template.TemplateMixer;
 import com.appspot.gaejwiki.domain.menu.MenuMaker;
 import com.appspot.gaejwiki.domain.page.PageLoader;
+import com.appspot.gaejwiki.domain.page.PageParam;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 import com.appspot.gaejwiki.domain.urlparam.ParamParser;
 
@@ -47,18 +47,18 @@ public class ViewServlet extends HttpServlet {
 			DomainParameter domain = DomainParameter.getDomainParameter();
 			
 			// パラメータを分析
-			Map<String, String> bodyparam = new ParamParser().parseUrl(req, domain.get(DomainParameter.VIEWURL));
+			PageParam pageparam = new ParamParser().parseUrl(req, domain.get(DomainParameter.VIEWURL));
 			
 			// ページをロード（カウンタを増やす）
 			// ページをパースしてHTMLにする（Memcacheに入っていれば取り出す）
 			// ページに値をマッピング（カウンタ等動的要素）を含む
 			// デフォルトページで、かつない場合は、デフォルト要素を取り出す
-			String bodypage = new PageLoader().loadPage(bodyparam);
+			String bodypage = new PageLoader().loadPage(pageparam);
 			
 			// ページがなければリダイレクトで終わり
 			if (bodypage == null) {
 				// 含まれていなければ、デフォルトページへリダイレクトして終わり
-				
+				resp.sendRedirect(domain.getDefaultViewURL());
 				return;
 			}
 			
@@ -68,48 +68,21 @@ public class ViewServlet extends HttpServlet {
 			String menupage = new PageLoader().loadPage(new MenuMaker().getMenuParam());
 			
 			// テンプレート用マップ作成 
-			Map<String, String> templatemap = new TemplateMapCreater().createMenuBodyMap(bodyparam, bodypage, menupage);
-			
 			// readテンプレートをロード
-			String readtemplate = new TemplateLoader().loadTemplate(domain.get(DomainParameter.VIEWTEMPLATE));
+			// パラメータをマッピング
+			String viewoutput = new TemplateMixer().makeHtml(
+					new TemplateLoader().loadTemplate(domain.get(DomainParameter.VIEWTEMPLATE)), 
+					new TemplateMapCreater().createMenuBodyMap(pageparam, bodypage, menupage));
 			
-			// テンプレートに値をマッピング（出力データを作成）
-			String outputdata = new TemplateMapper().mappingTemplate(readtemplate, templatemap);
+			if (viewoutput == null) {
+				// エラー画面を返す(最終的にはリダイレクト）
+				viewoutput = "error";
+			}
 			
 			// 出力
 			resp.setContentType("text/html");
-			resp.getWriter().print(outputdata);
+			resp.getWriter().print(viewoutput);
 			
-			/*
-			String templatepath = new String("template/index.pt");
-			StringBuffer sb = new StringBuffer();
-			
-	        try {
-	            FileReader in = new FileReader(templatepath);
-	            BufferedReader br = new BufferedReader(in);
-	            String line;
-	            while ((line = br.readLine()) != null) {
-	                sb.append(line);
-	            }
-	            br.close();
-	            in.close();
-	        } catch (Exception e) {
-	            System.out.println(e);
-	        }
-	        
-			BitXmlParser xParser1 = new BitXmlParser();
-			PtXmlParser parser = new PtXmlParser();
-			xParser1.setListener( parser );
-			xParser1.parseSax( sb.toString() );
-			List<PtParam> list = parser.getList();
-			
-			for (PtParam str : list) {
-				System.out.println(str);
-			}
-		        
-			resp.setContentType("text/plain");
-			resp.getWriter().println("Hello, world read");
-			*/
 		}
 		
 	}

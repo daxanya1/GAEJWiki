@@ -26,15 +26,14 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.appspot.gaejwiki.domain.page.PageParam;
+
 /**
  *
  * @author Ryuichi Danno
  */
 public class ParamParser {
 
-	public static final String PAGEKEY = "PAGE";
-	public static final String REFERKEY = "ref";
-	
 	/**
 	 * requestからURLとパラメータを取り出し分析してMapにつめて返す
 	 * 
@@ -50,19 +49,19 @@ public class ParamParser {
 	 * @param req HttpServletRequest
 	 * @return パラメータのMap
 	 */
-	public Map<String, String> parseUrl(HttpServletRequest req, String requestcommand) {
+	public PageParam parseUrl(HttpServletRequest req, String requestcommand) {
 		if (req == null) {
 			return null;
 		}
 		
 		Util util = new Util();
-		Map<String, String> map = new HashMap<String, String>();
+		PageParam pageparam = new PageParam();
 		
 		String page = util.getPage(req.getRequestURI(), requestcommand);
-		map.put(PAGEKEY, util.decodeUrl(page));
-		map.putAll(util.arrangeMap(req.getParameterMap()));
+		pageparam.put(PageParam.PAGEKEY, util.decodeUrl(page));
+		pageparam.putAll(util.arrangeMap(req.getParameterMap()));
 		
-		return map;
+		return pageparam;
 	}
 	
 	static public class Util {

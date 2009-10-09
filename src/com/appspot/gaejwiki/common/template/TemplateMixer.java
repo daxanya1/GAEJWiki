@@ -13,26 +13,23 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package com.appspot.gaejwiki.domain.menu;
 
-import com.appspot.gaejwiki.domain.page.PageParam;
+package com.appspot.gaejwiki.common.template;
 
 /**
  *
  * @author Ryuichi Danno
  */
-public class MenuMaker {
+public class TemplateMixer {
 
-	private static final String MENUPAGENAME = "menu";
-	
 	/**
-	 * メニュー用ページパラメータを作成して返す
-	 * @return メニュー用ページパラメータ
+	 * @param loadtemplate
+	 * @param map
+	 * @return
 	 */
-	public PageParam getMenuParam() {
-		PageParam pageparam = new PageParam();
-		pageparam.put(PageParam.PAGEKEY, MENUPAGENAME);
-		return pageparam;
+	public String makeHtml(TemplateData loadtemplate, TemplateReplaceMap map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

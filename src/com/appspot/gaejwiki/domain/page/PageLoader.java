@@ -20,7 +20,7 @@ import java.util.Map;
 
 import com.appspot.gaejwiki.data.dao.WikiData;
 import com.appspot.gaejwiki.data.dao.WikiInfo;
-import com.appspot.gaejwiki.domain.urlparam.ParamParser;
+import com.appspot.gaejwiki.domain.setting.DomainParameter;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
@@ -40,27 +40,42 @@ public class PageLoader {
 	 * 4.3で取得できなかった場合、データレコードから最新のdataを取り出して、Memcachedに格納
 	 * 5.動的な値（主にカウンタ）をマッピングして返す
 	 * 
-	 * @param bodyparam URLパラメータのMap
+	 * 特例として、デフォルトページかどうか確認して、デフォルトページかつデータがない場合、デフォルト情報を返す
+	 * 
+	 * @param pageparam PageParam
 	 * @return HTML文字列
 	 */
-	public String loadPage(Map<String, String> bodyparam) {
-		if (bodyparam == null) {
+	public String loadPage(PageParam pageparam) {
+		if (pageparam == null) {
 			return null;
 		}
-		String pagename = bodyparam.get(ParamParser.PAGEKEY);
+		String pagename = pageparam.get(PageParam.PAGEKEY);
 		if (pagename == null) {
 			return null;
 		}
 		
 		Sub sub = new Sub();
 		WikiInfo info = sub.getWikiInfo(pagename);
+		if (info == null) {
+			return sub.getDefaultHtmlData(pagename);
+		}
+		
 		String htmldata = sub.getHtmlData(info);
+		if (htmldata == null) {
+			return null;
+		}
+		
 		Map<String, String> countermap = sub.createCounterMap(info);
 		return new HtmlCounterMarger().margeHtml(htmldata, countermap);
 	}
 	
 	static public class Sub {
 		
+		/**
+		 * 
+		 * @param info
+		 * @return
+		 */
 		public String getHtmlData(WikiInfo info) {
 			assert(info != null);
 			WikiData.Util datautil = new WikiData.Util();
@@ -73,6 +88,7 @@ public class PageLoader {
 			}
 			
 			WikiData data = datautil.loadData(datakey, false, true);
+			
 			if (data == null) {
 				return null;
 			}
@@ -81,8 +97,25 @@ public class PageLoader {
 			return htmldata;
 		}
 		
+		/**
+		 * 
+		 * @return
+		 */
 		public MemcacheService getMemcacheService() {
 			return MemcacheServiceFactory.getMemcacheService();
+		}
+		
+		/**
+		 * 
+		 * @param pagename
+		 * @return
+		 */
+		public String getDefaultHtmlData(String pagename) {
+			assert(pagename != null);
+			
+			DomainParameter domainparam = DomainParameter.getDomainParameter();
+			return (pagename.equals(domainparam.get(DomainParameter.DEFAULTPAGENAME))) ? 
+					domainparam.get(DomainParameter.DEFAULTPAGEHTML) : null;
 		}
 
 		/**

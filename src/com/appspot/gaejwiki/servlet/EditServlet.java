@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.appspot.gaejwiki.domain.page.PageParam;
 import com.appspot.gaejwiki.domain.page.PageSaver;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 import com.appspot.gaejwiki.domain.urlparam.ParamParser;
@@ -40,7 +41,7 @@ public class EditServlet extends HttpServlet {
 		// ƒpƒ‰ƒ[ƒ^‚ğ•ªÍ
 		Map<String, String> bodyparam = new ParamParser().parseUrl(req, domain.get(DomainParameter.EDITURL));
 		
-		new PageSaver().savePage(bodyparam.get(ParamParser.PAGEKEY), bodyparam.get(ParamParser.REFERKEY));
+		new PageSaver().savePage(bodyparam.get(PageParam.PAGEKEY), bodyparam.get(PageParam.REFERKEY));
 		
 		resp.setContentType("text/plain");
 		resp.getWriter().println("Hello, world edit");
