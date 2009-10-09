@@ -8,9 +8,10 @@
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
 		<property name="com.appspot.gaejwiki.domain" value="gaejwiki.appspot.com"/>
 		<property name="com.appspot.gaejwiki.viewurl" value="view/"/>
-		<property name="com.appspot.gaejwiki.viewtemplate" value="/template/view.pt"/>
+		<property name="com.appspot.gaejwiki.templatepath" value="/template/"/>
+		<property name="com.appspot.gaejwiki.viewtemplate" value="view.pt"/>
 		<property name="com.appspot.gaejwiki.editurl" value="edit/"/>
-		<property name="com.appspot.gaejwiki.edittemplate" value="/template/edit.pt"/>
+		<property name="com.appspot.gaejwiki.edittemplate" value="edit.pt"/>
 		<property name="com.appspot.gaejwiki.defaultpage" value="welcome"/>
 		<property name="com.appspot.gaejwiki.timezone" value="Asia/Tokyo"/>
 	</system-properties>

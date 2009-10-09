@@ -22,6 +22,8 @@ import junit.framework.TestCase;
 
 import org.fb.xml.parser.BitXmlParser;
 
+import com.appspot.gaejwiki.common.template.TemplateData;
+
 public class PtXmlParserTest extends TestCase {
 
 	public PtXmlParserTest(String name) {
@@ -37,7 +39,7 @@ public class PtXmlParserTest extends TestCase {
 		PtXmlParser parser = new PtXmlParser();
 		xParser1.setListener( parser );
 		xParser1.parseSax( xml1 );
-		List<PtParam> list = parser.getList();
+		TemplateData list = parser.getTemplateData();
 		assertEquals(list.size(), 1);
 		PtParam param = list.get(0);
 		assertEquals(param.getName(), "header");
@@ -54,7 +56,7 @@ public class PtXmlParserTest extends TestCase {
 		PtXmlParser parser = new PtXmlParser();
 		xParser1.setListener( parser );
 		xParser1.parseSax( xml1 );
-		List<PtParam> list = parser.getList();
+		TemplateData list = parser.getTemplateData();
 		assertEquals(list.size(), 1);
 		PtParam param = list.get(0);
 		assertEquals(param.getName(), "header");
@@ -71,7 +73,7 @@ public class PtXmlParserTest extends TestCase {
 		PtXmlParser parser = new PtXmlParser();
 		xParser1.setListener( parser );
 		xParser1.parseSax( xml1 );
-		List<PtParam> list = parser.getList();
+		TemplateData list = parser.getTemplateData();
 		assertEquals(list.size(), 3);
 		PtParam param1 = list.get(0);
 		assertEquals(param1.getName(), "header");
@@ -93,7 +95,7 @@ public class PtXmlParserTest extends TestCase {
 		PtXmlParser parser = new PtXmlParser();
 		xParser1.setListener( parser );
 		xParser1.parseSax( xml1 );
-		List<PtParam> list = parser.getList();
+		TemplateData list = parser.getTemplateData();
 		assertEquals(list.size(), 3);
 		PtParam param1 = list.get(0);
 		assertEquals(param1.getName(), "header");
@@ -115,7 +117,7 @@ public class PtXmlParserTest extends TestCase {
 		PtXmlParser parser = new PtXmlParser();
 		xParser1.setListener( parser );
 		xParser1.parseSax( xml1 );
-		List<PtParam> list = parser.getList();
+		TemplateData list = parser.getTemplateData();
 		assertEquals(list.size(), 3);
 		PtParam param1 = list.get(0);
 		assertEquals(param1.getName(), "header");
@@ -173,7 +175,7 @@ public class PtXmlParserTest extends TestCase {
 		PtXmlParser parser = new PtXmlParser();
 		xParser1.setListener( parser );
 		xParser1.parseSax( xml1 );
-		List<PtParam> list = parser.getList();
+		TemplateData list = parser.getTemplateData();
 		assertEquals(list.size(), 0);
 	}
 

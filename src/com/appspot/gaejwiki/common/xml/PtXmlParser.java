@@ -15,12 +15,12 @@
  */
 package com.appspot.gaejwiki.common.xml;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 import java.util.logging.Logger;
 
 import org.fb.xml.parser.BitXmlParserI;
+
+import com.appspot.gaejwiki.common.template.TemplateData;
 
 
 /**
@@ -31,7 +31,7 @@ public class PtXmlParser  implements BitXmlParserI {
 
 	private static final Logger logger = Logger.getLogger(PtXmlParser.class.getName());
 
-	private final List<PtParam> list = new ArrayList<PtParam>();
+	private final TemplateData templatedata = new TemplateData();
 	private final Stack<String> nowstack = new Stack<String>();
 	
 	private PtParam nowparam = null;
@@ -42,8 +42,8 @@ public class PtXmlParser  implements BitXmlParserI {
 	public final String ATTRIVUTE_NAME = "name";
 	public final String PARAMVALUE = "_";
 	
-	public final List<PtParam> getList() {
-		return list;
+	public final TemplateData getTemplateData() {
+		return templatedata;
 	}
 	
 	@Override
@@ -93,7 +93,7 @@ public class PtXmlParser  implements BitXmlParserI {
 		nowstack.push(arg0);
 		if (TAG_PHTML.equals(arg0)) {
 			nowparam = new PtParam();
-			list.add(nowparam);
+			templatedata.add(nowparam);
 		}
 	}
 

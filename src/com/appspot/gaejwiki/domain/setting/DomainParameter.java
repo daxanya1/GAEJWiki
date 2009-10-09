@@ -42,6 +42,7 @@ public class DomainParameter {
 	public static final String TIMEZONE = "timezone";
 	public static final String DEFAULTPAGENAME = "defaultpage";
 	public static final String DEFAULTPAGEHTML = "defaultpagehtml";
+	public static final String TEMPLATEPATH = "templatepath";
 	public static final String LINESEPARATOR = "line.separator";
 	
 	private static final String DEFAULTPAGENAME_NOTSET_DEFAULT = "welcome";
@@ -61,6 +62,7 @@ public class DomainParameter {
 		sub.putMap(VIEWTEMPLATE, parammap);
 		sub.putMap(EDITTEMPLATE, parammap);
 		sub.putMap(TIMEZONE, parammap);
+		sub.putMap(TEMPLATEPATH, parammap);
 		sub.putMap(DEFAULTPAGENAME, parammap);
 		if (parammap.get(DEFAULTPAGENAME) == null) {
 			parammap.put(DEFAULTPAGENAME, DEFAULTPAGENAME_NOTSET_DEFAULT);
@@ -89,6 +91,10 @@ public class DomainParameter {
 	
 	public String getDefaultViewURL() {
 		return get(VIEWURL) + get(DEFAULTPAGENAME);
+	}
+	
+	public String getTemplateFilePath(String templatefilename) {
+		return get(TEMPLATEPATH) + templatefilename;
 	}
 	
 	public static class Sub {

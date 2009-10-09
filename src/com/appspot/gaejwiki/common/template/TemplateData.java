@@ -16,18 +16,17 @@
 
 package com.appspot.gaejwiki.common.template;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+
+import com.appspot.gaejwiki.common.xml.PtParam;
 
 /**
  *
  * @author Ryuichi Danno
  */
 @SuppressWarnings("serial")
-public class TemplateData extends HashMap<String, String>{
+public class TemplateData extends ArrayList<PtParam>{
 
-	public static final String KEY_BODY = "BODY";
-	public static final String KEY_MENU = "MENU";
-	public static final String KEY_TITLE = "TITLE";
-	
+
 
 }

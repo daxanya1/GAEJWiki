@@ -15,8 +15,17 @@
  */
 package com.appspot.gaejwiki.common.text;
 
+/**
+ * テキストに関するユーティリティクラス
+ * @author Ryuichi Danno
+ */
 public class TextUtils {
 
+	/**
+	 * 通常のテキストに対してHTML文字列をエスケープする
+	 * @param line エスケープ前の文字列
+	 * @return エスケープされた文字列
+	 */
 	public String escapeHtmlString(String line) {
 		if (line == null || line.length() == 0) {
 			return line;

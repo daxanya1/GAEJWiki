@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.appspot.gaejwiki.common.template.TemplateLoader;
 import com.appspot.gaejwiki.common.template.TemplateMapCreater;
-import com.appspot.gaejwiki.common.template.TemplateMixer;
+import com.appspot.gaejwiki.common.template.TemplateMerger;
 import com.appspot.gaejwiki.domain.menu.MenuMaker;
 import com.appspot.gaejwiki.domain.page.PageLoader;
 import com.appspot.gaejwiki.domain.page.PageParam;
@@ -70,7 +70,7 @@ public class ViewServlet extends HttpServlet {
 			// テンプレート用マップ作成 
 			// readテンプレートをロード
 			// パラメータをマッピング
-			String viewoutput = new TemplateMixer().makeHtml(
+			String viewoutput = new TemplateMerger().makeHtml(
 					new TemplateLoader().loadTemplate(domain.get(DomainParameter.VIEWTEMPLATE)), 
 					new TemplateMapCreater().createMenuBodyMap(pageparam, bodypage, menupage));
 			

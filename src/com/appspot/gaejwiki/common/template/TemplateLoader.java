@@ -15,44 +15,40 @@
  */
 package com.appspot.gaejwiki.common.template;
 
+import org.fb.xml.parser.BitXmlParser;
+
+import com.appspot.gaejwiki.common.text.FileUtils;
+import com.appspot.gaejwiki.common.xml.PtXmlParser;
+import com.appspot.gaejwiki.domain.setting.DomainParameter;
+
 public class TemplateLoader {
 
 	/**
-	 * @param string
+	 * @param templatepath
 	 * @return
 	 */
-	public TemplateData loadTemplate(String string) {
-		/*
-		String templatepath = new String("template/index.pt");
-		StringBuffer sb = new StringBuffer();
-		
-        try {
-            FileReader in = new FileReader(templatepath);
-            BufferedReader br = new BufferedReader(in);
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-            br.close();
-            in.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+	public TemplateData loadTemplate(String templatepath) {
+		if (templatepath == null) {
+			return null;
+		}
+		DomainParameter domainparam = DomainParameter.getDomainParameter();
+		String templatebody = new Sub().loadTemplateFile(domainparam.getTemplateFilePath(templatepath));
+		if (templatebody == null) {
+			return null;
+		}
         
 		BitXmlParser xParser1 = new BitXmlParser();
 		PtXmlParser parser = new PtXmlParser();
 		xParser1.setListener( parser );
-		xParser1.parseSax( sb.toString() );
-		List<PtParam> list = parser.getList();
+		xParser1.parseSax( templatebody );
+		return parser.getTemplateData();
+	}
+	
+	public static class Sub {
 		
-		for (PtParam str : list) {
-			System.out.println(str);
+		public String loadTemplateFile(String filepath) {
+			return new FileUtils().getFile(filepath);
 		}
-	        
-		resp.setContentType("text/plain");
-		resp.getWriter().println("Hello, world read");
-		*/
-		return null;
 	}
 
 }
