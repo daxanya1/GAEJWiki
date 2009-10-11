@@ -61,9 +61,16 @@ public class ViewServlet extends HttpServlet {
 			
 			// ページがなければリダイレクトで終わり
 			if (bodypagedata == null) {
-				// 含まれていなければ、デフォルトページへリダイレクトして終わり
-				resp.sendRedirect(domain.getDefaultViewURL());
-				logger.info("sendredirect body null: page:" + pageparam.get(PageParam.PAGEKEY));
+				String pagename = pageparam.get(PageParam.PAGEKEY);
+				// ページがある場合、editページへリダイレクト
+				// ページがない場合、デフォルトページへリダイレクト
+				if (pagename == null) {
+					resp.sendRedirect(domain.getDefaultViewURL());
+					logger.info("sendredirect defaultpage");
+				} else {
+					resp.sendRedirect(domain.getEditURL(pagename));
+					logger.info("sendredirect editpage:" + pagename);
+				}
 				return;
 			}
 			

@@ -46,9 +46,48 @@ public class PageSaver {
 	static public class Sub {
 
 		/**
+		 * WikiInfoがあるかないかで処理を分ける
 		 * @param pagename
 		 */
 		public WikiInfo saveWikiInfo(String pagename) {
+			assert(pagename != null);
+			
+	    	WikiInfo.Util util = new WikiInfo.Util();
+	    	Key key = util.makeKey(pagename);
+	    	WikiInfo wikiinfo = util.loadData(key);
+	    	if (wikiinfo == null) {
+	    		return createWikiInfo(pagename);
+	    	} else {
+	    		return updateWikiInfo(pagename, wikiinfo);
+	    	}
+	    	
+		}
+		
+		/**
+		 * Version情報をインクリメントして上書きする
+		 * @param pagename
+		 * @param wikiinfo
+		 * @return
+		 */
+		public WikiInfo updateWikiInfo(String pagename, WikiInfo info) {
+			assert(info != null);
+			
+	    	WikiInfo.Util util = new WikiInfo.Util();
+	    	info.setVersion(info.getVersion() + 1);
+	    	Calendar cal = Calendar.getInstance();
+	    	info.setUpdatedate(cal.getTime());
+	    	util.saveData(info);
+	    	return info;
+		}
+		
+		/**
+		 * 
+		 * @param pagename
+		 * @return
+		 */
+		public WikiInfo createWikiInfo(String pagename) {
+			assert(pagename != null);
+			
 			WikiInfo info = new WikiInfo();
 			info.setPagename(pagename);
 			info.setTodaycounter(1);
@@ -62,6 +101,7 @@ public class PageSaver {
 	    	info.setKey(util.makeKey(pagename));
 	    	util.saveData(info);
 	    	return info;
+			
 		}
 		
 		/**

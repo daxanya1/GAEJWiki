@@ -83,11 +83,19 @@ public class EditServlet extends HttpServlet {
 		public void commitAndRedirect(HttpServletResponse resp, PageParam pageparam) throws IOException {
 			assert(resp != null);
 			assert(pageparam != null);
-			// 書き込みする
-			String pagename = pageparam.get(PageParam.PAGEKEY);
-			String wikidata = pageparam.get("wiki");
 			
-			new PageSaver().savePage(pagename, wikidata);
+			// オリジナルと今回の変更点を比べて、変更されていなければ何もしない。
+			String wikidataoriginal = pageparam.get("original");
+			String wikidata = pageparam.get("wiki");
+			String pagename = pageparam.get(PageParam.PAGEKEY);
+			if (wikidataoriginal == null || !wikidataoriginal.equals(wikidata)) {
+				// 書き込みする
+				new PageSaver().savePage(pagename, wikidata);
+				logger.info("editcommit save:" + pagename);
+			} else {
+				// 書き込みしない
+				logger.info("editcommit original same:" + pagename);
+			}
 			
 			DomainParameter domain = DomainParameter.getDomainParameter();
 			resp.sendRedirect(domain.getViewURL(pagename));
@@ -112,11 +120,11 @@ public class EditServlet extends HttpServlet {
 			PageData bodypagedata = new PageLoader().loadPage(pageparam, false);
 			DomainParameter domain = DomainParameter.getDomainParameter();
 			
-			// ページがなければリダイレクトで終わり
-			if (bodypagedata == null) {
-				// 含まれていなければ、デフォルトページへリダイレクトして終わり
+			// ページがない場合、デフォルトページへリダイレクト
+			String pagename = pageparam.get(PageParam.PAGEKEY);
+			if (bodypagedata == null && pagename == null) {
 				resp.sendRedirect(domain.getDefaultViewURL());
-				logger.info("sendredirect editbody null: page:" + pageparam.get(PageParam.PAGEKEY));
+				logger.info("sendredirect defaultpage");
 				return;
 			}
 			

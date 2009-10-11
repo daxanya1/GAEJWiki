@@ -42,14 +42,17 @@ public class TemplateMapCreater {
 	 * @return
 	 */
 	public TemplateReplaceMap createEditBodyMap(PageParam bodyparam, PageData bodypage) {
-			if (bodyparam == null || bodypage == null) {
+			if (bodyparam == null) {
 				return null;
 			}
 			
 			TemplateReplaceMap templateparam = new TemplateReplaceMap();
-			templateparam.put(TemplateReplaceMap.KEY_BODYWIKI, bodypage.get(PageData.WIKIDATAKEY));
-			templateparam.put(TemplateReplaceMap.KEY_BODY, bodypage.get(PageData.HTMLDATAKEY));
 			templateparam.put(TemplateReplaceMap.KEY_TITLE, bodyparam.get(PageParam.PAGEKEY));
+			
+			if (bodypage != null) {
+				templateparam.put(TemplateReplaceMap.KEY_BODYWIKI, bodypage.get(PageData.WIKIDATAKEY));
+				templateparam.put(TemplateReplaceMap.KEY_BODY, bodypage.get(PageData.HTMLDATAKEY));
+			}
 			
 			return templateparam;
 	}

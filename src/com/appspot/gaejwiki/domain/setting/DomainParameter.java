@@ -100,6 +100,10 @@ public class DomainParameter {
 		return "/" + get(VIEWURL) + page;
 	}
 	
+	public String getEditURL(String page) {
+		return "/" + get(EDITURL) + page;
+	}
+	
 	public String getTemplateFilePath(String templatefilename) {
 		return get(TEMPLATEPATH) + templatefilename;
 	}
