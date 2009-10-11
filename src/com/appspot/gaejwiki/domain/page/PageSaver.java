@@ -17,9 +17,11 @@ package com.appspot.gaejwiki.domain.page;
 
 import java.util.Calendar;
 
+import com.appspot.gaejwiki.common.wiki.WikiParser;
 import com.appspot.gaejwiki.data.dao.WikiData;
 import com.appspot.gaejwiki.data.dao.WikiInfo;
 import com.google.appengine.api.datastore.Blob;
+import com.google.appengine.api.datastore.Key;
 
 /**
  *
@@ -33,8 +35,12 @@ public class PageSaver {
 		}
 		
 		Sub sub = new Sub();
+		
+		WikiParser wikiparser = new WikiParser();
+		String htmldata = wikiparser.parse(wikidata);
+		
 		WikiInfo info = sub.saveWikiInfo(pagename);
-		sub.saveWikiData(info, wikidata);
+		sub.saveWikiData(info, htmldata, wikidata);
 	}
 	
 	static public class Sub {
@@ -62,16 +68,23 @@ public class PageSaver {
 		 * @param pagename
 		 * @param wikidata
 		 */
-		public WikiData saveWikiData(WikiInfo info, String wikidata) {
+		public WikiData saveWikiData(WikiInfo info, String htmldata, String wikidata) {
 			WikiData data = new WikiData();
 	    	WikiData.Util util = new WikiData.Util();
 	    	Calendar cal = Calendar.getInstance();
 	    	data.setUpdatedate(cal.getTime());
-	    	data.setKey(util.makeKey(info.getKey(), info.getVersion()));
+	    	Key datakey = util.makeKey(info.getKey(), info.getVersion());
+	    	data.setKey(datakey);
 	    	byte[] partdata = wikidata.getBytes();
 	    	data.setWikidata(new Blob(partdata));
-	    	data.setHtmldata(new Blob(partdata));
+	    	byte[] parthtmldata = htmldata.getBytes();
+	    	data.setHtmldata(new Blob(parthtmldata));
 	    	util.saveData(data);
+	    	
+	    	PageData pagedata = new PageData();
+	    	pagedata.setHtmlWiki(htmldata, wikidata);
+	    	new PageMemcacheSetterGetter().setPageData(datakey, pagedata);
+	    	
 	    	return data;
 		}
 	}

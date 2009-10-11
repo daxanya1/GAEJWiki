@@ -1,6 +1,7 @@
 package com.appspot.gaejwiki.data.dao;
 
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import javax.jdo.JDOObjectNotFoundException;
@@ -71,12 +72,28 @@ public class WikiData {
 		this.updatedate = updatedate;
 	}
 
+	public String getHtmldataString() {
+		return new Util().toBlogString(htmldata);
+	}
+
+	public String getWikidataString() {
+		return new Util().toBlogString(wikidata);
+	}
+
 
 
 
 
 	public static class Util {
     
+		public String toBlogString(Blob blob) {
+			try {
+				return new String(blob.getBytes(), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				return null;
+			}
+		}
+		
 		public void saveData(WikiData data) {
 	        PersistenceManager pm = PMF.get().getPersistenceManager();
 	        try{

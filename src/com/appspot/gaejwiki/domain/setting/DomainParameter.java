@@ -96,6 +96,10 @@ public class DomainParameter {
 		return "/" + get(VIEWURL) + get(DEFAULTPAGENAME);
 	}
 	
+	public String getViewURL(String page) {
+		return "/" + get(VIEWURL) + page;
+	}
+	
 	public String getTemplateFilePath(String templatefilename) {
 		return get(TEMPLATEPATH) + templatefilename;
 	}

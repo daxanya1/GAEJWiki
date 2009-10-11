@@ -24,7 +24,7 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
  *
  * @author Ryuichi Danno
  */
-public class PageMemcacheGetter {
+public class PageMemcacheSetterGetter {
 
 	public static final String KEY_MEMCACHEHTML = "_HTML";
 	public static final String KEY_MEMCACHEWIKI = "_WIKI";
@@ -44,6 +44,16 @@ public class PageMemcacheGetter {
 		PageData pagedata = new PageData();
 		pagedata.setHtmlWiki(memhtmldata, memwikidata);
 		return pagedata;
+	}
+	
+	public void setPageData(Key keyname, PageData pagedata) {
+		if (pagedata == null) {
+			return;
+		}
+		
+		MemcacheService memcache = getMemcacheService();
+		memcache.put(keyname + KEY_MEMCACHEHTML, pagedata.get(PageData.HTMLDATAKEY));
+		memcache.put(keyname + KEY_MEMCACHEWIKI, pagedata.get(PageData.WIKIDATAKEY));
 	}
 	
 	/**

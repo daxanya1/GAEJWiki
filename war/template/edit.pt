@@ -4,6 +4,7 @@
 		<param key="TITLE"></param>
 	</phtml>
 	<phtml name="body_edit.p.html">
+		<param key="TITLE"></param>
 		<param key="BODYWIKI"></param>
 		<param key="BODY"></param>
 	</phtml>

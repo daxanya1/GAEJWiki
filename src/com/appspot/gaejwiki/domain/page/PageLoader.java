@@ -24,8 +24,6 @@ import com.appspot.gaejwiki.data.dao.WikiData;
 import com.appspot.gaejwiki.data.dao.WikiInfo;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.memcache.MemcacheService;
-import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 /**
  *
@@ -91,24 +89,23 @@ public class PageLoader {
 		public PageData getHtmlData(WikiInfo info) {
 			assert(info != null);
 			
-			PageData pagedata = new PageData();
-			
 			WikiData.Util datautil = new WikiData.Util();
 			Key datakey = datautil.makeKey(info.getKey(), info.getVersion());
 			
-			PageData mempegedata = new PageMemcacheGetter().getPageData(info.getKey());
+			PageData mempegedata = new PageMemcacheSetterGetter().getPageData(datakey);
 			if (mempegedata != null) {
 				return mempegedata;
 			}
 			
 			WikiData data = datautil.loadData(datakey, true, true);
-			
 			if (data == null) {
 				return null;
 			}
 			
 			PageData pegedata = new PageData();
-			pagedata.setHtmlWiki(data.getHtmldata().toString(), data.getWikidata().toString());
+			pegedata.setHtmlWiki(data.getHtmldataString(), data.getWikidataString());
+			new PageMemcacheSetterGetter().setPageData(datakey, pegedata);
+			
 			return pegedata;
 		}
 
