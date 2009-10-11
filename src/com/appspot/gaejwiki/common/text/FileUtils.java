@@ -20,15 +20,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 /**
- * �t�@�C���Ɋւ��郆�[�e�B���e�B�N���X
+ * ファイルに関するユーティリティクラス
  * @author Ryuichi Danno
  */
 public class FileUtils {
 
 	/**
-	 * filepath�̃t�@�C����ǂݍ��ݕ�����ɂ��ĕԂ�
-	 * @param filepath �t�@�C���p�X
-	 * @return �ǂݍ��܂ꂽ�t�@�C���̕�����
+	 * filepathのファイルを読み込み文字列にして返す
+	 * @param filepath ファイルパス
+	 * @return 読み込まれたファイルの文字列
 	 */
 	public String getFile(String filepath) {
 		StringBuffer sb = new StringBuffer();

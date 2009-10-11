@@ -50,87 +50,87 @@ public interface WikiObjectBlockI {
 	public static final String HASHFORMATPATTERN3 = "^#(vote)\\((.+)\\)$";
 
 	/**
-	 * s‚ğ’Ç‰Á‚·‚éBiˆês–Ú‚àŠÜ‚Şj
+	 * è¡Œã‚’è¿½åŠ ã™ã‚‹ã€‚ï¼ˆä¸€è¡Œç›®ã‚‚å«ã‚€ï¼‰
 	 * @param str
 	 */
 	void addLine(String str);
 	
 	/**
-	 * block‚ğ’Ç‰Á‚·‚é
-	 * @param wikiobject qblock
+	 * blockã‚’è¿½åŠ ã™ã‚‹
+	 * @param wikiobject å­block
 	 */
 	void addChildBlock(WikiObjectBlockI wikiobject);
 	
 	/**
-	 * e‚ğİ’è‚·‚é
-	 * @param wikiobject eblock
+	 * è¦ªã‚’è¨­å®šã™ã‚‹
+	 * @param wikiobject è¦ªblock
 	 */
 	void setParent(WikiObjectBlockI wikiobject);
 	
 	/**
-	 * Ÿ‚Ìblock‚ğq‹Ÿ‚Æ‚µ‚Ä’Ç‰Á‚Å‚«‚é‚©‚Ç‚¤‚©B
-	 * @return Ÿ‚Ìblock‚ğq‹Ÿ‚Æ‚µ‚Ä’Ç‰Á‚Å‚«‚éê‡‚Ítrue
+	 * æ¬¡ã®blockã‚’å­ä¾›ã¨ã—ã¦è¿½åŠ ã§ãã‚‹ã‹ã©ã†ã‹ã€‚
+	 * @return æ¬¡ã®blockã‚’å­ä¾›ã¨ã—ã¦è¿½åŠ ã§ãã‚‹å ´åˆã¯true
 	 */
 	boolean isAddChildBlock();
 	
 	/**
-	 * ©•ª©g‚ğe‚É’Ç‰Á‚Å‚«‚é‚©
-	 * @return ©•ª©g‚ğe‚É’Ç‰Á‚Å‚«‚éê‡‚Ítrue
+	 * è‡ªåˆ†è‡ªèº«ã‚’è¦ªã«è¿½åŠ ã§ãã‚‹ã‹
+	 * @return è‡ªåˆ†è‡ªèº«ã‚’è¦ªã«è¿½åŠ ã§ãã‚‹å ´åˆã¯true
 	 */
 	boolean isAddToParent();
 	
 	/**
-	 * Ÿ‚Ìs‚ğ’Ç‰Á‚Å‚«‚é‚©‚Ç‚¤‚©B
-	 * @return Ÿ‚Ìs‚ğ’Ç‰Á‚Å‚«‚éê‡‚Ítrue
+	 * æ¬¡ã®è¡Œã‚’è¿½åŠ ã§ãã‚‹ã‹ã©ã†ã‹ã€‚
+	 * @return æ¬¡ã®è¡Œã‚’è¿½åŠ ã§ãã‚‹å ´åˆã¯true
 	 */
 	boolean isAddLine();
 	
 	/**
-	 * Ÿ‚Ìs‚ğ’Ç‰Á‚·‚éÛ‚É“¯‚¶ƒuƒƒbƒN‚Ìê‡‚ÉŒÀ‚é‚©‚Ç‚¤‚©B
-	 * @return Ÿ‚Ìs‚ğ’Ç‰Á‚·‚éÛ‚É“¯‚¶ƒuƒƒbƒN‚Ìê‡‚ÉŒÀ‚éê‡‚Ítrue
+	 * æ¬¡ã®è¡Œã‚’è¿½åŠ ã™ã‚‹éš›ã«åŒã˜ãƒ–ãƒ­ãƒƒã‚¯ã®å ´åˆã«é™ã‚‹ã‹ã©ã†ã‹ã€‚
+	 * @return æ¬¡ã®è¡Œã‚’è¿½åŠ ã™ã‚‹éš›ã«åŒã˜ãƒ–ãƒ­ãƒƒã‚¯ã®å ´åˆã«é™ã‚‹å ´åˆã¯true
 	 */
 	boolean isSameBlockAddLine();
 	
 	/**
-	 * ‚±‚ÌƒuƒƒbƒN‚ğˆ—‚µ‚½ŒãAdØ‚è‚Æ‚·‚é‚©‚Ç‚¤‚©
-	 * @return ‚±‚ÌƒuƒƒbƒN‚ğˆ—‚µ‚½ŒãAdØ‚è‚Æ‚·‚éê‡‚Ítrue
+	 * ã“ã®ãƒ–ãƒ­ãƒƒã‚¯ã‚’å‡¦ç†ã—ãŸå¾Œã€ä»•åˆ‡ã‚Šã¨ã™ã‚‹ã‹ã©ã†ã‹
+	 * @return ã“ã®ãƒ–ãƒ­ãƒƒã‚¯ã‚’å‡¦ç†ã—ãŸå¾Œã€ä»•åˆ‡ã‚Šã¨ã™ã‚‹å ´åˆã¯true
 	 */
 	boolean isReset();
 	
 	/**
-	 * ƒVƒ“ƒvƒ‹‚Èiƒ^ƒO‚Ì‚Â‚¢‚Ä‚¢‚È‚¢j•¶š—ñ‚ğ•Ô‚·B
+	 * ã‚·ãƒ³ãƒ—ãƒ«ãªï¼ˆã‚¿ã‚°ã®ã¤ã„ã¦ã„ãªã„ï¼‰æ–‡å­—åˆ—ã‚’è¿”ã™ã€‚
 	 * @return
 	 */
 	String toString();
 	
 	/**
-	 * HTMLƒtƒH[ƒ}ƒbƒg—p‚Ì•¶š—ñ‚ğ•Ô‚·B
+	 * HTMLãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆç”¨ã®æ–‡å­—åˆ—ã‚’è¿”ã™ã€‚
 	 * @return
 	 */
 	String toHtmlString();
 	
 	/**
-	 * Debug—p•¶š—ñ‚ğ•Ô‚·B
+	 * Debugç”¨æ–‡å­—åˆ—ã‚’è¿”ã™ã€‚
 	 * @return
 	 */
 	String toDebugString();
 	
 	/**
-	 * e‚ğ•Ô‚·
-	 * @return e‚ÌWikiObjectBlockI
+	 * è¦ªã‚’è¿”ã™
+	 * @return è¦ªã®WikiObjectBlockI
 	 */
 	WikiObjectBlockI getParent();
 	
 	/**
-	 * ƒuƒƒbƒN“à•¶š—ñ‚ğƒp[ƒX‚µ‚ÄInline”z—ñ‚É‚·‚éB
+	 * ãƒ–ãƒ­ãƒƒã‚¯å†…æ–‡å­—åˆ—ã‚’ãƒ‘ãƒ¼ã‚¹ã—ã¦Inlineé…åˆ—ã«ã™ã‚‹ã€‚
 	 * @param parser
 	 */
 	void paserInline(WikiInlineParser parser);
 	
 	/**
-	 * ƒŒƒxƒ‹‚ÌŠT”O‚ª‚ ‚éƒuƒƒbƒN‚É‚Â‚¢‚ÄƒŒƒxƒ‹‚ğ•Ô‚·B
-	 * ƒŒƒxƒ‹‚ÌŠT”O‚ª‚È‚¢ƒuƒƒbƒN‚É‚Â‚¢‚Ä‚Í-1‚ğ•Ô‚·
-	 * @return ƒŒƒxƒ‹‚ğ•Ô‚·B
+	 * ãƒ¬ãƒ™ãƒ«ã®æ¦‚å¿µãŒã‚ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã«ã¤ã„ã¦ãƒ¬ãƒ™ãƒ«ã‚’è¿”ã™ã€‚
+	 * ãƒ¬ãƒ™ãƒ«ã®æ¦‚å¿µãŒãªã„ãƒ–ãƒ­ãƒƒã‚¯ã«ã¤ã„ã¦ã¯-1ã‚’è¿”ã™
+	 * @return ãƒ¬ãƒ™ãƒ«ã‚’è¿”ã™ã€‚
 	 */
 	int getLevel();
 	
@@ -138,7 +138,7 @@ public interface WikiObjectBlockI {
 	static public class Util {
 		
 		/**
-		 * s‚Ìæ“ª‚ğØ‚Á‚Ä•Ô‚·
+		 * è¡Œã®å…ˆé ­ã‚’åˆ‡ã£ã¦è¿”ã™
 		 * @param data
 		 * @return
 		 */
@@ -151,11 +151,11 @@ public interface WikiObjectBlockI {
 		}
 		
 		/**
-		 * ‚»‚Ì•¶š‚ªæ“ª‚©‚ç˜A‘±‚Å‚Ç‚ê‚¾‚¯ŠÜ‚Ü‚ê‚Ä‚¢‚é‚©‚ğ•Ô‚·
-		 * ƒŒƒxƒ‹‚ÍÅ‘å‚R‚Ü‚Å‚È‚Ì‚ÅA‚R‚ÂˆÈã‚Ìê‡A‚R‚ğ•Ô‚·
-		 * @param data •¶š—ñ
-		 * @param c ƒ`ƒFƒbƒN‚·‚é•¶š
-		 * @return æ“ª‚Éc‚ª‚È‚¯‚ê‚Î-1Aæ“ª‚Éc‚ª‚ ‚ê‚Î˜A‘±‚·‚é”‚ğ•Ô‚·
+		 * ãã®æ–‡å­—ãŒå…ˆé ­ã‹ã‚‰é€£ç¶šã§ã©ã‚Œã ã‘å«ã¾ã‚Œã¦ã„ã‚‹ã‹ã‚’è¿”ã™
+		 * ãƒ¬ãƒ™ãƒ«ã¯æœ€å¤§ï¼“ã¾ã§ãªã®ã§ã€ï¼“ã¤ä»¥ä¸Šã®å ´åˆã€ï¼“ã‚’è¿”ã™
+		 * @param data æ–‡å­—åˆ—
+		 * @param c ãƒã‚§ãƒƒã‚¯ã™ã‚‹æ–‡å­—
+		 * @return å…ˆé ­ã«cãŒãªã‘ã‚Œã°-1ã€å…ˆé ­ã«cãŒã‚ã‚Œã°é€£ç¶šã™ã‚‹æ•°ã‚’è¿”ã™
 		 */
 		public int checkLevel(String data, char c) {
 			if (data == null) {
@@ -177,10 +177,10 @@ public interface WikiObjectBlockI {
 		}
 		
 		/**
-		 * inline‚Æchild‚ÌtoHtmlString‚ğŒÄ‚Ño‚µ‚ÄAStringBuffer‚É‹l‚ß‚Ä•Ô‚·
-		 * @param inlinelist WikiObjectInlineI‚ÌƒŠƒXƒg
-		 * @param childlist WikiObjectBlockI‚ÌƒŠƒXƒg
-		 * @return toHtmlString•¶š—ñ
+		 * inlineã¨childã®toHtmlStringã‚’å‘¼ã³å‡ºã—ã¦ã€StringBufferã«è©°ã‚ã¦è¿”ã™
+		 * @param inlinelist WikiObjectInlineIã®ãƒªã‚¹ãƒˆ
+		 * @param childlist WikiObjectBlockIã®ãƒªã‚¹ãƒˆ
+		 * @return toHtmlStringæ–‡å­—åˆ—
 		 */
 		public String toHtmlString(List<WikiObjectInlineI> inlinelist, List<WikiObjectBlockI> childlist) {
 			StringBuffer sb = new StringBuffer();
@@ -206,9 +206,9 @@ public interface WikiObjectBlockI {
 	static interface Checker {
 		
 		/**
-		 * ©•ª‚ÌƒuƒƒbƒNğŒ‚É‡‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
-		 * @param line ƒ`ƒFƒbƒN‘ÎÛ•¶š—ñ
-		 * @return ©•ª‚ÌƒuƒƒbƒNğŒ‚É‚ ‚Á‚Ä‚¢‚ê‚Îtrue
+		 * è‡ªåˆ†ã®ãƒ–ãƒ­ãƒƒã‚¯æ¡ä»¶ã«åˆã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
+		 * @param line ãƒã‚§ãƒƒã‚¯å¯¾è±¡æ–‡å­—åˆ—
+		 * @return è‡ªåˆ†ã®ãƒ–ãƒ­ãƒƒã‚¯æ¡ä»¶ã«ã‚ã£ã¦ã„ã‚Œã°true
 		 */
 		boolean isThis(String line);
 	}

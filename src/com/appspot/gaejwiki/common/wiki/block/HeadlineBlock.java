@@ -28,15 +28,15 @@ import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
 /**
  * WikiObject
- * Œ©o‚µ
+ * è¦‹å‡ºã—
  * @author daxanya
  *
  * --
  * 
-s“ª‚Å * ‚ğ‹Lq‚·‚é‚ÆAŒ©o‚µ‚É‚È‚è‚Ü‚·BŒ©o‚µ‚Í *A**A*** ‚Ì3’iŠK‚ ‚è‚Ü‚·B
+è¡Œé ­ã§ * ã‚’è¨˜è¿°ã™ã‚‹ã¨ã€è¦‹å‡ºã—ã«ãªã‚Šã¾ã™ã€‚è¦‹å‡ºã—ã¯ *ã€**ã€*** ã®3æ®µéšã‚ã‚Šã¾ã™ã€‚
 
-Œ©o‚µ‚ÍA‘¼‚ÌƒuƒƒbƒN—v‘f‚Ìq—v‘f‚É‚È‚é‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñBŒ©o‚µ‚ªŒ»‚í‚ê‚é‚Æ‘¼‚ÌƒuƒƒbƒN—v‘f‚ÍI—¹‚µ‚Ü‚·B
-Œ©o‚µ‚ÍA‘¼‚ÌƒuƒƒbƒN—v‘f‚ğq—v‘f‚É‚·‚é‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñB
+è¦‹å‡ºã—ã¯ã€ä»–ã®ãƒ–ãƒ­ãƒƒã‚¯è¦ç´ ã®å­è¦ç´ ã«ãªã‚‹ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚è¦‹å‡ºã—ãŒç¾ã‚ã‚Œã‚‹ã¨ä»–ã®ãƒ–ãƒ­ãƒƒã‚¯è¦ç´ ã¯çµ‚äº†ã—ã¾ã™ã€‚
+è¦‹å‡ºã—ã¯ã€ä»–ã®ãƒ–ãƒ­ãƒƒã‚¯è¦ç´ ã‚’å­è¦ç´ ã«ã™ã‚‹ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚
  * 
  * --
 
@@ -51,7 +51,7 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 	public String toHtmlString() {
 		StringBuffer sb = new StringBuffer();
 
-		// Å‰‚ÌHeadlineˆÈŠO‚ÍAˆê”Ôã‚É–ß‚é‚½‚ß‚Ìƒ^ƒO‚ğ’Ç‰Á
+		// æœ€åˆã®Headlineä»¥å¤–ã¯ã€ä¸€ç•ªä¸Šã«æˆ»ã‚‹ãŸã‚ã®ã‚¿ã‚°ã‚’è¿½åŠ 
 		if (contentsid != 0) {
 			sb.append(new Sub().makeJumpmenu());
 		}
@@ -87,7 +87,7 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 			String idstr = new Integer(contentsid).toString();
 			DomainParameter domainparam = DomainParameter.getDomainParameter();
 			
-			// level1‚ªh2Alevel2‚ªh3Alevel3‚ªh4‚Æ‚È‚é‚½‚ßA1‘«‚·
+			// level1ãŒh2ã€level2ãŒh3ã€level3ãŒh4ã¨ãªã‚‹ãŸã‚ã€1è¶³ã™
 			String levelstr = new Integer(level + 1).toString();
 			
 			sb.append("<h" + levelstr + " id=\"content_1_" + idstr + "\">");
@@ -109,9 +109,9 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 		}
 		
 		/**
-		 * inline‚É‚Â‚¢‚ÄAHeadline‚É‡‚í‚¹‚Ä•ÏŠ·‚µ‚½‚­‚È‚¢inline‚Ìê‡Atrue‚Æ‚·‚é
+		 * inlineã«ã¤ã„ã¦ã€Headlineã«åˆã‚ã›ã¦å¤‰æ›ã—ãŸããªã„inlineã®å ´åˆã€trueã¨ã™ã‚‹
 		 * @param inline
-		 * @return •ÏŠ·‚µ‚½‚­‚È‚¢inline‚Ìê‡true
+		 * @return å¤‰æ›ã—ãŸããªã„inlineã®å ´åˆtrue
 		 */
 		public boolean isSimpleString(WikiObjectInlineI inline) {
 			return (inline instanceof NewlineInline) ? true : false;

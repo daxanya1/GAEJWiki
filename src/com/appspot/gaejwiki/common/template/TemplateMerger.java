@@ -18,25 +18,30 @@ package com.appspot.gaejwiki.common.template;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import com.appspot.gaejwiki.common.text.FileUtils;
 import com.appspot.gaejwiki.common.xml.PtParam;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
 /**
- * ƒeƒ“ƒvƒŒ[ƒgƒf[ƒ^‚Æƒeƒ“ƒvƒŒ[ƒg‚Éƒ}[ƒW‚·‚éƒpƒ‰ƒ[ƒ^‚æ‚èA•¶š—ñ‚ğ¶¬‚·‚é
+ * ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ‡ãƒ¼ã‚¿ã¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã«ãƒãƒ¼ã‚¸ã™ã‚‹ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚ˆã‚Šã€æ–‡å­—åˆ—ã‚’ç”Ÿæˆã™ã‚‹
  * @author Ryuichi Danno
  */
 public class TemplateMerger {
+	private static final Logger logger = Logger.getLogger(TemplateMerger.class.getName());
 
+	public static final String TEMPLATEFILE_EXT = ".p.html";
+	
 	/**
-	 * ƒeƒ“ƒvƒŒ[ƒgƒf[ƒ^“à‚Ìƒpƒ‰ƒ[ƒ^‚ğMap‚Ìƒpƒ‰ƒ[ƒ^‚Æ’u‚«Š·‚¦‚Äo—Í‚·‚é
-	 * @param loadtemplate ƒeƒ“ƒvƒŒ[ƒgƒf[ƒ^
-	 * @param replacemap ƒeƒ“ƒvƒŒ[ƒg‚Ìƒpƒ‰ƒ[ƒ^‚ğ’u‚«Š·‚¦‚é‚½‚ß‚ÌMap
-	 * @return ¶¬•¶š—ñ
+	 * ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ‡ãƒ¼ã‚¿å†…ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’Mapã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¨ç½®ãæ›ãˆã¦å‡ºåŠ›ã™ã‚‹
+	 * @param loadtemplate ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ‡ãƒ¼ã‚¿
+	 * @param replacemap ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ç½®ãæ›ãˆã‚‹ãŸã‚ã®Map
+	 * @return ç”Ÿæˆæ–‡å­—åˆ—
 	 */
 	public String makeHtml(TemplateData loadtemplate, TemplateReplaceMap replacemap) {
 		if (loadtemplate == null || replacemap == null) {
+			logger.info("makeHtml:param null");
 			return null;
 		}
 		
@@ -55,17 +60,19 @@ public class TemplateMerger {
 	}
 	
 	protected String loadTemplateFile(String filepath) {
-		return new FileUtils().getFile(filepath);
+		String filepathext = filepath + TEMPLATEFILE_EXT;
+		logger.info("makeHtml:loadtemplate:" + filepathext);
+		return new FileUtils().getFile(filepathext);
 	}
 	
 	public static class Sub {
 
 		/**
-		 * •¶š—ñ’†‚ÉKeyMap‚ÌKey‚Æ“¯‚¶•¶š—ñ‚ª‚ ‚ê‚ÎAreplacemap‚ÌKey‚Æ•R•t‚¯‚Äreplacemap‚ÌValue‚Æ’u‚«Š·‚¦‚éB
+		 * æ–‡å­—åˆ—ä¸­ã«KeyMapã®Keyã¨åŒã˜æ–‡å­—åˆ—ãŒã‚ã‚Œã°ã€replacemapã®Keyã¨ç´ä»˜ã‘ã¦replacemapã®Valueã¨ç½®ãæ›ãˆã‚‹ã€‚
 		 * @param filebody
 		 * @param keymap
 		 * @param replacemap
-		 * @return ’u‚«Š·‚¦Œã‚Ì•¶š—ñ
+		 * @return ç½®ãæ›ãˆå¾Œã®æ–‡å­—åˆ—
 		 */
 		public String margeMap(String filebody, Map<String, String> keymap, TemplateReplaceMap replacemap) {
 			if (filebody == null) {
@@ -79,10 +86,19 @@ public class TemplateMerger {
 			Iterator<String> ite = keymap.keySet().iterator();
 			while(ite.hasNext()) {
 				String key = ite.next();
-				margebody = margebody.replaceAll(key, replacemap.get(key));
+				String value = replacemap.get(key);
+				if (value == null) {
+					value = "";
+				}
+				margebody = margebody.replaceAll(makeMargeKey(key), value);
 			}
 			
 			return margebody;
+		}
+		
+		public String makeMargeKey(String key) {
+			// æ­£è¦è¡¨ç¾ã«ãªã‚‰ãªã„ã‚ˆã†ã€[ã¨]ã‚’ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã—ã¦ãŠãã€‚
+			return "\\[" + key + "\\]";
 		}
 	}
 

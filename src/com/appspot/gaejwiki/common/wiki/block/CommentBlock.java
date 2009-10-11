@@ -21,17 +21,17 @@ import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 
 /**
  * WikiObject
- * ƒRƒƒ“ƒg
+ * ã‚³ãƒ¡ãƒ³ãƒˆ
  * @author daxanya
  * 
  * --
  * 
-s“ª‚Å // ‚ğw’è‚·‚é‚ÆAƒRƒƒ“ƒgs‚É‚È‚è‚Ü‚·BƒRƒƒ“ƒgs‚Ío—Í‚³‚ê‚È‚¢s‚Å‚·B
+è¡Œé ­ã§ // ã‚’æŒ‡å®šã™ã‚‹ã¨ã€ã‚³ãƒ¡ãƒ³ãƒˆè¡Œã«ãªã‚Šã¾ã™ã€‚ã‚³ãƒ¡ãƒ³ãƒˆè¡Œã¯å‡ºåŠ›ã•ã‚Œãªã„è¡Œã§ã™ã€‚
 
-ƒRƒƒ“ƒgs‚ÍA‘¼‚Ì—v‘f‚Æ–³ŠÖŒW‚És’PˆÊ‚Å‚Ç‚ÌˆÊ’u‚É‚à‹Lq‚Å‚«‚Ü‚·B
-ƒRƒƒ“ƒgs‚ÍA‘OŒã‚Ì‘¼‚Ì—v‘f‚É‰½‚ç‰e‹¿‚ğ‹y‚Ú‚µ‚Ü‚¹‚ñB
+ã‚³ãƒ¡ãƒ³ãƒˆè¡Œã¯ã€ä»–ã®è¦ç´ ã¨ç„¡é–¢ä¿‚ã«è¡Œå˜ä½ã§ã©ã®ä½ç½®ã«ã‚‚è¨˜è¿°ã§ãã¾ã™ã€‚
+ã‚³ãƒ¡ãƒ³ãƒˆè¡Œã¯ã€å‰å¾Œã®ä»–ã®è¦ç´ ã«ä½•ã‚‰å½±éŸ¿ã‚’åŠã¼ã—ã¾ã›ã‚“ã€‚
 
-¦–{—ˆƒuƒƒbƒN‚Å‚Í‚È‚¢‚ªA\‘¢“I‚ÉƒuƒƒbƒNˆµ‚¢‚Æ‚·‚é(ƒp[ƒT‚Åˆ—‚·‚é)
+â€»æœ¬æ¥ãƒ–ãƒ­ãƒƒã‚¯ã§ã¯ãªã„ãŒã€æ§‹é€ çš„ã«ãƒ–ãƒ­ãƒƒã‚¯æ‰±ã„ã¨ã™ã‚‹(ãƒ‘ãƒ¼ã‚µã§å‡¦ç†ã™ã‚‹)
  *
  * --
  */
@@ -40,14 +40,14 @@ public class CommentBlock extends NoChildParentBlockBase {
 	
 	@Override
 	public String toHtmlString() {
-		// ƒp[ƒX‘ÎÛ‚Æ‚È‚ç‚È‚¢
+		// ãƒ‘ãƒ¼ã‚¹å¯¾è±¡ã¨ãªã‚‰ãªã„
 		assert(false);
 		return null;
 	}
 	
 	@Override
 	public void paserInline(WikiInlineParser parser) {
-		// ‚È‚É‚à‚µ‚È‚¢
+		// ãªã«ã‚‚ã—ãªã„
 	}
 	
 	@Override
@@ -59,7 +59,7 @@ public class CommentBlock extends NoChildParentBlockBase {
 		
 		@Override
 		public boolean isThis(String line) {
-			// COMMENT.length()ˆÈ‰º‚È‚çƒRƒƒ“ƒg‚Å‚Í‚È‚¢
+			// COMMENT.length()ä»¥ä¸‹ãªã‚‰ã‚³ãƒ¡ãƒ³ãƒˆã§ã¯ãªã„
 			if (line == null || line.length() < COMMENT.length()) {
 				return false;
 			}

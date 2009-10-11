@@ -39,7 +39,7 @@ public abstract class ParentableInlineBase implements WikiObjectInlineI {
 	@Override
 	public void set(String str, WikiInlineParser parser) {
 		rawdata = str;
-		// Ä‹Aˆ—‚ğs‚¤
+		// å†å¸°å‡¦ç†ã‚’è¡Œã†
 		String line = new Util().matchSet(rawdata, getPattern());
 		if (line != null) {
 			childlist = parser.parseInline(line);

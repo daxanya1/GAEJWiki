@@ -58,7 +58,7 @@ public class ParamParserTest {
 	@Test
 	public void testParamParserUtil4() {
 		ParamParser.Util util = new ParamParser.Util();
-		String page = util.getPage("/test/test2/view3/aaac", "view3");
+		String page = util.getPage("/test/test2/view3/aaac", "view3/");
 		assertNotNull(page);
 		assertEquals(page, "aaac");
 	}
@@ -66,7 +66,7 @@ public class ParamParserTest {
 	@Test
 	public void testParamParserUtil5() {
 		ParamParser.Util util = new ParamParser.Util();
-		String page = util.getPage("/test/test2/view3/aaac", "view");
+		String page = util.getPage("/test/test2/view3/aaac", "view/");
 		assertNull(page);
 	}
 

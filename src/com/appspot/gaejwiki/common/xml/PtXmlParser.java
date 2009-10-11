@@ -51,8 +51,8 @@ public class PtXmlParser  implements BitXmlParserI {
 		if (arg0 == null) {
 			return;
 		}
-		// stack‚ÌÅ‰‚ğŒ©‚ÄA“¯‚¶‚Å‚ ‚ê‚Î‚»‚Ì‚Ü‚Ü”²‚­
-		// ˆá‚Á‚Ä‚¢‚ê‚ÎA“¯‚¶‚à‚Ì‚ğ’T‚µ‚Ä”²‚­
+		// stackã®æœ€åˆã‚’è¦‹ã¦ã€åŒã˜ã§ã‚ã‚Œã°ãã®ã¾ã¾æŠœã
+		// é•ã£ã¦ã„ã‚Œã°ã€åŒã˜ã‚‚ã®ã‚’æ¢ã—ã¦æŠœã
 		String first = null;
 		while (!arg0.equals(first)) {
 			if (nowstack.size() == 0) {
@@ -99,7 +99,7 @@ public class PtXmlParser  implements BitXmlParserI {
 
 	@Override
 	public void text(String arg0) {
-		// –³‹‚·‚é
+		// ç„¡è¦–ã™ã‚‹
 	} 
 	
 	static public class Util {

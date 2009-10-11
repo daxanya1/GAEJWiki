@@ -26,7 +26,7 @@ import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 /**
  * WikiObject
- * ƒŠƒXƒgŒn
+ * ãƒªã‚¹ãƒˆç³»
  * @author daxanya
  * 
  * --
@@ -151,20 +151,20 @@ public abstract class ListBlockBase implements WikiObjectBlockI {
 	}
 	
 	/**
-	 * ƒuƒƒbƒN‚Ìæ“ª•”•ª‚ğØ‚é
+	 * ãƒ–ãƒ­ãƒƒã‚¯ã®å…ˆé ­éƒ¨åˆ†ã‚’åˆ‡ã‚‹
 	 * @param datalist
-	 * @return æ“ª•”•ª‚ğØ‚Á‚½•¶š—ñ‚Ì”z—ñ
+	 * @return å…ˆé ­éƒ¨åˆ†ã‚’åˆ‡ã£ãŸæ–‡å­—åˆ—ã®é…åˆ—
 	 */
 	abstract protected String cutBlockChar(List<String> datalist);
 	
 	/**
-	 * HtmlString‚Ìƒwƒbƒ_‚ğ•Ô‚·
+	 * HtmlStringã®ãƒ˜ãƒƒãƒ€ã‚’è¿”ã™
 	 * @return
 	 */
 	abstract protected String toHtmlStringHeader();
 	
 	/**
-	 * HtmlString‚Ìƒtƒbƒ^‚ğ•Ô‚·
+	 * HtmlStringã®ãƒ•ãƒƒã‚¿ã‚’è¿”ã™
 	 * @return
 	 */
 	abstract protected String toHtmlStringFooter();
@@ -173,18 +173,18 @@ public abstract class ListBlockBase implements WikiObjectBlockI {
 	public static class Util extends WikiObjectBlockI.Util {
 		
 		/**
-		 * datalist‚©‚çƒuƒƒbƒN•¶š‚ğæ‚èœ‚¢‚ÄAƒŒƒxƒ‹‚ğİ’è‚µ‚ÄA•¶š—ñ‚É‚µ‚Ä•Ô‚·
-		 * @param block ListBlockBase‚ÌObject
-		 * @param datalist •¶š—ñƒŠƒXƒg
-		 * @param blockchar Block‚ÌƒJƒbƒg‚·‚é‚×‚«•¶š
-		 * @return datalist‚©‚ç¶¬‚³‚ê‚é•¶š—ñ
+		 * datalistã‹ã‚‰ãƒ–ãƒ­ãƒƒã‚¯æ–‡å­—ã‚’å–ã‚Šé™¤ã„ã¦ã€ãƒ¬ãƒ™ãƒ«ã‚’è¨­å®šã—ã¦ã€æ–‡å­—åˆ—ã«ã—ã¦è¿”ã™
+		 * @param block ListBlockBaseã®Object
+		 * @param datalist æ–‡å­—åˆ—ãƒªã‚¹ãƒˆ
+		 * @param blockchar Blockã®ã‚«ãƒƒãƒˆã™ã‚‹ã¹ãæ–‡å­—
+		 * @return datalistã‹ã‚‰ç”Ÿæˆã•ã‚Œã‚‹æ–‡å­—åˆ—
 		 */
 		public String cutBlockCharListBlockBase(ListBlockBase block, List<String> datalist, char blockchar) {
 			if (datalist == null || datalist.size() == 0) {
 				return null;
 			}
 
-			// list‚ÌÅ‰‚¾‚¯ƒuƒƒbƒN‚ÅAˆÈ‰º‚Ìs‚Í’Êís‚È‚Ì‚Åí‚ç‚È‚¢
+			// listã®æœ€åˆã ã‘ãƒ–ãƒ­ãƒƒã‚¯ã§ã€ä»¥ä¸‹ã®è¡Œã¯é€šå¸¸è¡Œãªã®ã§å‰Šã‚‰ãªã„
 			StringBuffer sb = new StringBuffer();
 			String datalistfirststr = datalist.get(0);
 			block.setLevel(checkLevel(datalistfirststr, blockchar));

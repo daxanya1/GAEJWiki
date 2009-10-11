@@ -21,7 +21,7 @@ import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
 
 /**
  * WikiObject
- * q‹Ÿ‚É‚Í‚È‚ê‚é‚µs’Ç‰Á‚ª‚Å‚«‚é
+ * å­ä¾›ã«ã¯ãªã‚Œã‚‹ã—è¡Œè¿½åŠ ãŒã§ãã‚‹
  * @author daxanya
  * 
  * --
@@ -75,7 +75,7 @@ public abstract class YesChildAddlineBlockBase implements WikiObjectBlockI {
 	
 	@Override
 	public void addChildBlock(WikiObjectBlockI wikiobject) {
-		// ‚È‚É‚à‚µ‚È‚¢B
+		// ãªã«ã‚‚ã—ãªã„ã€‚
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public abstract class YesChildAddlineBlockBase implements WikiObjectBlockI {
 	
 	@Override
 	public int getLevel() {
-		// levelİ’è‚Í‚È‚¢‚Ì‚ÅA•K‚¸-1‚ğ•Ô‚·
+		// levelè¨­å®šã¯ãªã„ã®ã§ã€å¿…ãš-1ã‚’è¿”ã™
 		return -1;
 	}
 

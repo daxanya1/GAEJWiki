@@ -19,24 +19,24 @@ import com.appspot.gaejwiki.common.wiki.inline.base.ChildOnlyInlineBase;
 
 /**
  * WikiObject
- * inline �y�[�W��
+ * inline ページ名
  * @author daxanya
  *
  *
- *�s���� [[ �� ]] �ň͂܂ꂽ������̓y�[�W���ɂȂ�܂��B
+ *行中で [[ と ]] で囲まれた文字列はページ名になります。
 
-�y�[�W���̒��ɂ́A�S�p�����A�L���A�����A���p�󔒕������܂߂邱�Ƃ��ł��܂��B
-�y�[�W���̒��ɂ́A"#&<> ���܂߂邱�Ƃ͂ł��܂���B
-���łɑ��݂���y�[�W�ł���΂��̃y�[�W�ւ̃����N�������I�ɓ\���܂��B���݂��Ȃ��ꍇ�̓y�[�W���̌���?�������I�ɕt���A���̃y�[�W��V�K�쐬���邽�߂̃����N���\���܂��B
-[[�y�[�W��#�A���J�[��]]
-�y�[�W���ɃA���J�[�������邱�Ƃ��ł��܂��B
-�y�[�W���́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�y�[�W���́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
+ページ名の中には、全角文字、記号、数字、半角空白文字を含めることができます。
+ページ名の中には、"#&<> を含めることはできません。
+すでに存在するページであればそのページへのリンクが自動的に貼られます。存在しない場合はページ名の後ろに?が自動的に付き、そのページを新規作成するためのリンクが貼られます。
+[[ページ名#アンカー名]]
+ページ名にアンカー名をつけることもできます。
+ページ名は、他のインライン要素の子要素になることができます。
+ページ名は、他のインライン要素を子要素にはできません。
  *
  *
- * ��������
- * �y�[�W�����邩�Ȃ����̊m�F�́Ainline�̃p�[�X���Ɋm�F���A�Ȃ��ꍇ�̓t���O���Z�b�g���Ă����܂��B
- * �t���O���Z�b�g����Ă���ꍇ�A?�̕�����t�����܂��B
+ * 内部動作
+ * ページがあるかないかの確認は、inlineのパース時に確認し、ない場合はフラグをセットしておきます。
+ * フラグがセットされている場合、?の文字を付加します。
  */
 
 public class PageInline extends ChildOnlyInlineBase {

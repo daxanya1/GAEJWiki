@@ -22,15 +22,15 @@ import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 
 /**
  * WikiObject
- * ������
+ * 水平線
  * @author daxanya
  *
  * --
  * 
-�s����4�ȏ�� - �������Ɛ������ɂȂ�܂��B
+行頭で4つ以上の - を書くと水平線になります。
 
-�������́A���̃u���b�N�v�f�̎q�v�f�ɂȂ邱�Ƃ͂ł��܂���B��������������Ƒ��̃u���b�N�v�f�͏I�����܂��B
-�������́A���̃u���b�N�v�f���q�v�f�ɂ��邱�Ƃ͂ł��܂���B
+水平線は、他のブロック要素の子要素になることはできません。水平線が現われると他のブロック要素は終了します。
+水平線は、他のブロック要素を子要素にすることはできません。
  * 
  * --
 

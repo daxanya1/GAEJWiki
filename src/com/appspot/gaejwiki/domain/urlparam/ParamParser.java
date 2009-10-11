@@ -35,19 +35,19 @@ import com.appspot.gaejwiki.domain.page.PageParam;
 public class ParamParser {
 
 	/**
-	 * request‚©‚çURL‚Æƒpƒ‰ƒ[ƒ^‚ğæ‚èo‚µ•ªÍ‚µ‚ÄMap‚É‚Â‚ß‚Ä•Ô‚·
+	 * requestã‹ã‚‰URLã¨ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–ã‚Šå‡ºã—åˆ†æã—ã¦Mapã«ã¤ã‚ã¦è¿”ã™
 	 * 
-	 * URL‚ÌƒtƒH[ƒ}ƒbƒg‚ÍAhttp://ƒhƒƒCƒ“/path/aaaa?ref=bbbb&otherkey=cccc&...
-	 * ‚Æ‚·‚é
+	 * URLã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã¯ã€http://ãƒ‰ãƒ¡ã‚¤ãƒ³/path/aaaa?ref=bbbb&otherkey=cccc&...
+	 * ã¨ã™ã‚‹
 	 * 
-	 * URL‚©‚çæ‚èo‚·î•ñ‚ÍA
-	 * 1.‚Ç‚Ìƒy[ƒW‚© PAGE=aaaa (required)
-	 * 2.‚Ç‚±‚©‚çŒÄ‚Î‚ê‚½‚© REFER=bbbb
-	 * 3.‚»‚Ì‘¼ƒIƒvƒVƒ‡ƒ“‚ª‚ ‚ê‚Î otherkey=cccc
+	 * URLã‹ã‚‰å–ã‚Šå‡ºã™æƒ…å ±ã¯ã€
+	 * 1.ã©ã®ãƒšãƒ¼ã‚¸ã‹ PAGE=aaaa (required)
+	 * 2.ã©ã“ã‹ã‚‰å‘¼ã°ã‚ŒãŸã‹ REFER=bbbb
+	 * 3.ãã®ä»–ã‚ªãƒ—ã‚·ãƒ§ãƒ³ãŒã‚ã‚Œã° otherkey=cccc
 	 * 
 	 * 
 	 * @param req HttpServletRequest
-	 * @return ƒpƒ‰ƒ[ƒ^‚ÌMap
+	 * @return ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®Map
 	 */
 	public PageParam parseUrl(HttpServletRequest req, String requestcommand) {
 		if (req == null) {
@@ -68,12 +68,12 @@ public class ParamParser {
 		private static final String URLPATTERN = "/([^/]+/)+([^?]+)";
 		
 		/**
-		 * URL‚©‚çAƒy[ƒWî•ñ‚ğ•Ô‚·B
-		 * URL‚Ìpageî•ñ‚Ì‘O‚Ìpath‚Æ³‹K•\Œ»’†‚Ìpath•”•ª‚ª‡’v‚µ‚Ä‚¢‚È‚¯‚ê‚Î–³Œø
+		 * URLã‹ã‚‰ã€ãƒšãƒ¼ã‚¸æƒ…å ±ã‚’è¿”ã™ã€‚
+		 * URLã®pageæƒ…å ±ã®å‰ã®pathã¨æ­£è¦è¡¨ç¾ä¸­ã®pathéƒ¨åˆ†ãŒåˆè‡´ã—ã¦ã„ãªã‘ã‚Œã°ç„¡åŠ¹
 		 * 
-		 * @param str URL•¶š—ñ
-		 * @param requestcommand URL‚Ìpageî•ñ‚Ì‘O‚Ìpath 
-		 * @return pageî•ñ‚Ì•¶š—ñ‚ğ•Ô‚·B–³Œø‚Å‚ ‚ê‚Înull
+		 * @param str URLæ–‡å­—åˆ—
+		 * @param requestcommand URLã®pageæƒ…å ±ã®å‰ã®path 
+		 * @return pageæƒ…å ±ã®æ–‡å­—åˆ—ã‚’è¿”ã™ã€‚ç„¡åŠ¹ã§ã‚ã‚Œã°null
 		 */
 		public String getPage(String str, String requestcommand) {
 			if (str == null || requestcommand == null) {
@@ -93,9 +93,9 @@ public class ParamParser {
 		}
 		
 		/**
-		 * URL•¶š—ñ‚ª³‹K•\Œ»‚Éƒ}ƒbƒ`‚µ‚Ä‚¢‚é‚©’²‚×‚é
-		 * @param str URL•¶š—ñ
-		 * @return ƒ}ƒbƒ`‚µ‚Ä‚¢‚ê‚Îmatcher‚ğ•Ô‚·Bƒ}ƒbƒ`‚µ‚Ä‚¢‚È‚¯‚ê‚Înull
+		 * URLæ–‡å­—åˆ—ãŒæ­£è¦è¡¨ç¾ã«ãƒãƒƒãƒã—ã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹
+		 * @param str URLæ–‡å­—åˆ—
+		 * @return ãƒãƒƒãƒã—ã¦ã„ã‚Œã°matcherã‚’è¿”ã™ã€‚ãƒãƒƒãƒã—ã¦ã„ãªã‘ã‚Œã°null
 		 */
 		public Matcher matchUrl(String str) {
 			if (str == null) {
@@ -107,13 +107,13 @@ public class ParamParser {
 		}
 		
 		/**
-		 * Map<?,?>‚ÌŒ^‚©‚çAMap<String,String>‚ÌŒ^‚É•ÏŠ·‚·‚é
-		 * Key‚ªString‚Å‚Í‚È‚¢ê‡‚Í–³‹‚·‚é
-		 * Key‚ªString‚Ìê‡‚ÅA
-		 *@Value‚ªString‚Ìê‡A‚»‚Ì‚Ü‚Üput, String[]‚Ìê‡Aˆê”Ô–Ú‚Ì‚İput, ‚»‚êˆÈŠO‚ÍtoString()‚Ì’l‚ğput
+		 * Map<?,?>ã®å‹ã‹ã‚‰ã€Map<String,String>ã®å‹ã«å¤‰æ›ã™ã‚‹
+		 * KeyãŒStringã§ã¯ãªã„å ´åˆã¯ç„¡è¦–ã™ã‚‹
+		 * KeyãŒStringã®å ´åˆã§ã€
+		 *ã€€ValueãŒStringã®å ´åˆã€ãã®ã¾ã¾put, String[]ã®å ´åˆã€ä¸€ç•ªç›®ã®ã¿put, ãã‚Œä»¥å¤–ã¯toString()ã®å€¤ã‚’put
 		 *
-		 * @param map Map<?,?>Œ^‚ÌMap
-		 * @return <String,String>‚ÌMap‚É®—‚µ‚Ä•Ô‚·
+		 * @param map Map<?,?>å‹ã®Map
+		 * @return <String,String>ã®Mapã«æ•´ç†ã—ã¦è¿”ã™
 		 */
 		public Map<String, String> arrangeMap(Map<?,?> map) {
 			if (map == null) {
@@ -146,9 +146,9 @@ public class ParamParser {
 		}
 		
 		/**
-		 * URL•¶š—ñ‚ğURLƒfƒR[ƒh‚·‚é
-		 * @param str ƒfƒR[ƒh‘O‚Ì•¶š—ñ
-		 * @return ƒfƒR[ƒh‚³‚ê‚½•¶š—ñ
+		 * URLæ–‡å­—åˆ—ã‚’URLãƒ‡ã‚³ãƒ¼ãƒ‰ã™ã‚‹
+		 * @param str ãƒ‡ã‚³ãƒ¼ãƒ‰å‰ã®æ–‡å­—åˆ—
+		 * @return ãƒ‡ã‚³ãƒ¼ãƒ‰ã•ã‚ŒãŸæ–‡å­—åˆ—
 		 */
 		public String decodeUrl(String str) {
 			if (str == null) {

@@ -51,7 +51,7 @@ public class WikiParser {
 		WikiObjectInlineFactory inlinefactory = new WikiObjectInlineFactory();
 		WikiObjectBlockInfo info = new WikiObjectBlockInfo();
 		
-		// inlineparser‚ÍV‹Kì¬‚·‚é(note—pî•ñ‚ª•K—v‚È‚½‚ßAƒƒ“ƒo•Ï”‚Æ‚µ‚Ä‚¢‚éj
+		// inlineparserã¯æ–°è¦ä½œæˆã™ã‚‹(noteç”¨æƒ…å ±ãŒå¿…è¦ãªãŸã‚ã€ãƒ¡ãƒ³ãƒå¤‰æ•°ã¨ã—ã¦ã„ã‚‹ï¼‰
 		inlineparser = new WikiInlineParser();
 		inlineparser.setWikiObjectBlockInfo(info);
 		inlineparser.setWikiObjectInlineFactory(inlinefactory);
@@ -66,7 +66,7 @@ public class WikiParser {
 	}
 	
 	/**
-	 * noteî•ñ‚ğHTMLŒ`®‚Å•Ô‚·
+	 * noteæƒ…å ±ã‚’HTMLå½¢å¼ã§è¿”ã™
 	 * @return
 	 */
 	public String toNoteHtmlString() {

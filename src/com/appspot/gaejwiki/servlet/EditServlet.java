@@ -35,10 +35,10 @@ import com.appspot.gaejwiki.domain.urlparam.ParamParser;
 public class EditServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 		
-		// staticƒpƒ‰ƒ[ƒ^‰Šú‰»—p‚Éˆê“xŒÄ‚Ño‚µ‚Ä‚¨‚­
+		// staticãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿åˆæœŸåŒ–ç”¨ã«ä¸€åº¦å‘¼ã³å‡ºã—ã¦ãŠã
 		DomainParameter domain = DomainParameter.getDomainParameter();
 		
-		// ƒpƒ‰ƒ[ƒ^‚ğ•ªÍ
+		// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’åˆ†æ
 		Map<String, String> bodyparam = new ParamParser().parseUrl(req, domain.get(DomainParameter.EDITURL));
 		
 		new PageSaver().savePage(bodyparam.get(PageParam.PAGEKEY), bodyparam.get(PageParam.REFERKEY));

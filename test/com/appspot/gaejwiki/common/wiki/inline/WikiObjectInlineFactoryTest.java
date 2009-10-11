@@ -40,18 +40,18 @@ public class WikiObjectInlineFactoryTest {
 		list.add("&aname(a);");
 		list.add("test");
 		list.add("'''test'''a");
-		list.add("[[‚ ‚ ‚ >test:test#test]]");
+		list.add("[[ã‚ã‚ã‚>test:test#test]]");
 		// 10 - 14
 		list.add("[[test>hoge+test@aaa.com]]");
 		list.add("~");
 		list.add("((a () ))) ");
-		list.add("[[paFge]]");
+		list.add("[[paï¼šge]]");
 		list.add("[[page]]test");
 		// 15 - 17
 		list.add("%%1%% %% ");
 		list.add("'' ' ''");
 		list.add("WiWiWWiiiNAAAame2");
-		list.add("[:[paFge]]");
+		list.add("[:[paï¼šge]]");
 		list.add("&test(a);");
 
 		

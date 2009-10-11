@@ -21,7 +21,7 @@ import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
 
 /**
  * WikiObject
- * e‚É‚àq‚É‚à‚È‚ê‚È‚¢Œn
+ * è¦ªã«ã‚‚å­ã«ã‚‚ãªã‚Œãªã„ç³»
  * @author daxanya
  * 
  * --
@@ -71,18 +71,18 @@ public abstract class NoChildParentBlockBase implements WikiObjectBlockI {
 	
 	@Override
 	public void addChildBlock(WikiObjectBlockI wikiobject) {
-		// ‚È‚É‚à‚µ‚È‚¢B
+		// ãªã«ã‚‚ã—ãªã„ã€‚
 	}
 
 	@Override
 	public WikiObjectBlockI getParent() {
-		// e‚Í‘¶İ‚µ‚È‚¢
+		// è¦ªã¯å­˜åœ¨ã—ãªã„
 		return null;
 	}
 
 	@Override
 	public void setParent(WikiObjectBlockI wikiobject) {
-		// ‚È‚É‚à‚µ‚È‚¢B
+		// ãªã«ã‚‚ã—ãªã„ã€‚
 	}
 	
 	protected String getData() {

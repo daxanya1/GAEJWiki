@@ -231,10 +231,10 @@ public class WikiInfo {
 
 
 		/**
-		 * WikiInfo‚ğ“Ç‚İ‚Ş‚Æ“¯‚ÉAcounter‚ğƒCƒ“ƒNƒŠƒƒ“ƒg‚·‚é
-		 * ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‘ÎÛ
-		 * ƒCƒ“ƒNƒŠƒƒ“ƒg‘ÎÛ‚ÍAtoday‹y‚Ñtotal‚Æ‚·‚éB
-		 * counterupdatedate‚ğŒ©‚ÄAğ“ú‚É‚È‚Á‚Ä‚¢‚éê‡‚ÍAtoday‚ğyesterday‚Æ‚µAtoday‚Í‚P‚É‚·‚é
+		 * WikiInfoã‚’èª­ã¿è¾¼ã‚€ã¨åŒæ™‚ã«ã€counterã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã™ã‚‹
+		 * ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³å¯¾è±¡
+		 * ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆå¯¾è±¡ã¯ã€todayåŠã³totalã¨ã™ã‚‹ã€‚
+		 * counterupdatedateã‚’è¦‹ã¦ã€æ˜¨æ—¥ã«ãªã£ã¦ã„ã‚‹å ´åˆã¯ã€todayã‚’yesterdayã¨ã—ã€todayã¯ï¼‘ã«ã™ã‚‹
 		 * @param makeKey
 		 * @return
 		 */
@@ -267,9 +267,9 @@ public class WikiInfo {
 		}
 		
 		/**
-		 * ˆø”‚Ìdate‚ª¡“ú‚Æ”ä‚×‚ÄA‚P“úˆÈã‘O‚©‚Ç‚¤‚©’²‚×‚é
+		 * å¼•æ•°ã®dateãŒä»Šæ—¥ã¨æ¯”ã¹ã¦ã€ï¼‘æ—¥ä»¥ä¸Šå‰ã‹ã©ã†ã‹èª¿ã¹ã‚‹
 		 * @param date
-		 * @return date‚æ‚èŒ»İ‚ªŒã‚ÅA“ú‚ªˆÙ‚È‚éê‡Atrue ‚»‚êˆÈŠO‚Ífalse
+		 * @return dateã‚ˆã‚Šç¾åœ¨ãŒå¾Œã§ã€æ—¥ãŒç•°ãªã‚‹å ´åˆã€true ãã‚Œä»¥å¤–ã¯false
 		 */
 		public boolean isNextDay(Date date) {
 	    	Calendar cal = Calendar.getInstance();

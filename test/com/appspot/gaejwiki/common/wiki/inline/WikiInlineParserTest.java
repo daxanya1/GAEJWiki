@@ -47,10 +47,10 @@ public class WikiInlineParserTest {
 	
 	@Test
 	public void testWikiInlineParser2() {
-		String str = "((([[‚ ‚ ‚ >https://hogehoge.jp]] ''tes&br;t123'' )))~";
+		String str = "((([[ã‚ã‚ã‚>https://hogehoge.jp]] ''tes&br;t123'' )))~";
 		List<WikiObjectInlineI> wikilist = getTestParser().parseInline(str);
 		assertEquals(wikilist.size(), 2);
-		assertEquals(wikilist.get(0).toDebugString(), "note|c:/(/:cc:/true|‚ ‚ ‚ ||https://hogehoge.jp|/:cc:/ /:cc:/strong|c:/tes/:cc:/br||/:cc:/t123/:c/:cc:/ )/:c");
+		assertEquals(wikilist.get(0).toDebugString(), "note|c:/(/:cc:/true|ã‚ã‚ã‚||https://hogehoge.jp|/:cc:/ /:cc:/strong|c:/tes/:cc:/br||/:cc:/t123/:c/:cc:/ )/:c");
 		assertEquals(wikilist.get(1).toDebugString(), "<br />");
 	}
 	
@@ -64,11 +64,11 @@ public class WikiInlineParserTest {
 	
 	@Test
 	public void testWikiInlineParser4() {
-		String str = "[[—ûK‚R]]‚àc‚Á‚Ä‚¢‚éH ";
+		String str = "[[ç·´ç¿’ï¼“]]ã‚‚æ®‹ã£ã¦ã„ã‚‹ï¼Ÿ ";
 		List<WikiObjectInlineI> wikilist = getTestParser().parseInline(str);
 		assertEquals(wikilist.size(), 2);
-		assertEquals(wikilist.get(0).toDebugString(), "page|—ûK‚R");
-		assertEquals(wikilist.get(1).toDebugString(), "‚àc‚Á‚Ä‚¢‚éH ");
+		assertEquals(wikilist.get(0).toDebugString(), "page|ç·´ç¿’ï¼“");
+		assertEquals(wikilist.get(1).toDebugString(), "ã‚‚æ®‹ã£ã¦ã„ã‚‹ï¼Ÿ ");
 	}
 	
 	

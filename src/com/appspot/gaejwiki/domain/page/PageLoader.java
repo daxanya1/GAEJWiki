@@ -17,6 +17,7 @@ package com.appspot.gaejwiki.domain.page;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import com.appspot.gaejwiki.data.dao.WikiData;
 import com.appspot.gaejwiki.data.dao.WikiInfo;
@@ -30,42 +31,48 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
  * @author Ryuichi Danno
  */
 public class PageLoader {
+	private static final Logger logger = Logger.getLogger(PageLoader.class.getName());
 
 	/**
-	 * bodyparam‚ÌPAGEƒL[‚ÌValue‚©‚çƒy[ƒW–¼‚ğæ‚èo‚µ‚ÄAƒy[ƒW‚ğæ“¾‚µA“®“I‚È’l‚ğƒ}ƒbƒsƒ“ƒO‚µ‚Ä•Ô‚·
-	 * ƒy[ƒW‚Ìæ“¾•û–@‚ÍA
-	 * 1.ƒJƒEƒ“ƒ^ƒŒƒR[ƒh‚©‚çƒf[ƒ^‚ğæ‚èo‚·
-	 * 2.ƒJƒEƒ“ƒ^‚Ì’l‚ğƒCƒ“ƒNƒŠƒƒ“ƒg‚µ‚Ä•Û‘¶‚·‚é
-	 * 3.Memcached‚ğƒy[ƒW–¼‚ğKey‚É‚µ‚ÄŠm”F‚·‚éB
-	 * 4.3‚Åæ“¾‚Å‚«‚È‚©‚Á‚½ê‡Aƒf[ƒ^ƒŒƒR[ƒh‚©‚çÅV‚Ìdata‚ğæ‚èo‚µ‚ÄAMemcached‚ÉŠi”[
-	 * 5.“®“I‚È’liå‚ÉƒJƒEƒ“ƒ^j‚ğƒ}ƒbƒsƒ“ƒO‚µ‚Ä•Ô‚·
+	 * bodyparamã®PAGEã‚­ãƒ¼ã®Valueã‹ã‚‰ãƒšãƒ¼ã‚¸åã‚’å–ã‚Šå‡ºã—ã¦ã€ãƒšãƒ¼ã‚¸ã‚’å–å¾—ã—ã€å‹•çš„ãªå€¤ã‚’ãƒãƒƒãƒ”ãƒ³ã‚°ã—ã¦è¿”ã™
+	 * ãƒšãƒ¼ã‚¸ã®å–å¾—æ–¹æ³•ã¯ã€
+	 * 1.ã‚«ã‚¦ãƒ³ã‚¿ãƒ¬ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–ã‚Šå‡ºã™
+	 * 2.ã‚«ã‚¦ãƒ³ã‚¿ã®å€¤ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã—ã¦ä¿å­˜ã™ã‚‹
+	 * 3.Memcachedã‚’ãƒšãƒ¼ã‚¸åã‚’Keyã«ã—ã¦ç¢ºèªã™ã‚‹ã€‚
+	 * 4.3ã§å–å¾—ã§ããªã‹ã£ãŸå ´åˆã€ãƒ‡ãƒ¼ã‚¿ãƒ¬ã‚³ãƒ¼ãƒ‰ã‹ã‚‰æœ€æ–°ã®dataã‚’å–ã‚Šå‡ºã—ã¦ã€Memcachedã«æ ¼ç´
+	 * 5.å‹•çš„ãªå€¤ï¼ˆä¸»ã«ã‚«ã‚¦ãƒ³ã‚¿ï¼‰ã‚’ãƒãƒƒãƒ”ãƒ³ã‚°ã—ã¦è¿”ã™
 	 * 
-	 * “Á—á‚Æ‚µ‚ÄAƒfƒtƒHƒ‹ƒgƒy[ƒW‚©‚Ç‚¤‚©Šm”F‚µ‚ÄAƒfƒtƒHƒ‹ƒgƒy[ƒW‚©‚Âƒf[ƒ^‚ª‚È‚¢ê‡AƒfƒtƒHƒ‹ƒgî•ñ‚ğ•Ô‚·
+	 * ç‰¹ä¾‹ã¨ã—ã¦ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒšãƒ¼ã‚¸ã‹ã©ã†ã‹ç¢ºèªã—ã¦ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒšãƒ¼ã‚¸ã‹ã¤ãƒ‡ãƒ¼ã‚¿ãŒãªã„å ´åˆã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆæƒ…å ±ã‚’è¿”ã™
 	 * 
 	 * @param pageparam PageParam
-	 * @return HTML•¶š—ñ
+	 * @return HTMLæ–‡å­—åˆ—
 	 */
 	public String loadPage(PageParam pageparam) {
 		if (pageparam == null) {
+			logger.info("loadpage:pageparam null");
 			return null;
 		}
 		String pagename = pageparam.get(PageParam.PAGEKEY);
 		if (pagename == null) {
+			logger.info("loadpage:pagename null");
 			return null;
 		}
 		
 		Sub sub = new Sub();
 		WikiInfo info = sub.getWikiInfo(pagename);
 		if (info == null) {
+			logger.info("loadpage:info null");
 			return sub.getDefaultHtmlData(pagename);
 		}
 		
 		String htmldata = sub.getHtmlData(info);
 		if (htmldata == null) {
+			logger.info("loadpage:htmldata null");
 			return null;
 		}
 		
 		Map<String, String> countermap = sub.createCounterMap(info);
+		logger.info("loadpage:done:" + pagename);
 		return new HtmlCounterMarger().margeHtml(htmldata, countermap);
 	}
 	
@@ -114,8 +121,12 @@ public class PageLoader {
 			assert(pagename != null);
 			
 			DomainParameter domainparam = DomainParameter.getDomainParameter();
-			return (pagename.equals(domainparam.get(DomainParameter.DEFAULTPAGENAME))) ? 
-					domainparam.get(DomainParameter.DEFAULTPAGEHTML) : null;
+			if (pagename.equals(domainparam.get(DomainParameter.DEFAULTPAGENAME))) {
+				logger.info("loadpage:defaultpage:" + DomainParameter.DEFAULTPAGENAME);
+				return domainparam.get(DomainParameter.DEFAULTPAGEHTML);
+			} else {
+				return null;
+			}
 		}
 
 		/**
@@ -143,10 +154,10 @@ public class PageLoader {
 			WikiInfo.Util infoutil = new WikiInfo.Util();
 			WikiInfo info = infoutil.loadAndIncrementData(infoutil.makeKey(pagename));
 			
-			// ¸”s‚Ìê‡A‚R‰ñÄƒgƒ‰ƒC
+			// å¤±æ•—ã®å ´åˆã€ï¼“å›å†ãƒˆãƒ©ã‚¤
 			if (info == null) {
 				for (int i=0; i<3; i++) {
-					// ƒXƒŠ[ƒv‚³‚¹‚½‚Ù‚¤‚ª‚æ‚¢H
+					// ã‚¹ãƒªãƒ¼ãƒ—ã•ã›ãŸã»ã†ãŒã‚ˆã„ï¼Ÿ
 					info = infoutil.loadAndIncrementData(infoutil.makeKey(pagename));
 					if (info != null) {
 						break;

@@ -66,46 +66,46 @@ public interface WikiObjectInlineI {
 
 
 	/**
-	 * •¶š‚ğ’Ç‰Á‚·‚éB
-	 * @param str ’Ç‰Á‚·‚é•¶š
+	 * æ–‡å­—ã‚’è¿½åŠ ã™ã‚‹ã€‚
+	 * @param str è¿½åŠ ã™ã‚‹æ–‡å­—
 	 * @param factory TODO
 	 */
 	void set(String str, WikiInlineParser parser);
 	
 	/**
-	 * e‚ğİ’è‚·‚é
-	 * @param wikiobject einline
+	 * è¦ªã‚’è¨­å®šã™ã‚‹
+	 * @param wikiobject è¦ªinline
 	 */
 	void setParent(WikiObjectInlineI wikiobject);
 	
 	/**
-	 * ƒVƒ“ƒvƒ‹‚Èiƒ^ƒO‚Ì‚Â‚¢‚Ä‚¢‚È‚¢j•¶š—ñ‚ğ•Ô‚·B
+	 * ã‚·ãƒ³ãƒ—ãƒ«ãªï¼ˆã‚¿ã‚°ã®ã¤ã„ã¦ã„ãªã„ï¼‰æ–‡å­—åˆ—ã‚’è¿”ã™ã€‚
 	 * @return
 	 */
 	String toString();
 	
 	/**
-	 * HTMLƒtƒH[ƒ}ƒbƒg—p‚Ì•¶š—ñ‚ğ•Ô‚·B
+	 * HTMLãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆç”¨ã®æ–‡å­—åˆ—ã‚’è¿”ã™ã€‚
 	 * @return
 	 */
 	String toHtmlString();
 	
 	/**
-	 * Debug—p•¶š—ñ‚ğ•Ô‚·B
+	 * Debugç”¨æ–‡å­—åˆ—ã‚’è¿”ã™ã€‚
 	 * @return
 	 */
 	String toDebugString();
 	
 	/**
-	 * e‚ğ•Ô‚·
-	 * @return e‚ÌWikiObjectInlineI
+	 * è¦ªã‚’è¿”ã™
+	 * @return è¦ªã®WikiObjectInlineI
 	 */
 	WikiObjectInlineI getParent();
 
 
 	static public class Util {
 		
-		// ³‹K•\Œ»‚É‚©‚¯‚ÄA•K—v‚Èî•ñ‚ğæ‚èo‚·
+		// æ­£è¦è¡¨ç¾ã«ã‹ã‘ã¦ã€å¿…è¦ãªæƒ…å ±ã‚’å–ã‚Šå‡ºã™
 		public String matchSet(String str, String pat) {
 			if (str == null || pat == null) {
 				return null;
@@ -140,23 +140,23 @@ public interface WikiObjectInlineI {
 	}
 	
 	/**
-	 * ©•ª©g‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN‚·‚é
+	 * è‡ªåˆ†è‡ªèº«ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 	 */
 	static interface Checker {
 		
 		/**
-		 * ©•ª©g‚Å‚ ‚ê‚ÎA•¶š—ñ‚ğØ‚èæ‚éEndPosition‚ğ•Ô‚·
-		 * @param str •¶š—ñ
-		 * @return endposition‚ğ•Ô‚·B‚È‚¯‚ê‚Î0‚ğ•Ô‚·
+		 * è‡ªåˆ†è‡ªèº«ã§ã‚ã‚Œã°ã€æ–‡å­—åˆ—ã‚’åˆ‡ã‚Šå–ã‚‹EndPositionã‚’è¿”ã™
+		 * @param str æ–‡å­—åˆ—
+		 * @return endpositionã‚’è¿”ã™ã€‚ãªã‘ã‚Œã°0ã‚’è¿”ã™
 		 */
 		int getMatchLength(String str);
 		
 		static class Util {
 			/**
-			 * pat‚Éstr‚ªƒ}ƒbƒ`‚µ‚½‚çAƒ}ƒbƒ`‚µ‚½•¶š”‚ğ•Ô‚·
+			 * patã«strãŒãƒãƒƒãƒã—ãŸã‚‰ã€ãƒãƒƒãƒã—ãŸæ–‡å­—æ•°ã‚’è¿”ã™
 			 * @param str
-			 * @param pat ƒpƒ^[ƒ“
-			 * @return ƒ}ƒbƒ`‚µ‚½•¶š”
+			 * @param pat ãƒ‘ã‚¿ãƒ¼ãƒ³
+			 * @return ãƒãƒƒãƒã—ãŸæ–‡å­—æ•°
 			 */
 			public int getRegexMatcherLength(String str, String pat) {
 				if (str == null || pat == null) {

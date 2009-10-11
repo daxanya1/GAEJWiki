@@ -20,14 +20,14 @@ import com.appspot.gaejwiki.common.wiki.inline.base.OneCharacterInlineBase;
 
 /**
  * WikiObject
- * inline •¶š—ñ
+ * inline æ–‡å­—åˆ—
  * @author daxanya
  *
  *
- *•¶š—ñ‚ÍƒCƒ“ƒ‰ƒCƒ“—v‘f‚Å‚·B
+ *æ–‡å­—åˆ—ã¯ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³è¦ç´ ã§ã™ã€‚
 
-•¶š—ñ‚ÍA‘¼‚ÌƒCƒ“ƒ‰ƒCƒ“—v‘f‚Ìq—v‘f‚É‚È‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
-•¶š—ñ‚ÍA‘¼‚ÌƒCƒ“ƒ‰ƒCƒ“—v‘f‚ğq—v‘f‚É‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñB
+æ–‡å­—åˆ—ã¯ã€ä»–ã®ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³è¦ç´ ã®å­è¦ç´ ã«ãªã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚
+æ–‡å­—åˆ—ã¯ã€ä»–ã®ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³è¦ç´ ã‚’å­è¦ç´ ã«ã™ã‚‹ã“ã¨ãŒã§ãã¾ã›ã‚“ã€‚
  *
  */
 
@@ -49,7 +49,7 @@ public class CharacterInline extends OneCharacterInlineBase {
 	}
 	
 	/**
-	 * •¶š—ñ‚ğ‚P•¶š‚Æ‚·‚é
+	 * æ–‡å­—åˆ—ã‚’ï¼‘æ–‡å­—ã¨ã™ã‚‹
 	 */
 	static public class Checker implements WikiObjectInlineI.Checker {
 

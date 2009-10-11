@@ -19,14 +19,14 @@ import java.util.List;
 
 /**
  * WikiObject
- * inline ’ß
+ * inline æ³¨é‡ˆ
  * @author daxanya
  *
  *
- *s’†‚ÅƒCƒ“ƒ‰ƒCƒ“—v‘f‚ğ (( ‚Æ )) ‚Å‚Í‚³‚Ş‚ÆA’ß*3‚ªì¬‚³‚êAs’†‚É’ß‚Ö‚ÌƒŠƒ“ƒN‚ª“\‚ç‚ê‚Ü‚·B
+ *è¡Œä¸­ã§ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³è¦ç´ ã‚’ (( ã¨ )) ã§ã¯ã•ã‚€ã¨ã€æ³¨é‡ˆ*3ãŒä½œæˆã•ã‚Œã€è¡Œä¸­ã«æ³¨é‡ˆã¸ã®ãƒªãƒ³ã‚¯ãŒè²¼ã‚‰ã‚Œã¾ã™ã€‚
 
-’ß‚ÍA‘¼‚ÌƒCƒ“ƒ‰ƒCƒ“—v‘f‚Ìq—v‘f‚É‚È‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·Be—v‘f‚Í’ß•¶‚Å‚Í‚È‚­A’ß‚Ö‚ÌƒŠƒ“ƒN‚É”½‰f‚³‚ê‚Ü‚·B
-’ß‚ÍA‘¼‚ÌƒCƒ“ƒ‰ƒCƒ“—v‘f‚ğq—v‘f‚É‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·Bq—v‘f‚Í’ß•¶‚É”½‰f‚³‚ê‚Ü‚·B
+æ³¨é‡ˆã¯ã€ä»–ã®ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³è¦ç´ ã®å­è¦ç´ ã«ãªã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚è¦ªè¦ç´ ã¯æ³¨é‡ˆæ–‡ã§ã¯ãªãã€æ³¨é‡ˆã¸ã®ãƒªãƒ³ã‚¯ã«åæ˜ ã•ã‚Œã¾ã™ã€‚
+æ³¨é‡ˆã¯ã€ä»–ã®ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³è¦ç´ ã‚’å­è¦ç´ ã«ã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚å­è¦ç´ ã¯æ³¨é‡ˆæ–‡ã«åæ˜ ã•ã‚Œã¾ã™ã€‚
  *
  */
 
@@ -50,7 +50,7 @@ public class NoteInline implements WikiObjectInlineI {
 	@Override
 	public void set(String str, WikiInlineParser parser) {
 		rawdata = str;
-		// Ä‹Aˆ—‚ğs‚¤
+		// å†å¸°å‡¦ç†ã‚’è¡Œã†
 		String line = new Util().matchSet(rawdata, getPattern());
 		if (line != null) {
 			childlist = parser.parseInline(line);
@@ -90,8 +90,8 @@ public class NoteInline implements WikiObjectInlineI {
 	}
 	
 	/**
-	 * noteî•ñ‚ğ•Ô‚·
-	 * @return noteî•ñ‚ÌHtmlƒtƒH[ƒ}ƒbƒg
+	 * noteæƒ…å ±ã‚’è¿”ã™
+	 * @return noteæƒ…å ±ã®Htmlãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	 */
 	public String toNoteHtmlString() {
 		if (noteno == -1) {
@@ -117,7 +117,7 @@ public class NoteInline implements WikiObjectInlineI {
 
 	
 	/**
-	 * ’ß‚©‚Ç‚¤‚©Šm”F
+	 * æ³¨é‡ˆã‹ã©ã†ã‹ç¢ºèª
 	 */
 	static public class Checker implements WikiObjectInlineI.Checker {
 

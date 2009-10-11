@@ -20,113 +20,113 @@ import java.util.regex.Pattern;
 
 /**
  * WikiObject
- * inline &()�n �̂����A�q�v�f�ɂȂ�邪�e�v�f�ɂȂ�Ȃ�����
+ * inline &()系 のうち、子要素になれるが親要素になれないもの
  * @author daxanya
  *
  *
  *
- *�s���� &br; �������ƁA�����ŉ��s����܂��B�s���� ~ �ƈႢ�A��`���X�g�̒�`���\�g�̗v�f�A# �Ŏn�܂�u���b�N�v�f�̃p�����^�̒��ł��g�p�ł��܂��B
+ *行中に &br; を書くと、そこで改行されます。行末の ~ と違い、定義リストの定義語や表組の要素、# で始まるブロック要素のパラメタの中でも使用できます。
 
-�s�����s�́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�s�����s�́A���̃C�����C���v�f���q�v�f�ɂ��邱�Ƃ͂ł��܂���B
+行中改行は、他のインライン要素の子要素になることができます。
+行中改行は、他のインライン要素を子要素にすることはできません。
 
-&ref(�Y�t�t�@�C����);
-&ref(�t�@�C����URL);
-�s���� &ref ���L�q����ƁA�Y�t�t�@�C���܂��͎w�肳�ꂽURL�ɂ���t�@�C���ւ̃����N��\��t���邱�Ƃ��ł��܂��B�t�@�C�����摜�t�@�C���̏ꍇ�́A���̉摜��\�����܂��B
+&ref(添付ファイル名);
+&ref(ファイルのURL);
+行中で &ref を記述すると、添付ファイルまたは指定されたURLにあるファイルへのリンクを貼り付けることができます。ファイルが画像ファイルの場合は、その画像を表示します。
 
-&ref �ɂ́A�J���}�ŋ�؂��ĉ��L�̃p�����^���w��ł��܂��B�p�����^���ȗ������ꍇ�̓f�t�H���g�l�ƂȂ�܂��B
-�Y�t�t�@�C���̃y�[�W
-�Y�t�t�@�C�������݂���y�[�W�����w�肵�܂��B�f�t�H���g�͌��݂̃y�[�W�ł��B
-���̃p�����^���w�肷��ꍇ�́A�Y�t�t�@�C�����̎��ɋL�q���܂��B
+&ref には、カンマで区切って下記のパラメタを指定できます。パラメタを省略した場合はデフォルト値となります。
+添付ファイルのページ
+添付ファイルが存在するページ名を指定します。デフォルトは現在のページです。
+このパラメタを指定する場合は、添付ファイル名の次に記述します。
 nolink
-�f�t�H���g�ł͓Y�t�t�@�C���ւ̃����N�������܂����Anolink ���w�肷��ƃ����N�𒣂�܂���B
-��֕�����
-�t�@�C�����̑���ɕ\�����镶�����摜�̑�֕�������w��ł��܂��B�w�肵�Ȃ��ꍇ�́A�t�@�C�����ɂȂ�܂��B
-��֕�����ɂ͕�����ȊO�̃C�����C���v�f���܂߂邱�Ƃ͂ł��܂���B�y�[�W���A������ȊO�̃C�����C���v�f���L�q���Ă�������Ƃ��Ĉ����܂��B
-���̃p�����^���w�肷��ꍇ�́A�Ō�ɋL�q���܂��B
-&ref �́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-&ref �́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
+デフォルトでは添付ファイルへのリンクが張られますが、nolink を指定するとリンクを張りません。
+代替文字列
+ファイル名の代わりに表示する文字列や画像の代替文字列を指定できます。指定しない場合は、ファイル名になります。
+代替文字列には文字列以外のインライン要素を含めることはできません。ページ名、文字列以外のインライン要素を記述しても文字列として扱われます。
+このパラメタを指定する場合は、最後に記述します。
+&ref は、他のインライン要素の子要素になることができます。
+&ref は、他のインライン要素を子要素にはできません。
 
 
-�s���� &counter ���L�q����Ƃ��̃y�[�W�ɃA�N�Z�X�����l�̐���\�����邱�Ƃ��ł��܂��B
+行中で &counter を記述するとそのページにアクセスした人の数を表示することができます。
 
-&counter �ɂ͎��̃I�v�V�������w��ł��܂��B�I�v�V�������ȗ������ꍇ��total���w�肳�ꂽ���̂Ƃ݂Ȃ���܂��B
+&counter には次のオプションを指定できます。オプションを省略した場合はtotalが指定されたものとみなされます。
 today
-�����̃A�N�Z�X����\�����܂��B
+今日のアクセス数を表示します。
 yesterday
-����̃A�N�Z�X����\�����܂��B
+昨日のアクセス数を表示します。
 total
-�A�N�Z�X������\�����܂��B
-�J�E���^�\���́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�J�E���^�\���́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
+アクセス総数を表示します。
+カウンタ表示は、他のインライン要素の子要素になることができます。
+カウンタ表示は、他のインライン要素を子要素にはできません。
 
 
 &online;
-�s���� &online ���L�q����ƌ��݃A�N�Z�X���̐l����\�����邱�Ƃ��ł��܂��B
+行中で &online を記述すると現在アクセス中の人数を表示することができます。
 
-�I�����C���\���́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�I�����C���\���́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
+オンライン表示は、他のインライン要素の子要素になることができます。
+オンライン表示は、他のインライン要素を子要素にはできません。
 
 
 &version;
-�s���� &version ���L�q�����PukiWiki�̃o�[�W������\�����邱�Ƃ��ł��܂��B
+行中で &version を記述するとPukiWikiのバージョンを表示することができます。
 
-�o�[�W�����\���́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�o�[�W�����\���́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
-
-
-�s���� &t; �Ə����ƁA�^�u�R�[�h�ɒu������܂��B
-
-�ʏ�A�t�H�[�����ł̓L�[�{�[�h����^�u�R�[�h�𒼐ړ��͂ł��Ȃ�*4�̂ŁA�^�u�R�[�h����͂������ʒu��&t;���L�q����ƁA�ۑ����Ƀ^�u�R�[�h�ɒu�����܂��B
-
-�^�u�R�[�h�́A�L�����������܂��Ƃ��ɒu������ċL�^����܂��B
-�^�u�R�[�h�́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�^�u�R�[�h�́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
+バージョン表示は、他のインライン要素の子要素になることができます。
+バージョン表示は、他のインライン要素を子要素にはできません。
 
 
-�s���� &page; �y�� &fpage; �Ə����ƁA�ҏW���̃y�[�W���ɒu������܂��B�y�[�W�����K�w�����ꂽ�y�[�W�Łuhogehoge/hoge�v�ƂȂ��Ă���ꍇ�A &page; �́uhoge�v�ɁA &fpage; �́uhogehoge/hoge�v�ɒu������܂��B�K�w������Ă��Ȃ��y�[�W�ł́A &page; �� &fpage; �������ɂȂ�܂��B
+行中で &t; と書くと、タブコードに置換されます。
 
-�y�[�W���u�������́A�L�����������܂��Ƃ��ɒu������ċL�^����܂��B
-�y�[�W���u�������́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�y�[�W���u�������́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
+通常、フォーム内ではキーボードからタブコードを直接入力できない*4ので、タブコードを入力したい位置に&t;を記述すると、保存時にタブコードに置換します。
 
-�s���� &date; �Ə����ƁA�X�V���̓��t�ɒu������܂�
-�s���� &time; �Ə����ƁA�X�V���̎����ɒu������܂�
-�s���� &now; �Ə����ƁA�X�V���̓����ɒu������܂�
-&date;�A &time;�A &now;�́A�L�����������܂��Ƃ��ɒu������ċL�^����܂��B
-&date;�A &time;�A &now;�́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-&date;�A &time;�A &now;�́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
+タブコードは、記事が書き込まれるときに置換されて記録されます。
+タブコードは、他のインライン要素の子要素になることができます。
+タブコードは、他のインライン要素を子要素にはできません。
 
 
-�s���� &_date; �Ə����ƁA�\�����̓��t�ɒu������ďo�͂���܂��B
-�s���� &_time; �Ə����ƁA�\�����̎����ɒu������ďo�͂���܂��B
-�s���� &_now; �Ə����ƁA�\�����̓����ɒu������ďo�͂���܂��B
-�s���� &lastmod; �Ə����ƁA���̃y�[�W�̍ŏI�X�V�����ɒu������ďo�͂���܂��B
-�y�[�W�����w�肷��ƁA���̎w�肳�ꂽ�y�[�W�̍ŏI�X�V�����ɒu������ďo�͂���܂��B
-&_date;�A &_time;�A &_now;�A &lastmod;�́A�L�����\�������Ƃ��ɒu������ďo�͂���܂��B
-&_date;�A &_time;�A &_now;�A &lastmod;�́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-&_date;�A &_time;�A &_now;�A &lastmod;�́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
+行中で &page; 及び &fpage; と書くと、編集中のページ名に置換されます。ページ名が階層化されたページで「hogehoge/hoge」となっている場合、 &page; は「hoge」に、 &fpage; は「hogehoge/hoge」に置換されます。階層化されていないページでは、 &page; も &fpage; も同じになります。
+
+ページ名置換文字は、記事が書き込まれるときに置換されて記録されます。
+ページ名置換文字は、他のインライン要素の子要素になることができます。
+ページ名置換文字は、他のインライン要素を子要素にはできません。
+
+行中で &date; と書くと、更新時の日付に置換されます
+行中で &time; と書くと、更新時の時刻に置換されます
+行中で &now; と書くと、更新時の日時に置換されます
+&date;、 &time;、 &now;は、記事が書き込まれるときに置換されて記録されます。
+&date;、 &time;、 &now;は、他のインライン要素の子要素になることができます。
+&date;、 &time;、 &now;は、他のインライン要素を子要素にはできません。
 
 
-�s����&heart;�Ə����ƁA�n�[�g�}�[�N &heart; �ɒu������ďo�͂���܂��B
-�s����&smile;�Ə����ƁA &smile; �ɒu������ďo�͂���܂��B
-�s����&bigsmile;�Ə����ƁA &bigsmile; �ɒu������ďo�͂���܂��B
-�s����&huh;�Ə����ƁA &huh; �ɒu������ďo�͂���܂��B
-�s����&oh;�Ə����ƁA &oh; �ɒu������ďo�͂���܂��B
-�s����&wink;�Ə����ƁA &wink; �ɒu������ďo�͂���܂��B
-�s����&sad;�Ə����ƁA &sad; �ɒu������ďo�͂���܂��B
-�s����&worried;�Ə����ƁA &worried; �ɒu������ďo�͂���܂��B
-�����Q�ƕ����́A�\�������Ƃ��ɒu������܂��B
-�����Q�ƕ����́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�����Q�ƕ����́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
+行中で &_date; と書くと、表示時の日付に置換されて出力されます。
+行中で &_time; と書くと、表示時の時刻に置換されて出力されます。
+行中で &_now; と書くと、表示時の日時に置換されて出力されます。
+行中で &lastmod; と書くと、そのページの最終更新日時に置換されて出力されます。
+ページ名を指定すると、その指定されたページの最終更新日時に置換されて出力されます。
+&_date;、 &_time;、 &_now;、 &lastmod;は、記事が表示されるときに置換されて出力されます。
+&_date;、 &_time;、 &_now;、 &lastmod;は、他のインライン要素の子要素になることができます。
+&_date;、 &_time;、 &_now;、 &lastmod;は、他のインライン要素を子要素にはできません。
 
 
-�s���� &# �� ; �̊Ԃ�10�i�����A&#x �� ;�̊Ԃ�16�i���������ƁAUnicode�𐔒l�Q�Ƃ��ĕ\�����܂��B�L�[�{�[�h���璼�ړ��͂ł��Ȃ�������JIS��3�����E��4�����̕����Ȃǂ̕\���Ɏg�p���܂��B���Ƃ��΁A���c�S&#38290;�Ɠ��͂���ƁA���c�S��ƕ\������܂��B
+行中で&heart;と書くと、ハートマーク &heart; に置換されて出力されます。
+行中で&smile;と書くと、 &smile; に置換されて出力されます。
+行中で&bigsmile;と書くと、 &bigsmile; に置換されて出力されます。
+行中で&huh;と書くと、 &huh; に置換されて出力されます。
+行中で&oh;と書くと、 &oh; に置換されて出力されます。
+行中で&wink;と書くと、 &wink; に置換されて出力されます。
+行中で&sad;と書くと、 &sad; に置換されて出力されます。
+行中で&worried;と書くと、 &worried; に置換されて出力されます。
+文字参照文字は、表示されるときに置換されます。
+文字参照文字は、他のインライン要素の子要素になることができます。
+文字参照文字は、他のインライン要素を子要素にはできません。
 
-���l�Q�ƕ����́A�\�������Ƃ��ɒu������܂��B
-���l�Q�ƕ����́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-���l�Q�ƕ����́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
-16�i���͔��p�������Ŏw�肷��K�v������܂�(XHTML 1.0 ��2�ł��珬�����Ɍ��肳��܂���)�B
+
+行中で &# と ; の間に10進数を、&#x と ;の間に16進数を書くと、Unicodeを数値参照して表示します。キーボードから直接入力できない文字やJIS第3水準・第4水準の文字などの表示に使用します。たとえば、内田百&#38290;と入力すると、内田百閒と表示されます。
+
+数値参照文字は、表示されるときに置換されます。
+数値参照文字は、他のインライン要素の子要素になることができます。
+数値参照文字は、他のインライン要素を子要素にはできません。
+16進数は半角小文字で指定する必要があります(XHTML 1.0 第2版から小文字に限定されました)。
 
  *
  */
@@ -151,7 +151,7 @@ public class AmpersandChildInline implements WikiObjectInlineI  {
 	@Override
 	public void set(String str, WikiInlineParser parser) {
 		rawdata = str;
-		// �ċA�������s��
+		// 再帰処理を行う
 		new Sub().matchSet(rawdata);
 	}
 	
@@ -177,7 +177,7 @@ public class AmpersandChildInline implements WikiObjectInlineI  {
 	
 	public class Sub {
 		
-		// ���K�\���ɂ����āA�K�v�ȏ������o��
+		// 正規表現にかけて、必要な情報を取り出す
 		public void matchSet(String str) {
 			Pattern pattern1 = Pattern.compile(AMPERSANDCHILDFORMATPATTERN1);
 			Matcher matcher1 = pattern1.matcher(str);
@@ -243,7 +243,7 @@ public class AmpersandChildInline implements WikiObjectInlineI  {
 	}
 	
 	/**
-	 * &()�n���ǂ����m�F
+	 * &()系かどうか確認
 	 */
 	static public class Checker implements WikiObjectInlineI.Checker {
 

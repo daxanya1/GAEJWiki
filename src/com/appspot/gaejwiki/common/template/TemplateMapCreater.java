@@ -24,7 +24,7 @@ public class TemplateMapCreater {
 		TemplateReplaceMap templateparam = new TemplateReplaceMap();
 		templateparam.put(TemplateReplaceMap.KEY_BODY, bodypage);
 		templateparam.put(TemplateReplaceMap.KEY_MENU, menupage);
-		templateparam.put(TemplateReplaceMap.KEY_TITLE, bodypage);
+		templateparam.put(TemplateReplaceMap.KEY_TITLE, bodyparam.get(PageParam.PAGEKEY));
 		
 		return templateparam;
 	}

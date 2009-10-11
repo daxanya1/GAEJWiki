@@ -19,14 +19,14 @@ import com.appspot.gaejwiki.common.wiki.inline.base.ParentableInlineBase;
 
 /**
  * WikiObject
- * inline æ‚èÁ‚µü
+ * inline å–ã‚Šæ¶ˆã—ç·š
  * @author daxanya
  *
  *
- *s’†‚ÌƒCƒ“ƒ‰ƒCƒ“—v‘f‚ğ%%‚Å‚Í‚³‚Ş‚ÆAƒCƒ“ƒ‰ƒCƒ“—v‘f‚ÉæÁü‚ª•t‚«‚Ü‚·B
+ *è¡Œä¸­ã®ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³è¦ç´ ã‚’%%ã§ã¯ã•ã‚€ã¨ã€ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³è¦ç´ ã«å–æ¶ˆç·šãŒä»˜ãã¾ã™ã€‚
 
-æÁü‚ÍA‘¼‚ÌƒCƒ“ƒ‰ƒCƒ“—v‘f‚Ìq—v‘f‚É‚È‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
-æÁü‚ÍA‘¼‚ÌƒCƒ“ƒ‰ƒCƒ“—v‘f‚ğq—v‘f‚É‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+å–æ¶ˆç·šã¯ã€ä»–ã®ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³è¦ç´ ã®å­è¦ç´ ã«ãªã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚
+å–æ¶ˆç·šã¯ã€ä»–ã®ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³è¦ç´ ã‚’å­è¦ç´ ã«ã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚
  *
  */
 
@@ -54,7 +54,7 @@ public class StrikeInline extends ParentableInlineBase {
 	}
 	
 	/**
-	 * æ‚èÁ‚µü‚©‚Ç‚¤‚©Šm”F
+	 * å–ã‚Šæ¶ˆã—ç·šã‹ã©ã†ã‹ç¢ºèª
 	 */
 	static public class Checker implements WikiObjectInlineI.Checker {
 

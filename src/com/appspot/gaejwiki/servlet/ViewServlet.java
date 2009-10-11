@@ -16,6 +16,7 @@
 package com.appspot.gaejwiki.servlet;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,8 @@ import com.appspot.gaejwiki.domain.urlparam.ParamParser;
  */
 @SuppressWarnings("serial")
 public class ViewServlet extends HttpServlet {
+	private static final Logger logger = Logger.getLogger(ViewServlet.class.getName());
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 		new Sub().exec(req, resp);
 	}
@@ -43,43 +46,44 @@ public class ViewServlet extends HttpServlet {
 	static public class Sub {
 
 		public void exec(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-			// staticƒpƒ‰ƒ[ƒ^‰Šú‰»—p‚Éˆê“xŒÄ‚Ño‚µ‚Ä‚¨‚­
+			// staticãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿åˆæœŸåŒ–ç”¨ã«ä¸€åº¦å‘¼ã³å‡ºã—ã¦ãŠã
 			DomainParameter domain = DomainParameter.getDomainParameter();
 			
-			// ƒpƒ‰ƒ[ƒ^‚ğ•ªÍ
+			// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’åˆ†æ
 			PageParam pageparam = new ParamParser().parseUrl(req, domain.get(DomainParameter.VIEWURL));
 			
-			// ƒy[ƒW‚ğƒ[ƒhiƒJƒEƒ“ƒ^‚ğ‘‚â‚·j
-			// ƒy[ƒW‚ğƒp[ƒX‚µ‚ÄHTML‚É‚·‚éiMemcache‚É“ü‚Á‚Ä‚¢‚ê‚Îæ‚èo‚·j
-			// ƒy[ƒW‚É’l‚ğƒ}ƒbƒsƒ“ƒOiƒJƒEƒ“ƒ^“™“®“I—v‘fj‚ğŠÜ‚Ş
-			// ƒfƒtƒHƒ‹ƒgƒy[ƒW‚ÅA‚©‚Â‚È‚¢ê‡‚ÍAƒfƒtƒHƒ‹ƒg—v‘f‚ğæ‚èo‚·
+			// ãƒšãƒ¼ã‚¸ã‚’ãƒ­ãƒ¼ãƒ‰ï¼ˆã‚«ã‚¦ãƒ³ã‚¿ã‚’å¢—ã‚„ã™ï¼‰
+			// ãƒšãƒ¼ã‚¸ã‚’ãƒ‘ãƒ¼ã‚¹ã—ã¦HTMLã«ã™ã‚‹ï¼ˆMemcacheã«å…¥ã£ã¦ã„ã‚Œã°å–ã‚Šå‡ºã™ï¼‰
+			// ãƒšãƒ¼ã‚¸ã«å€¤ã‚’ãƒãƒƒãƒ”ãƒ³ã‚°ï¼ˆã‚«ã‚¦ãƒ³ã‚¿ç­‰å‹•çš„è¦ç´ ï¼‰ã‚’å«ã‚€
+			// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒšãƒ¼ã‚¸ã§ã€ã‹ã¤ãªã„å ´åˆã¯ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¦ç´ ã‚’å–ã‚Šå‡ºã™
 			String bodypage = new PageLoader().loadPage(pageparam);
 			
-			// ƒy[ƒW‚ª‚È‚¯‚ê‚ÎƒŠƒ_ƒCƒŒƒNƒg‚ÅI‚í‚è
+			// ãƒšãƒ¼ã‚¸ãŒãªã‘ã‚Œã°ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã§çµ‚ã‚ã‚Š
 			if (bodypage == null) {
-				// ŠÜ‚Ü‚ê‚Ä‚¢‚È‚¯‚ê‚ÎAƒfƒtƒHƒ‹ƒgƒy[ƒW‚ÖƒŠƒ_ƒCƒŒƒNƒg‚µ‚ÄI‚í‚è
+				// å«ã¾ã‚Œã¦ã„ãªã‘ã‚Œã°ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒšãƒ¼ã‚¸ã¸ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã—ã¦çµ‚ã‚ã‚Š
 				resp.sendRedirect(domain.getDefaultViewURL());
+				logger.info("sendredirect body null: page:" + pageparam.get(PageParam.PAGEKEY));
 				return;
 			}
 			
-			// ƒƒjƒ…[‚ğƒ[ƒhiƒJƒEƒ“ƒ^‚Í‘‚â‚³‚È‚¢j
-			// ƒƒjƒ…[‚ğƒp[ƒX‚µ‚ÄHTML‚É‚·‚éiMemcache‚É“ü‚Á‚Ä‚¢‚ê‚Îæ‚èo‚·j
-			// ‚È‚©‚Á‚½‚çƒfƒtƒHƒ‹ƒgƒƒjƒ…[‚ğ•Ô‚·
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ãƒ­ãƒ¼ãƒ‰ï¼ˆã‚«ã‚¦ãƒ³ã‚¿ã¯å¢—ã‚„ã•ãªã„ï¼‰
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’ãƒ‘ãƒ¼ã‚¹ã—ã¦HTMLã«ã™ã‚‹ï¼ˆMemcacheã«å…¥ã£ã¦ã„ã‚Œã°å–ã‚Šå‡ºã™ï¼‰
+			// ãªã‹ã£ãŸã‚‰ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è¿”ã™
 			String menupage = new PageLoader().loadPage(new MenuMaker().getMenuParam());
 			
-			// ƒeƒ“ƒvƒŒ[ƒg—pƒ}ƒbƒvì¬ 
-			// readƒeƒ“ƒvƒŒ[ƒg‚ğƒ[ƒh
-			// ƒpƒ‰ƒ[ƒ^‚ğƒ}ƒbƒsƒ“ƒO
+			// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”¨ãƒãƒƒãƒ—ä½œæˆ 
+			// readãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ãƒ­ãƒ¼ãƒ‰
+			// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ãƒãƒƒãƒ”ãƒ³ã‚°
 			String viewoutput = new TemplateMerger().makeHtml(
 					new TemplateLoader().loadTemplate(domain.get(DomainParameter.VIEWTEMPLATE)), 
 					new TemplateMapCreater().createMenuBodyMap(pageparam, bodypage, menupage));
 			
 			if (viewoutput == null) {
-				// ƒGƒ‰[‰æ–Ê‚ğ•Ô‚·(ÅI“I‚É‚ÍƒŠƒ_ƒCƒŒƒNƒgj
+				// ã‚¨ãƒ©ãƒ¼ç”»é¢ã‚’è¿”ã™(æœ€çµ‚çš„ã«ã¯ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆï¼‰
 				viewoutput = "error";
 			}
 			
-			// o—Í
+			// å‡ºåŠ›
 			resp.setContentType("text/html");
 			resp.getWriter().print(viewoutput);
 			

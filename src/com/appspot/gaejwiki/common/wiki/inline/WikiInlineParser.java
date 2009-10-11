@@ -42,7 +42,7 @@ public class WikiInlineParser {
 	}
 	
 	/**
-	 * •¶š—ñƒŠƒXƒg‚©‚çAWikiObjectI‚ÌƒŠƒXƒg‚ğì‚Á‚Ä•Ô‚·
+	 * æ–‡å­—åˆ—ãƒªã‚¹ãƒˆã‹ã‚‰ã€WikiObjectIã®ãƒªã‚¹ãƒˆã‚’ä½œã£ã¦è¿”ã™
 	 * @param linelist
 	 * @return
 	 */
@@ -61,11 +61,11 @@ public class WikiInlineParser {
 		String activeline = line;
 		StringBuffer charactersb = new StringBuffer();
 		
-		// ƒAƒNƒeƒBƒuƒ‰ƒCƒ“‚ª‹ó‚É‚È‚é‚Ü‚Å‘±‚¯‚é
+		// ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãƒ©ã‚¤ãƒ³ãŒç©ºã«ãªã‚‹ã¾ã§ç¶šã‘ã‚‹
 		while (activeline.length() > 0) {
 			WikiObjectInlineIPair wikiobjectpair = factory.createWikiObjectInline(activeline);
 			if (wikiobjectpair == null) {
-				// –³‹‚·‚éBi‚±‚±‚É‚Í‚±‚È‚¢‚Í‚¸j
+				// ç„¡è¦–ã™ã‚‹ã€‚ï¼ˆã“ã“ã«ã¯ã“ãªã„ã¯ãšï¼‰
 				assert(false);
 				continue;
 			}
@@ -74,30 +74,30 @@ public class WikiInlineParser {
 			int length = wikiobjectpair.getLength();
 			String inlinestr = activeline.substring(0, length);
 			
-			// Character‚Å‚ ‚ê‚ÎA˜A‘±‚·‚é‰Â”\«‚ª‚‚¢‚Ì‚Å’™‚ß‚Ä‚¨‚­
+			// Characterã§ã‚ã‚Œã°ã€é€£ç¶šã™ã‚‹å¯èƒ½æ€§ãŒé«˜ã„ã®ã§è²¯ã‚ã¦ãŠã
 			if (inline instanceof CharacterInline) {
 				charactersb.append(inlinestr);
 			} else {
 				if (charactersb.length() > 0) {
-					// Character‚É’™‚Ü‚Á‚Ä‚¢‚½‚à‚Ì‚ğæ‚É“o˜^‚·‚é
+					// Characterã«è²¯ã¾ã£ã¦ã„ãŸã‚‚ã®ã‚’å…ˆã«ç™»éŒ²ã™ã‚‹
 					CharacterInline charainline = new CharacterInline();
 					
-					// characterinline‚ÉƒZƒbƒg‚·‚éBÄ‹Aˆ—‚Í‚µ‚È‚¢
+					// characterinlineã«ã‚»ãƒƒãƒˆã™ã‚‹ã€‚å†å¸°å‡¦ç†ã¯ã—ãªã„
 					charainline.set(charactersb.toString(), null);
 					wikilist.add(charainline);
 					charactersb.delete(0, charactersb.length());
 				}
 				
-				// ‚±‚±‚Åinline‚ÉƒZƒbƒg‚·‚é‚Æ“¯‚ÉAÄ‹A“I‚Éinline‚Ì’†‚ğƒp[ƒX‚·‚é
+				// ã“ã“ã§inlineã«ã‚»ãƒƒãƒˆã™ã‚‹ã¨åŒæ™‚ã«ã€å†å¸°çš„ã«inlineã®ä¸­ã‚’ãƒ‘ãƒ¼ã‚¹ã™ã‚‹
 				inline.set(inlinestr, this);
 				wikilist.add(inline);
 			}
 			
-			// ¡’Ç‰Á‚µ‚½•”•ª‚ğactiveline‚©‚ç‚Í‚¸‚µ‚ÄAŒJ‚è•Ô‚·
+			// ä»Šè¿½åŠ ã—ãŸéƒ¨åˆ†ã‚’activelineã‹ã‚‰ã¯ãšã—ã¦ã€ç¹°ã‚Šè¿”ã™
 			activeline = activeline.substring(length, activeline.length());
 		}
 		
-		// ‚±‚±‚ÅÅŒã‚ÉCharacter‚É’™‚Ü‚Á‚Ä‚¢‚½‚à‚Ì‚ªc‚Á‚Ä‚¢‚½‚ç“o˜^
+		// ã“ã“ã§æœ€å¾Œã«Characterã«è²¯ã¾ã£ã¦ã„ãŸã‚‚ã®ãŒæ®‹ã£ã¦ã„ãŸã‚‰ç™»éŒ²
 		if (charactersb.length() > 0) {
 			CharacterInline charainline = new CharacterInline();
 			charainline.set(charactersb.toString(), null);
@@ -108,10 +108,10 @@ public class WikiInlineParser {
 	}
 
 	/**
-	 * noteî•ñ‚É‚Â‚¢‚Ä‚ÍAparse‚Énote‚ğ“o˜^‚µ‚Ä‚¨‚«Anote”Ô†‚ğ•Ô‚·
-	 * html¶¬‚Énoteî•ñ‚Æ‚µ‚Äg‚¤
+	 * noteæƒ…å ±ã«ã¤ã„ã¦ã¯ã€parseæ™‚ã«noteã‚’ç™»éŒ²ã—ã¦ãŠãã€noteç•ªå·ã‚’è¿”ã™
+	 * htmlç”Ÿæˆæ™‚ã«noteæƒ…å ±ã¨ã—ã¦ä½¿ã†
 	 * @param noteInline
-	 * @return note”Ô†(1‚Í‚¶‚Ü‚è)
+	 * @return noteç•ªå·(1ã¯ã˜ã¾ã‚Š)
 	 */
 	public int addNote(NoteInline note) {
 		notelist.add(note);
@@ -119,8 +119,8 @@ public class WikiInlineParser {
 	}
 
 	/**
-	 * noteî•ñ‚ğ•Ô‚·
-	 * @return noteî•ñ‚ÌHtmlƒtƒH[ƒ}ƒbƒg
+	 * noteæƒ…å ±ã‚’è¿”ã™
+	 * @return noteæƒ…å ±ã®Htmlãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	 */
 	public String toNoteHtmlString() {
 		if (notelist == null || notelist.size() == 0) {
@@ -140,20 +140,20 @@ public class WikiInlineParser {
 	}
 
 	/**
-	 * Headline(contents)‚ğŠi”[‚µ‚Äid‚ğ•Ô‚·
+	 * Headline(contents)ã‚’æ ¼ç´ã—ã¦idã‚’è¿”ã™
 	 * @param headlineblock
-	 * @return contents”Ô†(0‚Í‚¶‚Ü‚è)
+	 * @return contentsç•ªå·(0ã¯ã˜ã¾ã‚Š)
 	 */
 	public int addHeadline(HeadlineBlock headlineblock) {
 		contentslist.add(headlineblock);
-		// •Ô‚·ID‚Í0‚Í‚¶‚Ü‚è‚É‚·‚éB
+		// è¿”ã™IDã¯0ã¯ã˜ã¾ã‚Šã«ã™ã‚‹ã€‚
 		return contentslist.size() - 1;
 	}
 
 	/**
-	 * ƒy[ƒW–¼‚ª‘¶İ‚µ‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‚·
+	 * ãƒšãƒ¼ã‚¸åãŒå­˜åœ¨ã—ã¦ã„ã‚Œã°trueã‚’è¿”ã™
 	 * @param pagename
-	 * @return ƒy[ƒW–¼‚ª‘¶İ‚µ‚Ä‚¢‚ê‚Îtrue
+	 * @return ãƒšãƒ¼ã‚¸åãŒå­˜åœ¨ã—ã¦ã„ã‚Œã°true
 	 */
 	public boolean checkPage(String pagename) {
 		// TODO Auto-generated method stub

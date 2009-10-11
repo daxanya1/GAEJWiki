@@ -26,16 +26,16 @@ public class LinkInlineTest {
 	public void tetWikiObjectInlineChecker1() {
 		LinkInline.Checker checker = new LinkInline.Checker();
 		assertEquals(checker.getMatchLength("[[test:http://hoge.jp/]]"), 24);
-		assertEquals(checker.getMatchLength("[[Ç†Ç†Ç†>http://hoge.jp/]]"), 23);
+		assertEquals(checker.getMatchLength("[[„ÅÇ„ÅÇ„ÅÇ>http://hoge.jp/]]"), 23);
 		assertEquals(checker.getMatchLength("[[test>hoge+test@aaa.com]]"), 26);
 		assertEquals(checker.getMatchLength("[[test:hoge+test@aaa.com]]"), 26);
 		assertEquals(checker.getMatchLength("[[http://hoge.jp/]]"), 19);
 		assertEquals(checker.getMatchLength("[[hoge+test@aaa.com]]"), 21);
-		assertEquals(checker.getMatchLength("[[Ç†Ç†Ç†>]]"), 0);
-		assertEquals(checker.getMatchLength("[[Ç†Ç†Ç†>test]]"), 12);
-		assertEquals(checker.getMatchLength("[[Ç†Ç†Ç†>test:test#test]]"), 22);
-		assertEquals(checker.getMatchLength("[[Ç†Ç† Ç†:test]]"), 13);
-		assertEquals(checker.getMatchLength("[[Ç†Ç†Ç†:te:st]]"), 0);
+		assertEquals(checker.getMatchLength("[[„ÅÇ„ÅÇ„ÅÇ>]]"), 0);
+		assertEquals(checker.getMatchLength("[[„ÅÇ„ÅÇ„ÅÇ>test]]"), 12);
+		assertEquals(checker.getMatchLength("[[„ÅÇ„ÅÇ„ÅÇ>test:test#test]]"), 22);
+		assertEquals(checker.getMatchLength("[[„ÅÇ„ÅÇ „ÅÇ:test]]"), 13);
+		assertEquals(checker.getMatchLength("[[„ÅÇ„ÅÇ„ÅÇ:te:st]]"), 0);
 	}
 
 	
@@ -46,7 +46,7 @@ public class LinkInlineTest {
 		assertEquals(checker.getMatchLength("[[page]]"), 0);
 		assertEquals(checker.getMatchLength("[[page]]test"), 0);
 		assertEquals(checker.getMatchLength("[[pa#ge]]"), 0);
-		assertEquals(checker.getMatchLength("[[paÅFge]]"), 0);
+		assertEquals(checker.getMatchLength("[[paÔºöge]]"), 0);
 		assertEquals(checker.getMatchLength(""), 0);
 		assertEquals(checker.getMatchLength(null), 0);
 		assertEquals(checker.getMatchLength("test[[page]]test"), 0);
@@ -97,12 +97,12 @@ public class LinkInlineTest {
 	@Test
 	public void testLinkInlineSub5() {
 		LinkInline link1 = new LinkInline();
-		link1.set("[[Ç†Ç†Ç†>test:test#test]]", null);
-		assertEquals(link1.toDebugString(), "false|Ç†Ç†Ç†|test|test#test|");
+		link1.set("[[„ÅÇ„ÅÇ„ÅÇ>test:test#test]]", null);
+		assertEquals(link1.toDebugString(), "false|„ÅÇ„ÅÇ„ÅÇ|test|test#test|");
 
 		LinkInline link2 = new LinkInline();
-		link2.set("[[Ç†Ç†Ç†>test#test]]", null);
-		assertEquals(link2.toDebugString(), "false|Ç†Ç†Ç†||test#test|");
+		link2.set("[[„ÅÇ„ÅÇ„ÅÇ>test#test]]", null);
+		assertEquals(link2.toDebugString(), "false|„ÅÇ„ÅÇ„ÅÇ||test#test|");
 	}
 
 	@Test

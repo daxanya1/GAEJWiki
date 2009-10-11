@@ -24,15 +24,15 @@ import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 /**
  * WikiObject
- * ���񂹁E�Z���^�����O�E�E��
+ * 左寄せ・センタリング・右寄せ
  * @author daxanya
  * 
  * --
  * 
-�s���� LEFT:�A CENTER:�A RIGHT: ���L�q����ƁA�C�����C���v�f�����񂹁A�Z���^�����O�A�E�񂹂���܂��B
+行頭で LEFT:、 CENTER:、 RIGHT: を記述すると、インライン要素が左寄せ、センタリング、右寄せされます。
 
-LEFT:�ACENTER:�ARIGHT:�́A���̃u���b�N�v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-LEFT:�ACENTER:�ARIGHT:�́A���̃u���b�N�v�f���q�v�f�ɂ��邱�Ƃ��ł��܂���B
+LEFT:、CENTER:、RIGHT:は、他のブロック要素の子要素になることができます。
+LEFT:、CENTER:、RIGHT:は、他のブロック要素を子要素にすることができません。
 
  *
  * --
@@ -106,7 +106,7 @@ public class AlignBlock extends YesChildAddlineBlockBase {
 				return false;
 			}
 			
-			// LEFT:,CENTER:,RIGHT:�̂ǂꂩ��������true
+			// LEFT:,CENTER:,RIGHT:のどれかだったらtrue
 			return (equalsSubstring(line, CENTERFORMAT)) ? true : 
 				(equalsSubstring(line, LEFTFORMAT)) ? true :
 				(equalsSubstring(line, RIGHTFORMAT)) ? true : false;

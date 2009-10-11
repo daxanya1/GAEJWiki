@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * İ’èƒtƒ@ƒCƒ‹‚âJava‚ÌƒVƒXƒeƒ€ƒvƒƒoƒeƒB‚©‚çæ“¾‚Å‚«‚éƒpƒ‰ƒ[ƒ^‚ğW–ñ‚·‚é
+ * è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚„Javaã®ã‚·ã‚¹ãƒ†ãƒ ãƒ—ãƒ­ãƒãƒ†ã‚£ã‹ã‚‰å–å¾—ã§ãã‚‹ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’é›†ç´„ã™ã‚‹
  * @author daxanya
  *
  */
@@ -46,7 +46,7 @@ public class DomainParameter {
 	public static final String LINESEPARATOR = "line.separator";
 	
 	private static final String DEFAULTPAGENAME_NOTSET_DEFAULT = "welcome";
-	private static final String DEFAULTPAGEHTML_DEFAULT = "<div>ƒy[ƒW‚ª“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñBƒy[ƒW‚ğì¬‚µ‚Ä‚­‚¾‚³‚¢BƒŠƒ“ƒN?</div>";
+	private static final String DEFAULTPAGEHTML_DEFAULT = "<div>page not found?</div>";
 	
 	private Map<String, String> parammap = new HashMap<String, String>();
 	
@@ -77,7 +77,7 @@ public class DomainParameter {
 	}
 	
 	/**
-	 * JUnitê—p‚Ìƒpƒ‰ƒ[ƒ^ƒZƒbƒ^[
+	 * JUnitå°‚ç”¨ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚»ãƒƒã‚¿ãƒ¼
 	 * @param key
 	 * @param value
 	 */

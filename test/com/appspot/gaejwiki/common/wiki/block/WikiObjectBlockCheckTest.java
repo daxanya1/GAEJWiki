@@ -42,43 +42,43 @@ public class WikiObjectBlockCheckTest {
 		List<String> list = new ArrayList<String>();
 		
 		// 0 - 4
-		list.add("•’Ê‚Ì’i—Ž");
-		list.add("~#‹L†•t‚«’i—Ž");
-		list.add("~//‹L†•t‚«’i—Ž");
-		list.add(">ˆø—p1");
-		list.add(">>ˆø—p2");
+		list.add("æ™®é€šã®æ®µè½");
+		list.add("~#è¨˜å·ä»˜ãæ®µè½");
+		list.add("~//è¨˜å·ä»˜ãæ®µè½");
+		list.add(">å¼•ç”¨1");
+		list.add(">>å¼•ç”¨2");
 		// 5 - 9
-		list.add(">>>ˆø—p3");
-		list.add("<‹tˆø—p1");
-		list.add("<<‹tˆø—p2");
-		list.add("<<<‹tˆø—p3");
-		list.add(" ®Œ`Ï‚Ý");
+		list.add(">>>å¼•ç”¨3");
+		list.add("<é€†å¼•ç”¨1");
+		list.add("<<é€†å¼•ç”¨2");
+		list.add("<<<é€†å¼•ç”¨3");
+		list.add(" æ•´å½¢æ¸ˆã¿");
 		// 10 - 14
-		list.add(" //®Œ`Ï‚Ý");
-		list.add("*Œ©o‚µ");
-		list.add("+”Ô†ƒŠƒXƒg1");
-		list.add("++”Ô†ƒŠƒXƒg2");
-		list.add("+++”Ô†ƒŠƒXƒg3");
+		list.add(" //æ•´å½¢æ¸ˆã¿");
+		list.add("*è¦‹å‡ºã—");
+		list.add("+ç•ªå·ãƒªã‚¹ãƒˆ1");
+		list.add("++ç•ªå·ãƒªã‚¹ãƒˆ2");
+		list.add("+++ç•ªå·ãƒªã‚¹ãƒˆ3");
 		// 15 - 19
-		list.add("-ƒŠƒXƒg1");
-		list.add("--ƒŠƒXƒg2");
-		list.add("---ƒŠƒXƒg3");
-		list.add("//ƒRƒƒ“ƒg");
+		list.add("-ãƒªã‚¹ãƒˆ1");
+		list.add("--ãƒªã‚¹ãƒˆ2");
+		list.add("---ãƒªã‚¹ãƒˆ3");
+		list.add("//ã‚³ãƒ¡ãƒ³ãƒˆ");
 		list.add("#contents");
 		// 20 - 24
-		list.add(":’è‹`");
+		list.add(":å®šç¾©");
 		list.add("|Table");
 		list.add(",CSV");
-		list.add("\\ŠÖŒW‚È‚¢i’i—Ž)");
-		list.add("@‘SŠpƒXƒy[ƒXi’i—Ž)");
+		list.add("\\é–¢ä¿‚ãªã„ï¼ˆæ®µè½)");
+		list.add("ã€€å…¨è§’ã‚¹ãƒšãƒ¼ã‚¹ï¼ˆæ®µè½)");
 		// 25 - 29
-		list.add("`‘SŠpƒ`ƒ‹ƒ_i’i—Ž)");
-		list.add("”‘SŠpƒiƒ“ƒo[i’i—Ž)");
+		list.add("ï½žå…¨è§’ãƒãƒ«ãƒ€ï¼ˆæ®µè½)");
+		list.add("ï¼ƒå…¨è§’ãƒŠãƒ³ãƒãƒ¼ï¼ˆæ®µè½)");
 		list.add(null);
 		list.add("");
-		list.add(":’è‹`|");
+		list.add(":å®šç¾©|");
 		// 30 - 34
-		list.add(":’è‹`|test");
+		list.add(":å®šç¾©|test");
 		list.add("----test");
 		list.add("-----");
 		list.add("CENTER:t");
@@ -132,7 +132,7 @@ public class WikiObjectBlockCheckTest {
 			blist.add(new ParagraphBlock.Checker().isThis(line));
 		}
 		
-		// ƒpƒ‰ƒOƒ‰ƒt‚Í‘S•”true‚Æ‚µ‚Ä‚¢‚éB
+		// ãƒ‘ãƒ©ã‚°ãƒ©ãƒ•ã¯å…¨éƒ¨trueã¨ã—ã¦ã„ã‚‹ã€‚
 		for (int i = 0; i<blist.size(); i++) {
 			assertTrue(blist.get(i).booleanValue());
 		}

@@ -55,13 +55,13 @@ public abstract class ChildOnlyInlineBase implements WikiObjectInlineI {
 	}
 	
 	/**
-	 * ŒÅ—L‚Ì³‹K•\Œ»‚Ìƒpƒ^[ƒ“‚ğ•Ô‚·
-	 * @return ³‹K•\Œ»•¶š—ñ
+	 * å›ºæœ‰ã®æ­£è¦è¡¨ç¾ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’è¿”ã™
+	 * @return æ­£è¦è¡¨ç¾æ–‡å­—åˆ—
 	 */
 	public abstract String getPattern();
 
 	/**
-	 * ƒy[ƒW‚Å‚ ‚ê‚ÎAƒp[ƒT‚É–â‚¢‡‚í‚¹‚Äƒy[ƒW‚ª‘¶İ‚·‚é‚©‚Ç‚¤‚©‚ğ’²‚×‚é
+	 * ãƒšãƒ¼ã‚¸ã§ã‚ã‚Œã°ã€ãƒ‘ãƒ¼ã‚µã«å•ã„åˆã‚ã›ã¦ãƒšãƒ¼ã‚¸ãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹ã‚’èª¿ã¹ã‚‹
 	 * @param parser
 	 */
 	protected abstract void checkPage(WikiInlineParser parser);

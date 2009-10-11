@@ -24,56 +24,56 @@ import java.util.regex.Pattern;
  * @author daxanya
  *
  *
- *�s���̃y�[�W���`���̕�����̒��ŁA: ��2�̕��������؂��InterWiki�ɂȂ�܂��B:�̑O�ɂ�InterWikiName�̃y�[�W�Œ�`����InterWikiName���A: �̌��ɂ̓y�[�W�����L�q���܂��B
+ *行中のページ名形式の文字列の中で、: で2つの文字列を区切るとInterWikiになります。:の前にはInterWikiNameのページで定義したInterWikiNameを、: の後ろにはページ名を記述します。
 
-[[InterWikiName:�y�[�W��#�A���J�[��]]
-�y�[�W���̌��ɃA���J�[�������邱�Ƃ��ł��܂��B
-InterWikiName�̒��ɂ́A�S�p�������܂߂邱�Ƃ��ł��܂��B
-InterWikiName�̒��ɂ́A���p�󔒕������܂߂邪�ł��܂��B
-InterWiki�́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-InterWiki�́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
+[[InterWikiName:ページ名#アンカー名]]
+ページ名の後ろにアンカー名をつけることもできます。
+InterWikiNameの中には、全角文字を含めることができます。
+InterWikiNameの中には、半角空白文字を含めるができます。
+InterWikiは、他のインライン要素の子要素になることができます。
+InterWikiは、他のインライン要素を子要素にはできません。
  *
  *
- *�s����InterWikiName�̌`���̕�����̒��ŁA: �̑O�ɔC�ӂ̃����N�����A: �̌���URL���L�q����ƁA���̃����N����URL�ɑ΂��郊���N��\�邱�Ƃ��ł��܂��B
+ *行中のInterWikiNameの形式の文字列の中で、: の前に任意のリンク名を、: の後ろにURLを記述すると、そのリンク名でURLに対するリンクを貼ることができます。
 
-�����N���ɂ́A�S�p�����┼�p�󔒕������܂߂邱�Ƃ��ł��܂��B���[���A�h���X���w�肷��ꍇ�́Amailto:���������ɃA�h���X�������L�q���܂��B
+リンク名には、全角文字や半角空白文字を含めることができます。メールアドレスを指定する場合は、mailto:を書かずにアドレスだけを記述します。
 http://www.example.com/
 https://www.example.com/
 ftp://ftp.example.com/
 news://news.example.com/
 foo@example.com
-�s���ɒ��ځAURL���L�q�����ꍇ�͎����I�ɂ���URL�ɑ΂��郊���N���\���܂��B
-�L�q����URL���摜�t�@�C���ł���ꍇ�́A���̉摜��\�����܂��B
-�����N�́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�����N�́A���̃C�����C���v�f���q�v�f�ɂ͂ł��܂���B
+行中に直接、URLを記述した場合は自動的にそのURLに対するリンクが貼られます。
+記述したURLが画像ファイルである場合は、その画像を表示します。
+リンクは、他のインライン要素の子要素になることができます。
+リンクは、他のインライン要素を子要素にはできません。
  *
  *
- *�s���̃y�[�W���`���̕�����̒��ŁA> ��2�̕��������؂�ƃG�C���A�X�ɂȂ�܂��B > �̑O�ɂ̓G�C���A�X�����A> �̌��ɂ̓y�[�W�����L�q���܂��B
+ *行中のページ名形式の文字列の中で、> で2つの文字列を区切るとエイリアスになります。 > の前にはエイリアス名を、> の後ろにはページ名を記述します。
 
-�G�C���A�X��PukiWiki���̃y�[�W���Ƃ͕ʂ̃G�C���A�X���ŁA�w�肵���y�[�W�ւ̃����N��\��܂��B
+エイリアスはPukiWiki内のページ名とは別のエイリアス名で、指定したページへのリンクを貼ります。
 
-[[�G�C���A�X��>�y�[�W��#�A���J�[��]]
-[[�G�C���A�X��>#�A���J�[��]]
-�y�[�W���ɃA���J�[����t�������ăA���J�[�ւ̃����N��\�邱�Ƃ��ł��܂��B�y�[�W���ƃA���J�[���̊Ԃɂ�#�����܂��B�J�����g�y�[�W�̃A���J�[�փ����N��\��ꍇ�̓y�[�W�����ȗ����邱�Ƃ��ł��܂��B
-[[�G�C���A�X��>http://www.example.com/]]
-[[�G�C���A�X��>https://www.example.com/]]
-[[�G�C���A�X��>ftp://ftp.example.com/]]
-[[�G�C���A�X��>news://news.example.com/]]
-[[�G�C���A�X��>foo@example.com]]
-[[�G�C���A�X��>InterWikiName:�y�[�W��]]
-[[�G�C���A�X��>InterWikiName:�y�[�W��#�A���J�[��]]
-�G�C���A�X��URL��InterWiki�Ƒg�ݍ��킹�邱�Ƃ��ł��܂��B
-[[�G�C���A�X��:http://www.example.com/]]
-[[�G�C���A�X��:https://www.example.com/]]
-[[�G�C���A�X��:ftp://ftp.example.com/]]
-[[�G�C���A�X��:news://news.example.com/]]
-[[�G�C���A�X��:foo@example.com]]
-URL���w�肷��ꍇ�́A>�̑����:���g�p�ł��܂��B
-�G�C���A�X���̒��ɂ́A�S�p�������܂߂邱�Ƃ��ł��܂��B
-�G�C���A�X���̒��ɂ́A���p�󔒕������܂߂邱�Ƃ��ł��܂��B
-�K�w�����ꂽ�y�[�W�ł́A�y�[�W���𑊑Ύw�肷�邱�Ƃ��ł��܂��B
-�G�C���A�X�́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�G�C���A�X�́A���̃C�����C���v�f���q�v�f�ɂł��܂��B
+[[エイリアス名>ページ名#アンカー名]]
+[[エイリアス名>#アンカー名]]
+ページ名にアンカー名を付け加えてアンカーへのリンクを貼ることができます。ページ名とアンカー名の間には#をつけます。カレントページのアンカーへリンクを貼る場合はページ名を省略することができます。
+[[エイリアス名>http://www.example.com/]]
+[[エイリアス名>https://www.example.com/]]
+[[エイリアス名>ftp://ftp.example.com/]]
+[[エイリアス名>news://news.example.com/]]
+[[エイリアス名>foo@example.com]]
+[[エイリアス名>InterWikiName:ページ名]]
+[[エイリアス名>InterWikiName:ページ名#アンカー名]]
+エイリアスをURLやInterWikiと組み合わせることもできます。
+[[エイリアス名:http://www.example.com/]]
+[[エイリアス名:https://www.example.com/]]
+[[エイリアス名:ftp://ftp.example.com/]]
+[[エイリアス名:news://news.example.com/]]
+[[エイリアス名:foo@example.com]]
+URLを指定する場合は、>の代わりに:も使用できます。
+エイリアス名の中には、全角文字を含めることができます。
+エイリアス名の中には、半角空白文字を含めることができます。
+階層化されたページでは、ページ名を相対指定することができます。
+エイリアスは、他のインライン要素の子要素になることができます。
+エイリアスは、他のインライン要素を子要素にできます。
  *
  */
 
@@ -129,7 +129,7 @@ public class LinkInline  implements WikiObjectInlineI {
 	
 	public class Sub {
 		
-		// ���K�\���ɂ����āA�K�v�ȏ������o��
+		// 正規表現にかけて、必要な情報を取り出す
 		public void matchSet(String str) {
 			{
 				Pattern pattern1 = Pattern.compile(LINKFORMATPATTERN1);
@@ -232,7 +232,7 @@ public class LinkInline  implements WikiObjectInlineI {
 	}
 
 	/**
-	 * �����N���ǂ����m�F
+	 * リンクかどうか確認
 	 */
 	static public class Checker implements WikiObjectInlineI.Checker {
 

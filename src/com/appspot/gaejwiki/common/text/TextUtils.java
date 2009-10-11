@@ -16,15 +16,15 @@
 package com.appspot.gaejwiki.common.text;
 
 /**
- * ƒeƒLƒXƒg‚ÉŠÖ‚·‚éƒ†[ƒeƒBƒŠƒeƒBƒNƒ‰ƒX
+ * ãƒ†ã‚­ã‚¹ãƒˆã«é–¢ã™ã‚‹ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã‚¯ãƒ©ã‚¹
  * @author Ryuichi Danno
  */
 public class TextUtils {
 
 	/**
-	 * ’Êí‚ÌƒeƒLƒXƒg‚É‘Î‚µ‚ÄHTML•¶š—ñ‚ğƒGƒXƒP[ƒv‚·‚é
-	 * @param line ƒGƒXƒP[ƒv‘O‚Ì•¶š—ñ
-	 * @return ƒGƒXƒP[ƒv‚³‚ê‚½•¶š—ñ
+	 * é€šå¸¸ã®ãƒ†ã‚­ã‚¹ãƒˆã«å¯¾ã—ã¦HTMLæ–‡å­—åˆ—ã‚’ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã™ã‚‹
+	 * @param line ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—å‰ã®æ–‡å­—åˆ—
+	 * @return ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã•ã‚ŒãŸæ–‡å­—åˆ—
 	 */
 	public String escapeHtmlString(String line) {
 		if (line == null || line.length() == 0) {
@@ -56,4 +56,5 @@ public class TextUtils {
 		}
 		return sb.toString();
 	}
+	
 }

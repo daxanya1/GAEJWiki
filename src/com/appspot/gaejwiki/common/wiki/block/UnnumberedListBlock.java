@@ -21,16 +21,16 @@ import com.appspot.gaejwiki.common.wiki.block.base.ListBlockBase;
 
 /**
  * WikiObject
- * �ԍ��Ȃ����X�g
+ * 番号なしリスト
  * @author daxanya
  *
  * --
  *
-�s���� - ���w�肷��ƁA�ԍ��Ȃ����X�g�ɂȂ�܂��B�ԍ��Ȃ����X�g�� -�A--�A--- ��3���x������܂��B
+行頭で - を指定すると、番号なしリストになります。番号なしリストは -、--、--- の3レベルあります。
 
-�ԍ��Ȃ����X�g�́A���̃u���b�N�v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B���̃��X�g�\���̎q�v�f�ɂ���ꍇ�́A���x����1�i���₵�ċL�q���܂��B���p���̎q�v�f�ɂ���ꍇ�́A���x���𑝂₳���ɋL�q���܂��B
--�̒���� ~���L�q����ƒi�����q�v�f�ɂ��邱�Ƃ��ł��܂��B
-�ԍ��Ȃ����X�g�́A���X�g�̐擪���C�����C���v�f�܂��͒i���ł���ꍇ�Ɍ���A���X�g�̎��̍s�ɑ��̃u���b�N�v�f���L�q���邱�ƂŁA���̃u���b�N�v�f���q�v�f�ɂ��邱�Ƃ��ł��܂��B
+番号なしリストは、他のブロック要素の子要素になることができます。他のリスト構造の子要素にする場合は、レベルを1段増やして記述します。引用文の子要素にする場合は、レベルを増やさずに記述します。
+-の直後に ~を記述すると段落を子要素にすることができます。
+番号なしリストは、リストの先頭がインライン要素または段落である場合に限り、リストの次の行に他のブロック要素を記述することで、他のブロック要素を子要素にすることができます。
  *
  * --
  */
@@ -61,7 +61,7 @@ public class UnnumberedListBlock extends ListBlockBase {
 				return false;
 			}
 			
-			// �������ł���ΈႤ
+			// 水平線であれば違う
 			if (new HorizonBlock.Checker().isThis(line)) {
 				return false;
 			}

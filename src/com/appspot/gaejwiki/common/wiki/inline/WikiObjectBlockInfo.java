@@ -16,8 +16,8 @@
 package com.appspot.gaejwiki.common.wiki.inline;
 
 /**
- * Block‰ğÍŒãAInline‚ğƒp[ƒX‚·‚éÛ‚É•K—v‚Æ‚·‚éî•ñ
- * #contents‚ÌŒ©o‚µ‚âAnoteî•ñ“™
+ * Blockè§£æå¾Œã€Inlineã‚’ãƒ‘ãƒ¼ã‚¹ã™ã‚‹éš›ã«å¿…è¦ã¨ã™ã‚‹æƒ…å ±
+ * #contentsæ™‚ã®è¦‹å‡ºã—ã‚„ã€noteæƒ…å ±ç­‰
  *
  * @author Ryuichi Danno
  */

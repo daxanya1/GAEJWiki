@@ -31,7 +31,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 	
 	/**
-	 * ‚P€–ÚAƒ^ƒO‚ğ<a></a>‚ÌŒ`®
+	 * ï¼‘é …ç›®ã€ã‚¿ã‚°ã‚’<a></a>ã®å½¢å¼
 	 */
 	public void testPtXmlParser1() {
 		String xml1="<pt><phtml name=\"header\"><param key=\"title\"></param></phtml></pt>";
@@ -48,7 +48,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 	
 	/**
-	 * ‚P€–ÚAƒ^ƒO‚ğ<a />‚ÌŒ`®
+	 * ï¼‘é …ç›®ã€ã‚¿ã‚°ã‚’<a />ã®å½¢å¼
 	 */
 	public void testPtXmlParser2() {
 		String xml1="<pt><phtml name=\"header\"><param key=\"title\" /\"></phtml></pt>";
@@ -65,7 +65,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 
 	/**
-	 * ‚R€–ÚAƒ^ƒO‚ğ<a></a>‚ÌŒ`®
+	 * ï¼“é …ç›®ã€ã‚¿ã‚°ã‚’<a></a>ã®å½¢å¼
 	 */
 	public void testPtXmlParser3() {
 		String xml1="<pt><phtml name=\"header\"><param key=\"title\"></param></phtml><phtml name=\"wikidata\"><param key=\"wiki\"></param></phtml><phtml name=\"footer\"></phtml></pt>";
@@ -87,7 +87,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 
 	/**
-	 * ‚R€–ÚAƒ^ƒO‚ğ<a />‚ÌŒ`®
+	 * ï¼“é …ç›®ã€ã‚¿ã‚°ã‚’<a />ã®å½¢å¼
 	 */
 	public void testPtXmlParser4() {
 		String xml1="<pt><phtml name=\"header\"><param key=\"title\" /></phtml><phtml name=\"wikidata\"><param key=\"wiki\" /></phtml><phtml name=\"footer\" /></pt>";
@@ -109,7 +109,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 
 	/**
-	 * ‚R€–ÚAkey‚ğ•¡”
+	 * ï¼“é …ç›®ã€keyã‚’è¤‡æ•°
 	 */
 	public void testPtXmlParser5() {
 		String xml1="<pt><phtml name=\"header\"><param key=\"title\" /></phtml><phtml name=\"wikidata\"><param key=\"wiki\" /><param key=\"wiki2\" /></phtml><phtml name=\"footer\" /></pt>";
@@ -135,7 +135,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 
 	/**
-	 * ‹ó@parseSax‚ÅNullPointException
+	 * ç©ºã€€parseSaxã§NullPointException
 	 */
 	public void testPtXmlParser6() {
 		String xml1=null;
@@ -151,7 +151,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 
 	/**
-	 * ‹ó•¶š@parseSax‚ÅStringIndexOutOfBoundsException
+	 * ç©ºæ–‡å­—ã€€parseSaxã§StringIndexOutOfBoundsException
 	 */
 	public void testPtXmlParser7() {
 		String xml1="";
@@ -167,7 +167,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 
 	/**
-	 * 1•¶š@ƒŠƒXƒg‚ª‹ó
+	 * 1æ–‡å­—ã€€ãƒªã‚¹ãƒˆãŒç©º
 	 */
 	public void testPtXmlParser8() {
 		String xml1="1";
@@ -180,7 +180,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 
 	/**
-	 * ƒ_ƒuƒ‹ƒNƒH[ƒgœ‹ƒ`ƒFƒbƒN@‹ó
+	 * ãƒ€ãƒ–ãƒ«ã‚¯ã‚©ãƒ¼ãƒˆé™¤å»ãƒã‚§ãƒƒã‚¯ã€€ç©º
 	 */
 	public void testTrimDoubleQuote1() {
 		String param = null;
@@ -190,7 +190,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 
 	/**
-	 * ƒ_ƒuƒ‹ƒNƒH[ƒgœ‹ƒ`ƒFƒbƒN@‹ó•¶š
+	 * ãƒ€ãƒ–ãƒ«ã‚¯ã‚©ãƒ¼ãƒˆé™¤å»ãƒã‚§ãƒƒã‚¯ã€€ç©ºæ–‡å­—
 	 */
 	public void testTrimDoubleQuote2() {
 		String param = "";
@@ -200,7 +200,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 
 	/**
-	 * ƒ_ƒuƒ‹ƒNƒH[ƒgœ‹ƒ`ƒFƒbƒN@•Ğ•û"
+	 * ãƒ€ãƒ–ãƒ«ã‚¯ã‚©ãƒ¼ãƒˆé™¤å»ãƒã‚§ãƒƒã‚¯ã€€ç‰‡æ–¹"
 	 */
 	public void testTrimDoubleQuote3() {
 		String param = "test\"";
@@ -210,7 +210,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 
 	/**
-	 * ƒ_ƒuƒ‹ƒNƒH[ƒgœ‹ƒ`ƒFƒbƒN@^‚ñ’†"
+	 * ãƒ€ãƒ–ãƒ«ã‚¯ã‚©ãƒ¼ãƒˆé™¤å»ãƒã‚§ãƒƒã‚¯ã€€çœŸã‚“ä¸­"
 	 */
 	public void testTrimDoubleQuote4() {
 		String param = "test\"test";
@@ -220,7 +220,7 @@ public class PtXmlParserTest extends TestCase {
 	}
 
 	/**
-	 * ƒ_ƒuƒ‹ƒNƒH[ƒgœ‹ƒ`ƒFƒbƒN@’[‚Æ^‚ñ’†"
+	 * ãƒ€ãƒ–ãƒ«ã‚¯ã‚©ãƒ¼ãƒˆé™¤å»ãƒã‚§ãƒƒã‚¯ã€€ç«¯ã¨çœŸã‚“ä¸­"
 	 */
 	public void testTrimDoubleQuote5() {
 		String param = "\"test\"test\"";

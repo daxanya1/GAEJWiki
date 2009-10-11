@@ -15,6 +15,8 @@
  */
 package com.appspot.gaejwiki.common.template;
 
+import java.util.logging.Logger;
+
 import org.fb.xml.parser.BitXmlParser;
 
 import com.appspot.gaejwiki.common.text.FileUtils;
@@ -22,6 +24,7 @@ import com.appspot.gaejwiki.common.xml.PtXmlParser;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
 public class TemplateLoader {
+	private static final Logger logger = Logger.getLogger(TemplateLoader.class.getName());
 
 	/**
 	 * @param templatepath
@@ -29,11 +32,13 @@ public class TemplateLoader {
 	 */
 	public TemplateData loadTemplate(String templatepath) {
 		if (templatepath == null) {
+			logger.info("loadtemplate path null");
 			return null;
 		}
 		DomainParameter domainparam = DomainParameter.getDomainParameter();
 		String templatebody = new Sub().loadTemplateFile(domainparam.getTemplateFilePath(templatepath));
 		if (templatebody == null) {
+			logger.info("loadtemplate templatebody null:" + domainparam.getTemplateFilePath(templatepath));
 			return null;
 		}
         

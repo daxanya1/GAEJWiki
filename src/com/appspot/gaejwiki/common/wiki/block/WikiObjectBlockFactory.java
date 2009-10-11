@@ -63,7 +63,7 @@ public class WikiObjectBlockFactory {
 	}
 	
 	/**
-	 * •¶š—ñ‚©‚ç”»’f‚µ‚Äwikiobjectblock‚ğ•Ô‚·
+	 * æ–‡å­—åˆ—ã‹ã‚‰åˆ¤æ–­ã—ã¦wikiobjectblockã‚’è¿”ã™
 	 * @param line
 	 * @return
 	 */
@@ -83,14 +83,14 @@ public class WikiObjectBlockFactory {
 			}
 		}
 		
-		// ‰½‚à‚È‚¢‚È‚çAƒpƒ‰ƒOƒ‰ƒt‚Æ‚İ‚È‚·
+		// ä½•ã‚‚ãªã„ãªã‚‰ã€ãƒ‘ãƒ©ã‚°ãƒ©ãƒ•ã¨ã¿ãªã™
 		return new Sub().createWikiObjectBlockFromChecker(new ParagraphBlock.Checker());
 	}
 	
 	static public class Sub {
 	
 		/**
-		 * checker‚ÌƒNƒ‰ƒX–¼‚©‚çAŒ³ƒNƒ‰ƒXiParagraphBlock.Checker‚¾‚Á‚½‚çAParagraphBlockj–¼‚ğæ“¾‚µAƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬‚µ‚Ä•Ô‚·
+		 * checkerã®ã‚¯ãƒ©ã‚¹åã‹ã‚‰ã€å…ƒã‚¯ãƒ©ã‚¹ï¼ˆParagraphBlock.Checkerã ã£ãŸã‚‰ã€ParagraphBlockï¼‰åã‚’å–å¾—ã—ã€ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œæˆã—ã¦è¿”ã™
 		 * @param classname
 		 * @return WikiObjectBlock
 		 */

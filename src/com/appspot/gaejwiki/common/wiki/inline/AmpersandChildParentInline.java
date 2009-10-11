@@ -21,38 +21,38 @@ import java.util.regex.Pattern;
 
 /**
  * WikiObject
- * inline &(){}�n �̂����A�q�v�f�ɂȂ邵�e�ɂ��Ȃ����
+ * inline &(){}系 のうち、子要素になるし親にもなるもの
  * @author daxanya
  *
  *
- *�s���� &color �Ə����ƃC�����C���v�f�̕����F�Ɣw�i�F���w�肷�邱�Ƃ��ł��܂��B�w�i�F�͏ȗ��ł��܂��B
+ *行中に &color と書くとインライン要素の文字色と背景色を指定することができます。背景色は省略できます。
 
-�F�̎w��́A���̂����ꂩ�̌`���ōs�Ȃ��܂��B
-�F�L�[���[�h
-#16�i��6��
-#16�i��3��
-�����F�́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�����F�́A���̃C�����C���v�f���q�v�f�ɂ��邱�Ƃ��ł��܂��B
+色の指定は、次のいずれかの形式で行ないます。
+色キーワード
+#16進数6桁
+#16進数3桁
+文字色は、他のインライン要素の子要素になることができます。
+文字色は、他のインライン要素を子要素にすることができます。
 
-�s���� &size �������ƃC�����C���v�f�̕����T�C�Y���w�肷�邱�Ƃ��ł��܂��B�T�C�Y�̓s�N�Z���P��(px)�Ŏw�肵�܂��B�Ⴆ��20���w�肷��ƁA20�s�N�Z���̕����̑傫���ɂȂ�܂��B
+行中に &size を書くとインライン要素の文字サイズを指定することができます。サイズはピクセル単位(px)で指定します。例えば20を指定すると、20ピクセルの文字の大きさになります。
 
-�����T�C�Y�́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�����T�C�Y�́A���̃C�����C���v�f���q�v�f�ɂ��邱�Ƃ��ł��܂��B
+文字サイズは、他のインライン要素の子要素になることができます。
+文字サイズは、他のインライン要素を子要素にすることができます。
 
-�s���� &ruby �������ƃC�����C���v�f�ɑ΂��郋�r���ӂ邱�Ƃ��ł��܂��B���r�ɑΉ����Ă��Ȃ��u���E�U�ł̓��r���{������ ( �� ) �Ɉ͂܂�ĕ\������܂��B
+行中で &ruby を書くとインライン要素に対するルビをふることができます。ルビに対応していないブラウザではルビが本文中に ( と ) に囲まれて表示されます。
 
-���r�\���̃��r�ɂ̓C�����C���v�f���L�q���܂��B�������A���r�̓�����A���Ғʂ�̕\���ɂȂ�Ƃ͌���܂���B
-���r�\���́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-���r�\���́A���̃C�����C���v�f���q�v�f�ɂ��邱�Ƃ��ł��܂��B
-���r�\�������r�\���̎q�v�f�ɂ͂ł��܂���(�l�X�g�͂ł��܂���)�B
-���ߓ��╶���T�C�Y�����������Ă��镔���ł̎g�p�́A���r�����ǂł��Ȃ��Ȃ�̂Ŕ����Ă��������B
+ルビ構造のルビにはインライン要素を記述します。ただし、ルビの特性上、期待通りの表示になるとは限りません。
+ルビ構造は、他のインライン要素の子要素になることができます。
+ルビ構造は、他のインライン要素を子要素にすることができます。
+ルビ構造をルビ構造の子要素にはできません(ネストはできません)。
+注釈内や文字サイズを小さくしている部分での使用は、ルビが判読できなくなるので避けてください。
 
-�s���� &aname ���L�q����ƃ����N�̃A���J�[��ݒ肷�邱�Ƃ��ł��܂��B�����N�̔�ѐ�ɂ������ʒu�ɋL�q���܂��B
+行中で &aname を記述するとリンクのアンカーを設定することができます。リンクの飛び先にしたい位置に記述します。
 
-�A���J�[���́A���p�A���t�@�x�b�g����n�܂锼�p�A���t�@�x�b�g�E�����E�n�C�t���E�A���_�[�X�R�A����Ȃ镶������w�肵�܂��B
-�A���J�[���̒��ɂ́A�S�p�����┼�p�󔒕����A���p�L�����܂߂邱�Ƃ͂ł��܂���B
-�A���J�[�ݒ�́A���̃C�����C���v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�A���J�[�ݒ�́A���̃C�����C���v�f���q�v�f�ɂ��邱�Ƃ��ł��܂��B
+アンカー名は、半角アルファベットから始まる半角アルファベット・数字・ハイフン・アンダースコアからなる文字列を指定します。
+アンカー名の中には、全角文字や半角空白文字、半角記号を含めることはできません。
+アンカー設定は、他のインライン要素の子要素になることができます。
+アンカー設定は、他のインライン要素を子要素にすることができます。
 
  *
  */
@@ -78,7 +78,7 @@ public class AmpersandChildParentInline implements WikiObjectInlineI {
 	@Override
 	public void set(String str, WikiInlineParser parser) {
 		rawdata = str;
-		// �ċA�������s��
+		// 再帰処理を行う
 		String line = new Sub().matchSet(rawdata);
 		if (line != null) {
 			childlist = parser.parseInline(line);
@@ -106,7 +106,7 @@ public class AmpersandChildParentInline implements WikiObjectInlineI {
 
 	public class Sub {
 		
-		// ���K�\���ɂ����āA�K�v�ȏ������o��
+		// 正規表現にかけて、必要な情報を取り出す
 		public String matchSet(String str) {
 			Pattern pattern1 = Pattern.compile(AMPERSANDCHILDPARENTFORMATPATTERN1);
 			Matcher matcher1 = pattern1.matcher(str);
@@ -154,7 +154,7 @@ public class AmpersandChildParentInline implements WikiObjectInlineI {
 	}
 
 	/**
-	 * &(){}�n���ǂ����m�F
+	 * &(){}系かどうか確認
 	 */
 	static public class Checker implements WikiObjectInlineI.Checker {
 

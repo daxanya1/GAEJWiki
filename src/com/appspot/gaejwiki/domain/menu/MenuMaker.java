@@ -26,8 +26,8 @@ public class MenuMaker {
 	private static final String MENUPAGENAME = "menu";
 	
 	/**
-	 * ƒƒjƒ…[—pƒy[ƒWƒpƒ‰ƒ[ƒ^‚ðì¬‚µ‚Ä•Ô‚·
-	 * @return ƒƒjƒ…[—pƒy[ƒWƒpƒ‰ƒ[ƒ^
+	 * ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨ãƒšãƒ¼ã‚¸ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ä½œæˆã—ã¦è¿”ã™
+	 * @return ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨ãƒšãƒ¼ã‚¸ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 	 */
 	public PageParam getMenuParam() {
 		PageParam pageparam = new PageParam();

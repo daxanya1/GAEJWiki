@@ -25,49 +25,49 @@ import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 /**
  * WikiObject
- * #�`�̃u���b�N
+ * #～のブロック
  * @author daxanya
  * 
  * --
  * 
-#contents : �ڎ�
-#hr : ������
-#br : �s�ԊJ��
-#clear : �e�L�X�g�̉�荞�݂̉���
-#comment,#pcomment, #article : �t�H�[��
+#contents : 目次
+#hr : 水平線
+#br : 行間開け
+#clear : テキストの回り込みの解除
+#comment,#pcomment, #article : フォーム
 
-#ref(�Y�t�t�@�C����)
-#ref(�t�@�C����URL)
-�s���� #ref ���L�q����ƁA�Y�t�t�@�C���܂��͎w�肳�ꂽURL�ɂ���t�@�C���ւ̃����N��\��t���邱�Ƃ��ł��܂��B�t�@�C�����摜�t�@�C���̏ꍇ�́A���̉摜��\�����܂��B
+#ref(添付ファイル名)
+#ref(ファイルのURL)
+行頭で #ref を記述すると、添付ファイルまたは指定されたURLにあるファイルへのリンクを貼り付けることができます。ファイルが画像ファイルの場合は、その画像を表示します。
 
-#ref �ɂ́A�J���}�ŋ�؂��ĉ��L�̃p�����^���w��ł��܂��B�p�����^���ȗ������ꍇ�̓f�t�H���g�l�ƂȂ�܂��B
-�Y�t�t�@�C���̃y�[�W
-�Y�t�t�@�C�������݂���y�[�W�����w�肵�܂��B�f�t�H���g�͌��݂̃y�[�W�ł��B
-���̃p�����^���w�肷��ꍇ�́A�Y�t�t�@�C�����̎��ɋL�q���܂��B
+#ref には、カンマで区切って下記のパラメタを指定できます。パラメタを省略した場合はデフォルト値となります。
+添付ファイルのページ
+添付ファイルが存在するページ名を指定します。デフォルトは現在のページです。
+このパラメタを指定する場合は、添付ファイル名の次に記述します。
 left
 center
 right
-�t�@�C���ւ̃����N�E�摜��\������ʒu���w�肵�܂��B�f�t�H���g�ł̓Z���^�����O����܂��B
+ファイルへのリンク・画像を表示する位置を指定します。デフォルトではセンタリングされます。
 wrap
 nowrap
-�t�@�C���ւ̃����N�E�摜��g�ň͂ނ��ǂ������w�肵�܂��B�f�t�H���g�͈݂͂܂���B
+ファイルへのリンク・画像を枠で囲むかどうかを指定します。デフォルトは囲みません。
 around
-�e�L�X�g�̉�荞�݂��w�肵�܂��B�f�t�H���g�ł͉�荞�݂��s�Ȃ��܂���B
+テキストの回り込みを指定します。デフォルトでは回り込みを行ないません。
 nolink
-�f�t�H���g�ł͓Y�t�t�@�C���ւ̃����N�������܂����Anolink���w�肷��ƃ����N�𒣂�܂���B
-��֕�����
-�t�@�C�����̑���ɕ\�����镶�����摜�̑�֕�������w��ł��܂��B�w�肵�Ȃ��ꍇ�́A�t�@�C�����ɂȂ�܂��B
-��֕�����ɂ͕�����ȊO�̃C�����C���v�f���܂߂邱�Ƃ͂ł��܂���B�y�[�W���A������ȊO�̃C�����C���v�f���L�q���Ă�������Ƃ��Ĉ����܂��B
-���̃p�����^���w�肷��ꍇ�́A�Ō�ɋL�q���܂��B
-#ref�́A���̃u���b�N�v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-#ref�́A���̃u���b�N�v�f���q�v�f�ɂ��邱�Ƃ͂ł��܂���B
+デフォルトでは添付ファイルへのリンクが張られますが、nolinkを指定するとリンクを張りません。
+代替文字列
+ファイル名の代わりに表示する文字列や画像の代替文字列を指定できます。指定しない場合は、ファイル名になります。
+代替文字列には文字列以外のインライン要素を含めることはできません。ページ名、文字列以外のインライン要素を記述しても文字列として扱われます。
+このパラメタを指定する場合は、最後に記述します。
+#refは、他のブロック要素の子要素になることができます。
+#refは、他のブロック要素を子要素にすることはできません。
 
-#vote(�I����1,�I����2,...)
-�s���� #vote ���L�q����ƁA�ȈՓ��[�t�H�[�������ߍ��܂�܂��B
+#vote(選択肢1,選択肢2,...)
+行頭で #vote を記述すると、簡易投票フォームが埋め込まれます。
 
-�I�����͕�����A�y�[�W���AInterWiki�A�����N���܂߂邱�Ƃ��ł��܂��B���̑��̃C�����C���v�f���܂߂邱�Ƃ��ł��܂���B
-#vote�́A���̃u���b�N�v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂����A�g�b�v���x���ɐݒu���邱�Ƃ�O��ɍ��}�[�W����ݒ肵�Ă���܂��̂ŁA���̃u���b�N�v�f�̎q�v�f�ɂ͂��Ȃ��ł��������B
-#vote�́A���̃u���b�N�v�f���q�v�f�ɂ��邱�Ƃ͂ł��܂���B
+選択肢は文字列、ページ名、InterWiki、リンクを含めることができます。その他のインライン要素を含めることができません。
+#voteは、他のブロック要素の子要素になることができますが、トップレベルに設置することを前提に左マージンを設定してありますので、他のブロック要素の子要素にはしないでください。
+#voteは、他のブロック要素を子要素にすることはできません。
  *
  * --
  */
@@ -124,10 +124,10 @@ public class HashBlock extends YesChildNoAddlineBlockBase {
 		
 		switch (type) {
 		case ref:
-			// ref�p���ꏈ��
+			// ref用特殊処理
 			break;
 		case vote:
-			// vote�p���ꏈ��
+			// vote用特殊処理
 			break;
 		}
 
@@ -136,7 +136,7 @@ public class HashBlock extends YesChildNoAddlineBlockBase {
 	static public class Sub {
 		
 		/**
-		 * line�𐳋K�\���ɂ����āA�}�b�`������Atype��Ԃ�
+		 * lineを正規表現にかけて、マッチしたら、typeを返す
 		 * @param line
 		 * @param pat
 		 * @return

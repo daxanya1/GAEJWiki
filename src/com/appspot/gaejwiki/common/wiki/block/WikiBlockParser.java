@@ -26,7 +26,7 @@ public class WikiBlockParser {
 
 	
 	/**
-	 * •¶š—ñƒŠƒXƒg‚©‚çAWikiObjectI‚ÌƒŠƒXƒg‚ğì‚Á‚Ä•Ô‚·
+	 * æ–‡å­—åˆ—ãƒªã‚¹ãƒˆã‹ã‚‰ã€WikiObjectIã®ãƒªã‚¹ãƒˆã‚’ä½œã£ã¦è¿”ã™
 	 * @param linelist
 	 * @return
 	 */
@@ -39,58 +39,58 @@ public class WikiBlockParser {
 			return wikilist;
 		}
 		
-		// ˆês‚¸‚Âæ“¾‚·‚éB
+		// ä¸€è¡Œãšã¤å–å¾—ã™ã‚‹ã€‚
 		for (String line : linelist) {
 			if (line == null || line.length() == 0) {
-				// ‹æØ‚è‚Æ‚İ‚È‚·B
+				// åŒºåˆ‡ã‚Šã¨ã¿ãªã™ã€‚
 				nowobject = null;
 				continue;
 			}
 			
 			WikiObjectBlockI wikiobject = factory.createWikiObjectBlock(line);
 			if (wikiobject == null) {
-				// ‹æØ‚è‚Æ‚İ‚È‚·Bi‚±‚±‚É‚Í‚±‚È‚¢‚Í‚¸j
+				// åŒºåˆ‡ã‚Šã¨ã¿ãªã™ã€‚ï¼ˆã“ã“ã«ã¯ã“ãªã„ã¯ãšï¼‰
 				assert(false);
 				nowobject = null;
 				continue;
 			}
 			
-			// ƒRƒƒ“ƒg‚©‚Ç‚¤‚©”»’f‚·‚é
+			// ã‚³ãƒ¡ãƒ³ãƒˆã‹ã©ã†ã‹åˆ¤æ–­ã™ã‚‹
 			if (wikiobject instanceof CommentBlock) {
-				// ‚È‚É‚à‚¹‚¸‚ÉŸ‚ÖB
+				// ãªã«ã‚‚ã›ãšã«æ¬¡ã¸ã€‚
 				continue;
 			}
 			
-			// nowobject‚ªnull‚Å‚È‚¢ê‡‚Ì“Áêd—l
+			// nowobjectãŒnullã§ãªã„å ´åˆã®ç‰¹æ®Šä»•æ§˜
 			if (new Sub().isAddLine(nowobject, wikiobject)) {
-				// ¡‚ÌƒuƒƒbƒN‚És’Ç‰Á‚µ‚ÄŸ‚ÖB
+				// ä»Šã®ãƒ–ãƒ­ãƒƒã‚¯ã«è¡Œè¿½åŠ ã—ã¦æ¬¡ã¸ã€‚
 				nowobject.addLine(line);
 				continue;
 			}
 			
-			// wikiobject‚Éline‚ğ’Ç‰Á‚·‚éB
+			// wikiobjectã«lineã‚’è¿½åŠ ã™ã‚‹ã€‚
 			wikiobject.addLine(line);
 			
-			// wikiobject‚ªq‹Ÿ‚É‚È‚ê‚È‚¢‚©Anowobject‚ªnull‚Ìê‡Awikilist‚É’Ç‰Á
+			// wikiobjectãŒå­ä¾›ã«ãªã‚Œãªã„ã‹ã€nowobjectãŒnullã®å ´åˆã€wikilistã«è¿½åŠ 
 			if (!wikiobject.isAddToParent() || nowobject == null) {
 				wikilist.add(wikiobject);
 			} else {
-				// block‚ğq‹Ÿ‚Æ‚µ‚ÄƒZƒbƒg‚·‚é‚ªAnowobject‚ªq‹Ÿ‚ğƒZƒbƒg‚Å‚«‚È‚¢ê‡Ae‚ğ‚½‚Ç‚é
+				// blockã‚’å­ä¾›ã¨ã—ã¦ã‚»ãƒƒãƒˆã™ã‚‹ãŒã€nowobjectãŒå­ä¾›ã‚’ã‚»ãƒƒãƒˆã§ããªã„å ´åˆã€è¦ªã‚’ãŸã©ã‚‹
 				if (nowobject.isAddChildBlock()) {
 					nowobject.addChildBlock(wikiobject);
 				} else {
 					WikiObjectBlockI parenttoaddchild = new Sub().getParentToAddChild(nowobject);
 					if (parenttoaddchild == null) {
-						// e‚ª‘S•”q‹ŸƒZƒbƒg•s‰Â‚Èê‡‚ÍAƒgƒbƒv‚Ö“ü‚ê‚é
+						// è¦ªãŒå…¨éƒ¨å­ä¾›ã‚»ãƒƒãƒˆä¸å¯ãªå ´åˆã¯ã€ãƒˆãƒƒãƒ—ã¸å…¥ã‚Œã‚‹
 						wikilist.add(wikiobject);
 					} else {
-						// e‚ª‚ ‚Á‚½‚çA‚»‚¿‚ç‚Ìe‚ÉƒZƒbƒg‚·‚é
+						// è¦ªãŒã‚ã£ãŸã‚‰ã€ãã¡ã‚‰ã®è¦ªã«ã‚»ãƒƒãƒˆã™ã‚‹
 						parenttoaddchild.addChildBlock(wikiobject);
 					}
 				}
 			}
 			
-			// ƒŠƒZƒbƒg‚·‚éê‡‚Ínowobject‚ğnull‚Æ‚·‚éB
+			// ãƒªã‚»ãƒƒãƒˆã™ã‚‹å ´åˆã¯nowobjectã‚’nullã¨ã™ã‚‹ã€‚
 			if (wikiobject.isReset()) {
 				nowobject = null;
 			} else {
@@ -103,13 +103,13 @@ public class WikiBlockParser {
 	
 	static public class Sub {
 		/**
-		 * nowobject‚ªisAddline()=true‚Ìê‡‚ÉAŸ‚Ì‚Ç‚¿‚ç‚©‚Å‚ ‚ê‚Îtrue
-		 * ‚PDnowobject‚ªisSameBlockAddLine()=true‚ÅAnowobject‚Æwikiobject‚ª“¯‚¶ƒNƒ‰ƒX
-		 * ‚QDnowobject‚ªisSameBlockAddLine()=false‚ÅAwikiobject‚ª’i—
+		 * nowobjectãŒisAddline()=trueã®å ´åˆã«ã€æ¬¡ã®ã©ã¡ã‚‰ã‹ã§ã‚ã‚Œã°true
+		 * ï¼‘ï¼nowobjectãŒisSameBlockAddLine()=trueã§ã€nowobjectã¨wikiobjectãŒåŒã˜ã‚¯ãƒ©ã‚¹
+		 * ï¼’ï¼nowobjectãŒisSameBlockAddLine()=falseã§ã€wikiobjectãŒæ®µè½
 		 *
 		 * @param nowobject
 		 * @param wikiobject
-		 * @return ğŒ‚É‡’v‚µ‚½ê‡true
+		 * @return æ¡ä»¶ã«åˆè‡´ã—ãŸå ´åˆtrue
 		 */
 		public boolean isAddLine(WikiObjectBlockI nowobject, WikiObjectBlockI wikiobject) {
 			if (nowobject == null || wikiobject == null) {
@@ -123,16 +123,16 @@ public class WikiBlockParser {
 					return (wikiobject instanceof ParagraphBlock) ? true : false;
 				}
 			} else {
-				// ‚±‚±‚É‚Í‚±‚È‚¢‚Í‚¸B
+				// ã“ã“ã«ã¯ã“ãªã„ã¯ãšã€‚
 				assert(false);
 				return false;
 			}
 		}
 
 		/**
-		 * nowobject‚©‚ç‚³‚©ã‚Á‚ÄAisAddChildBlock()‚ªtrue‚Ìe‚ğ’T‚·B‚È‚¯‚ê‚Înull
-		 * @param nowobject Œ»“_‚ÌWikiObjectI
-		 * @return isAddChildBlock()‚ªtrue‚Ìe‚ÌWikiObjectI
+		 * nowobjectã‹ã‚‰ã•ã‹ä¸Šã£ã¦ã€isAddChildBlock()ãŒtrueã®è¦ªã‚’æ¢ã™ã€‚ãªã‘ã‚Œã°null
+		 * @param nowobject ç¾æ™‚ç‚¹ã®WikiObjectI
+		 * @return isAddChildBlock()ãŒtrueã®è¦ªã®WikiObjectI
 		 */
 		public WikiObjectBlockI getParentToAddChild(WikiObjectBlockI nowobject) {
 			if (nowobject == null) {
@@ -140,7 +140,7 @@ public class WikiBlockParser {
 			}
 			
 			if (nowobject.isAddChildBlock()) {
-				// nowobject‚ªisAddChildBlock‚¾‚Á‚½‚ç‚»‚Ì‚Ü‚Ü–ß‚·B(‚±‚È‚¢‚Í‚¸)
+				// nowobjectãŒisAddChildBlockã ã£ãŸã‚‰ãã®ã¾ã¾æˆ»ã™ã€‚(ã“ãªã„ã¯ãš)
 				assert(false);
 				return nowobject;
 			}

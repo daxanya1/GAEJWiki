@@ -24,19 +24,19 @@ import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 
 /**
  * WikiObject
- * �i��
+ * 段落
  * @author daxanya
  * 
  * --
  * 
-���̃u���b�N�v�f�𖾎����Ȃ�����A�i���ƂȂ�܂��B
+他のブロック要素を明示しない限り、段落となります。
 
-�s���� ~ ���w�肵���ꍇ���i���ɂȂ�܂��B�s�������̕���(~�A-�A+�A:�A>�A|�A#�A//)��ʏ�̕����Ƃ��Ēi���̐擪�ɏ��������ꍇ�́A�s����~���L�q���ď������Ƃ��ł��܂��B
+行頭で ~ を指定した場合も段落になります。行頭書式の文字(~、-、+、:、>、|、#、//)を通常の文字として段落の先頭に書きたい場合は、行頭に~を記述して書くことができます。
 
-�i���̐擪��1����������������܂��B�A���A�ԍ��Ȃ����X�g�\���A�ԍ��t�����X�g�\���A���p�����̒i���ł͎���������܂���B��`���X�g���̒i���̐擪��1����������������܂��B
-�i���́A�V���ȃu���b�N�v�f��������܂Ōp�����܂��B
-�i���́A���̃u���b�N�v�f�̎q�v�f�ɂȂ邱�Ƃ��ł��܂��B
-�i���́A���̃u���b�N�v�f���q�v�f�ɂ��邱�Ƃ͂ł��܂���B
+段落の先頭は1文字分字下げされます。但し、番号なしリスト構造、番号付きリスト構造、引用文内の段落では字下げされません。定義リスト内の段落の先頭は1文字分字下げされます。
+段落は、新たなブロック要素が現われるまで継続します。
+段落は、他のブロック要素の子要素になることができます。
+段落は、他のブロック要素を子要素にすることはできません。
  *
  * --
  */
@@ -79,7 +79,7 @@ public class ParagraphBlock extends SameAddBlockBase {
 		
 		@Override
 		public boolean isThis(String line) {
-			// ���肹����true��Ԃ�
+			// 判定せずにtrueを返す
 			return true;
 		}
 	}

@@ -27,7 +27,7 @@ public class RootEntity {
     private Long count;
 
     /**
-     * コンストラクタ
+     * 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
      * 
      */
     public RootEntity() {

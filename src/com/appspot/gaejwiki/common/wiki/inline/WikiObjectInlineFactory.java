@@ -38,7 +38,7 @@ public class WikiObjectInlineFactory {
 		blockmap.put(getC(WikiObjectInlineI.TILDE), getL(new NewlineInline.Checker()));
 		blockmap.put(getC(WikiObjectInlineI.ROUNDBRACKET), getL(new NoteInline.Checker()));
 		blockmap.put(getC(WikiObjectInlineI.PARCENT), getL(new StrikeInline.Checker()));
-		// WikiName‚Í”¼Šp‘å•¶š‘S•”‚ª‘ÎÛ
+		// WikiNameã¯åŠè§’å¤§æ–‡å­—å…¨éƒ¨ãŒå¯¾è±¡
 		for (char c = 'A'; c <= 'Z'; c++) {
 			blockmap.put(getC(c), getL(new WikiNameInline.Checker()));
 		}
@@ -62,9 +62,9 @@ public class WikiObjectInlineFactory {
 	}
 	
 	/**
-	 * •¶š—ñ‚©‚ç”»’f‚µ‚Äwikiobjectinline‚ğ•Ô‚·(’†g‚Í‚Â‚ß‚È‚¢)
+	 * æ–‡å­—åˆ—ã‹ã‚‰åˆ¤æ–­ã—ã¦wikiobjectinlineã‚’è¿”ã™(ä¸­èº«ã¯ã¤ã‚ãªã„)
 	 * 
-	 * @param line •¶š—ñ
+	 * @param line æ–‡å­—åˆ—
 	 * @return wikiobjectinline
 	 */
 	public WikiObjectInlineIPair createWikiObjectInline(String line) {
@@ -84,7 +84,7 @@ public class WikiObjectInlineFactory {
 			}
 		}
 		
-		// ‰½‚à‚È‚¢ê‡‚Í•¶šInline‚ğ•Ô‚·
+		// ä½•ã‚‚ãªã„å ´åˆã¯æ–‡å­—Inlineã‚’è¿”ã™
 		return make(new Sub().createWikiObjectInlineFromChecker(new CharacterInline.Checker()), new CharacterInline.Checker().getMatchLength(""));
 	}
 	
@@ -117,7 +117,7 @@ public class WikiObjectInlineFactory {
 	static public class Sub {
 	
 		/**
-		 * checker‚ÌƒNƒ‰ƒX–¼‚©‚çAŒ³ƒNƒ‰ƒXiParagraphBlock.Checker‚¾‚Á‚½‚çAParagraphBlockj–¼‚ğæ“¾‚µAƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬‚µ‚Ä•Ô‚·
+		 * checkerã®ã‚¯ãƒ©ã‚¹åã‹ã‚‰ã€å…ƒã‚¯ãƒ©ã‚¹ï¼ˆParagraphBlock.Checkerã ã£ãŸã‚‰ã€ParagraphBlockï¼‰åã‚’å–å¾—ã—ã€ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œæˆã—ã¦è¿”ã™
 		 * @param classname
 		 * @return WikiObjectBlock
 		 */
