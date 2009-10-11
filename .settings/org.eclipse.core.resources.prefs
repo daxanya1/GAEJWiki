@@ -1,4 +1,7 @@
-#Sun Oct 11 19:01:16 JST 2009
+#Sun Oct 11 20:30:34 JST 2009
 eclipse.preferences.version=1
-encoding//src/com/appspot/gaejwiki/domain/setting/DomainParameter.java=MS932
+encoding//war/template/body.p.html=UTF-8
+encoding//war/template/body_edit.p.html=UTF-8
+encoding//war/template/defaultmes.p.html=UTF-8
+encoding//war/template/footer.p.html=UTF-8
 encoding/<project>=UTF-8

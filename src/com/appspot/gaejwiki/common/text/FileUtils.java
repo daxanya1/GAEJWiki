@@ -19,6 +19,8 @@ package com.appspot.gaejwiki.common.text;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+import com.appspot.gaejwiki.domain.setting.DomainParameter;
+
 /**
  * ファイルに関するユーティリティクラス
  * @author Ryuichi Danno
@@ -28,18 +30,24 @@ public class FileUtils {
 	/**
 	 * filepathのファイルを読み込み文字列にして返す
 	 * @param filepath ファイルパス
+	 * @param includebr 改行を残す場合はtrue
 	 * @return 読み込まれたファイルの文字列
 	 */
-	public String getFile(String filepath) {
+	public String getFile(String filepath, boolean includebr) {
 		StringBuffer sb = new StringBuffer();
         FileReader in = null;
         BufferedReader br = null;
+        
+        DomainParameter domainparam = DomainParameter.getDomainParameter();
         try {
             in = new FileReader(filepath);
             br = new BufferedReader(in);
             String line;
             while ((line = br.readLine()) != null) {
                 sb.append(line);
+                if (includebr) {
+                    sb.append(domainparam.getLineSeparator());
+                }
             }
             return sb.toString();
         } catch (Exception e) {

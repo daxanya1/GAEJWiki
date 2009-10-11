@@ -16,14 +16,18 @@
 package com.appspot.gaejwiki.servlet;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.appspot.gaejwiki.common.template.TemplateLoader;
+import com.appspot.gaejwiki.common.template.TemplateMapCreater;
+import com.appspot.gaejwiki.common.template.TemplateMerger;
+import com.appspot.gaejwiki.domain.page.PageData;
+import com.appspot.gaejwiki.domain.page.PageLoader;
 import com.appspot.gaejwiki.domain.page.PageParam;
-import com.appspot.gaejwiki.domain.page.PageSaver;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 import com.appspot.gaejwiki.domain.urlparam.ParamParser;
 
@@ -33,17 +37,52 @@ import com.appspot.gaejwiki.domain.urlparam.ParamParser;
  */
 @SuppressWarnings("serial")
 public class EditServlet extends HttpServlet {
+	private static final Logger logger = Logger.getLogger(ViewServlet.class.getName());
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
+		new Sub().exec(req, resp);
+	}
+	
+	static public class Sub {
+
+		public void exec(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+			// staticパラメータ初期化用に一度呼び出しておく
+			DomainParameter domain = DomainParameter.getDomainParameter();
+			
+			// パラメータを分析
+			PageParam pageparam = new ParamParser().parseUrl(req, domain.get(DomainParameter.EDITURL));
+			
+			// ページをロード（カウンタを増やさない）
+			// ページをパースしてHTMLにする（Memcacheに入っていれば取り出す）
+			// ページに値をマッピング（カウンタ等動的要素）を含む
+			// デフォルトページで、かつない場合は、デフォルト要素を取り出す
+			PageData bodypagedata = new PageLoader().loadPage(pageparam, false);
+			
+			// ページがなければリダイレクトで終わり
+			if (bodypagedata == null) {
+				// 含まれていなければ、デフォルトページへリダイレクトして終わり
+				resp.sendRedirect(domain.getDefaultViewURL());
+				logger.info("sendredirect editbody null: page:" + pageparam.get(PageParam.PAGEKEY));
+				return;
+			}
+			
+			// テンプレート用マップ作成 
+			// readテンプレートをロード
+			// パラメータをマッピング
+			String editoutput = new TemplateMerger().makeHtml(
+					new TemplateLoader().loadTemplate(domain.get(DomainParameter.EDITTEMPLATE)), 
+					new TemplateMapCreater().createEditBodyMap(pageparam, bodypagedata));
+			
+			if (editoutput == null) {
+				// エラー画面を返す(最終的にはリダイレクト）
+				editoutput = "error";
+			}
+			
+			// 出力
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().print(editoutput);
+			
+		}
 		
-		// staticパラメータ初期化用に一度呼び出しておく
-		DomainParameter domain = DomainParameter.getDomainParameter();
-		
-		// パラメータを分析
-		Map<String, String> bodyparam = new ParamParser().parseUrl(req, domain.get(DomainParameter.EDITURL));
-		
-		new PageSaver().savePage(bodyparam.get(PageParam.PAGEKEY), bodyparam.get(PageParam.REFERKEY));
-		
-		resp.setContentType("text/plain");
-		resp.getWriter().println("Hello, world edit");
 	}
 }

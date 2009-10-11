@@ -41,12 +41,12 @@ public class DomainParameter {
 	public static final String EDITTEMPLATE = "edittemplate";
 	public static final String TIMEZONE = "timezone";
 	public static final String DEFAULTPAGENAME = "defaultpage";
-	public static final String DEFAULTPAGEHTML = "defaultpagehtml";
+	public static final String DEFAULTMESSAGE = "defaultmessage";
 	public static final String TEMPLATEPATH = "templatepath";
 	public static final String LINESEPARATOR = "line.separator";
 	
-	private static final String DEFAULTPAGENAME_NOTSET_DEFAULT = "welcome";
-	private static final String DEFAULTPAGEHTML_DEFAULT = "<div>page not found?</div>";
+	private static final String DEFAULTPAGENAME_NOTSET_DEFAULT = "Welcome";
+	private static final String DEFAULTMESSAGE_DEFAULT_FILENAME = "defaultmes.p.html";
 	
 	private Map<String, String> parammap = new HashMap<String, String>();
 	
@@ -63,13 +63,16 @@ public class DomainParameter {
 		sub.putMap(EDITTEMPLATE, parammap);
 		sub.putMap(TIMEZONE, parammap);
 		sub.putMap(TEMPLATEPATH, parammap);
+		sub.putMap(DEFAULTMESSAGE, parammap);
 		sub.putMap(DEFAULTPAGENAME, parammap);
+		if (parammap.get(DEFAULTMESSAGE) == null) {
+			parammap.put(DEFAULTMESSAGE, DEFAULTMESSAGE_DEFAULT_FILENAME);
+		}
 		if (parammap.get(DEFAULTPAGENAME) == null) {
 			parammap.put(DEFAULTPAGENAME, DEFAULTPAGENAME_NOTSET_DEFAULT);
 		}
 		// parammap.put(LINESEPARATOR, System.getProperty(LINESEPARATOR));
 		parammap.put(LINESEPARATOR, "\n");
-		parammap.put(DEFAULTPAGEHTML, DEFAULTPAGEHTML_DEFAULT);
 	}
 	
 	public String get(String key) {
@@ -90,7 +93,7 @@ public class DomainParameter {
 	}
 	
 	public String getDefaultViewURL() {
-		return get(VIEWURL) + get(DEFAULTPAGENAME);
+		return "/" + get(VIEWURL) + get(DEFAULTPAGENAME);
 	}
 	
 	public String getTemplateFilePath(String templatefilename) {

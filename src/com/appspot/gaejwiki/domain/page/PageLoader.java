@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import com.appspot.gaejwiki.common.text.FileUtils;
 import com.appspot.gaejwiki.data.dao.WikiData;
 import com.appspot.gaejwiki.data.dao.WikiInfo;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
@@ -37,17 +38,18 @@ public class PageLoader {
 	 * bodyparamのPAGEキーのValueからページ名を取り出して、ページを取得し、動的な値をマッピングして返す
 	 * ページの取得方法は、
 	 * 1.カウンタレコードからデータを取り出す
-	 * 2.カウンタの値をインクリメントして保存する
+	 * 2.カウンタの値をインクリメントして保存する(incrementcounterがtrueの場合)
 	 * 3.Memcachedをページ名をKeyにして確認する。
 	 * 4.3で取得できなかった場合、データレコードから最新のdataを取り出して、Memcachedに格納
 	 * 5.動的な値（主にカウンタ）をマッピングして返す
 	 * 
 	 * 特例として、デフォルトページかどうか確認して、デフォルトページかつデータがない場合、デフォルト情報を返す
 	 * 
-	 * @param pageparam PageParam
+	 * @param pageparam Pageパラメータ
+	 * @param incrementcounter カウンタをインクリメントする場合はtrue
 	 * @return HTML文字列
 	 */
-	public String loadPage(PageParam pageparam) {
+	public PageData loadPage(PageParam pageparam, boolean incrementcounter) {
 		if (pageparam == null) {
 			logger.info("loadpage:pageparam null");
 			return null;
@@ -59,21 +61,24 @@ public class PageLoader {
 		}
 		
 		Sub sub = new Sub();
-		WikiInfo info = sub.getWikiInfo(pagename);
+		WikiInfo info = sub.getWikiInfo(pagename, incrementcounter);
 		if (info == null) {
 			logger.info("loadpage:info null");
 			return sub.getDefaultHtmlData(pagename);
 		}
 		
-		String htmldata = sub.getHtmlData(info);
-		if (htmldata == null) {
+		PageData pagedata = sub.getHtmlData(info);
+		if (pagedata == null) {
 			logger.info("loadpage:htmldata null");
 			return null;
 		}
 		
 		Map<String, String> countermap = sub.createCounterMap(info);
+		String htmldata = new HtmlCounterMarger().margeHtml(pagedata.get(PageData.HTMLDATAKEY), countermap);
+		pagedata.put(PageData.HTMLDATAKEY, htmldata);
+		
 		logger.info("loadpage:done:" + pagename);
-		return new HtmlCounterMarger().margeHtml(htmldata, countermap);
+		return pagedata;
 	}
 	
 	static public class Sub {
@@ -83,51 +88,55 @@ public class PageLoader {
 		 * @param info
 		 * @return
 		 */
-		public String getHtmlData(WikiInfo info) {
+		public PageData getHtmlData(WikiInfo info) {
 			assert(info != null);
+			
+			PageData pagedata = new PageData();
+			
 			WikiData.Util datautil = new WikiData.Util();
 			Key datakey = datautil.makeKey(info.getKey(), info.getVersion());
 			
-			MemcacheService memcache = getMemcacheService();
-			String memhtmldata = (String)memcache.get(datakey.toString());
-			if (memhtmldata != null) {
-				return memhtmldata;
+			PageData mempegedata = new PageMemcacheGetter().getPageData(info.getKey());
+			if (mempegedata != null) {
+				return mempegedata;
 			}
 			
-			WikiData data = datautil.loadData(datakey, false, true);
+			WikiData data = datautil.loadData(datakey, true, true);
 			
 			if (data == null) {
 				return null;
 			}
-			String htmldata = data.getHtmldata().toString();
-			memcache.put(datakey.toString(), htmldata);
-			return htmldata;
+			
+			PageData pegedata = new PageData();
+			pagedata.setHtmlWiki(data.getHtmldata().toString(), data.getWikidata().toString());
+			return pegedata;
 		}
-		
-		/**
-		 * 
-		 * @return
-		 */
-		public MemcacheService getMemcacheService() {
-			return MemcacheServiceFactory.getMemcacheService();
-		}
+
 		
 		/**
 		 * 
 		 * @param pagename
 		 * @return
 		 */
-		public String getDefaultHtmlData(String pagename) {
+		public PageData getDefaultHtmlData(String pagename) {
 			assert(pagename != null);
 			
 			DomainParameter domainparam = DomainParameter.getDomainParameter();
 			if (pagename.equals(domainparam.get(DomainParameter.DEFAULTPAGENAME))) {
 				logger.info("loadpage:defaultpage:" + DomainParameter.DEFAULTPAGENAME);
-				return domainparam.get(DomainParameter.DEFAULTPAGEHTML);
+				String html = loadTemplateFile(domainparam.getTemplateFilePath(domainparam.get(DomainParameter.DEFAULTMESSAGE)));
+				PageData data = new PageData();
+				data.setHtmlWiki(html, null);
+				return data;
 			} else {
 				return null;
 			}
 		}
+		
+		public String loadTemplateFile(String filepath) {
+			return new FileUtils().getFile(filepath, true);
+		}
+
 
 		/**
 		 * @param info
@@ -145,10 +154,27 @@ public class PageLoader {
 		}
 		
 		/**
-		 * @param pagename
+		 * 
+		 * @param pagename ページ名
+		 * @param incrementcounter trueの場合カウンタをインクリメントする
 		 * @return
 		 */
-		public WikiInfo getWikiInfo(String pagename) {
+		public WikiInfo getWikiInfo(String pagename, boolean incrementcounter) {
+			assert(pagename != null);
+			
+			if (incrementcounter) {
+				return getWikiInfoIncrementCounter(pagename);
+			} else {
+				WikiInfo.Util infoutil = new WikiInfo.Util();
+				return infoutil.loadData(infoutil.makeKey(pagename));
+			}
+		}
+
+		/**
+		 * @param pagename ページ名
+		 * @return
+		 */
+		public WikiInfo getWikiInfoIncrementCounter(String pagename) {
 			assert(pagename != null);
 			
 			WikiInfo.Util infoutil = new WikiInfo.Util();

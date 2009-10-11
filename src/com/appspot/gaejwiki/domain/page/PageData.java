@@ -14,21 +14,25 @@
  limitations under the License.
  */
 
-package com.appspot.gaejwiki.common.template;
+package com.appspot.gaejwiki.domain.page;
 
 import java.util.HashMap;
+
+
 
 /**
  *
  * @author Ryuichi Danno
  */
 @SuppressWarnings("serial")
-public class TemplateReplaceMap extends HashMap<String, String>{
+public class PageData extends HashMap<String, String> {
 
-	public static final String KEY_BODY = "BODY";
-	public static final String KEY_BODYWIKI = "BODYWIKI";
-	public static final String KEY_MENU = "MENU";
-	public static final String KEY_TITLE = "TITLE";
+	public static final String WIKIDATAKEY = "WIKI";
+	public static final String HTMLDATAKEY = "HTML";
 	
+	public void setHtmlWiki(String html, String wiki) {
+		this.put(HTMLDATAKEY, html);
+		this.put(WIKIDATAKEY, wiki);
+	}
 
 }

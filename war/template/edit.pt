@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pt>
-	<phtml name="header.p.html">
+	<phtml name="header_edit.p.html">
 		<param key="TITLE"></param>
 	</phtml>
-	<phtml name="body.p.html">
-		<param key="MENU"></param>
+	<phtml name="body_edit.p.html">
+		<param key="BODYWIKI"></param>
 		<param key="BODY"></param>
 	</phtml>
 	<phtml name="footer.p.html"></phtml>

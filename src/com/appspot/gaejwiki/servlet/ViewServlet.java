@@ -26,6 +26,7 @@ import com.appspot.gaejwiki.common.template.TemplateLoader;
 import com.appspot.gaejwiki.common.template.TemplateMapCreater;
 import com.appspot.gaejwiki.common.template.TemplateMerger;
 import com.appspot.gaejwiki.domain.menu.MenuMaker;
+import com.appspot.gaejwiki.domain.page.PageData;
 import com.appspot.gaejwiki.domain.page.PageLoader;
 import com.appspot.gaejwiki.domain.page.PageParam;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
@@ -56,10 +57,10 @@ public class ViewServlet extends HttpServlet {
 			// ページをパースしてHTMLにする（Memcacheに入っていれば取り出す）
 			// ページに値をマッピング（カウンタ等動的要素）を含む
 			// デフォルトページで、かつない場合は、デフォルト要素を取り出す
-			String bodypage = new PageLoader().loadPage(pageparam);
+			PageData bodypagedata = new PageLoader().loadPage(pageparam, true);
 			
 			// ページがなければリダイレクトで終わり
-			if (bodypage == null) {
+			if (bodypagedata == null) {
 				// 含まれていなければ、デフォルトページへリダイレクトして終わり
 				resp.sendRedirect(domain.getDefaultViewURL());
 				logger.info("sendredirect body null: page:" + pageparam.get(PageParam.PAGEKEY));
@@ -69,14 +70,14 @@ public class ViewServlet extends HttpServlet {
 			// メニューをロード（カウンタは増やさない）
 			// メニューをパースしてHTMLにする（Memcacheに入っていれば取り出す）
 			// なかったらデフォルトメニューを返す
-			String menupage = new PageLoader().loadPage(new MenuMaker().getMenuParam());
+			PageData menupagedata = new PageLoader().loadPage(new MenuMaker().getMenuParam(), false);
 			
 			// テンプレート用マップ作成 
 			// readテンプレートをロード
 			// パラメータをマッピング
 			String viewoutput = new TemplateMerger().makeHtml(
 					new TemplateLoader().loadTemplate(domain.get(DomainParameter.VIEWTEMPLATE)), 
-					new TemplateMapCreater().createMenuBodyMap(pageparam, bodypage, menupage));
+					new TemplateMapCreater().createMenuBodyMap(pageparam, bodypagedata, menupagedata));
 			
 			if (viewoutput == null) {
 				// エラー画面を返す(最終的にはリダイレクト）
@@ -84,7 +85,7 @@ public class ViewServlet extends HttpServlet {
 			}
 			
 			// 出力
-			resp.setContentType("text/html");
+			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().print(viewoutput);
 			
 		}

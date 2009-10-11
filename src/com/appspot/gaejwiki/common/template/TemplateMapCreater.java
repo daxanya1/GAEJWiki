@@ -15,18 +15,43 @@
  */
 package com.appspot.gaejwiki.common.template;
 
+import com.appspot.gaejwiki.domain.page.PageData;
 import com.appspot.gaejwiki.domain.page.PageParam;
 
 public class TemplateMapCreater {
 
-	public TemplateReplaceMap createMenuBodyMap(PageParam bodyparam, String bodypage, String menupage) {
-
+	public TemplateReplaceMap createMenuBodyMap(PageParam bodyparam, PageData bodypage, PageData menupage) {
+		if (bodyparam == null || bodypage == null) {
+			return null;
+		}
+		
 		TemplateReplaceMap templateparam = new TemplateReplaceMap();
-		templateparam.put(TemplateReplaceMap.KEY_BODY, bodypage);
-		templateparam.put(TemplateReplaceMap.KEY_MENU, menupage);
+		templateparam.put(TemplateReplaceMap.KEY_BODY, bodypage.get(PageData.HTMLDATAKEY));
 		templateparam.put(TemplateReplaceMap.KEY_TITLE, bodyparam.get(PageParam.PAGEKEY));
+		if (menupage != null) {
+			templateparam.put(TemplateReplaceMap.KEY_MENU, menupage.get(PageData.HTMLDATAKEY));
+		}
 		
 		return templateparam;
+	}
+
+	/**
+	 * @param pageparam
+	 * @param bodypagedata
+	 * @param object
+	 * @return
+	 */
+	public TemplateReplaceMap createEditBodyMap(PageParam bodyparam, PageData bodypage) {
+			if (bodyparam == null || bodypage == null) {
+				return null;
+			}
+			
+			TemplateReplaceMap templateparam = new TemplateReplaceMap();
+			templateparam.put(TemplateReplaceMap.KEY_BODYWIKI, bodypage.get(PageData.WIKIDATAKEY));
+			templateparam.put(TemplateReplaceMap.KEY_BODY, bodypage.get(PageData.HTMLDATAKEY));
+			templateparam.put(TemplateReplaceMap.KEY_TITLE, bodyparam.get(PageParam.PAGEKEY));
+			
+			return templateparam;
 	}
 
 }

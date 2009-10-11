@@ -36,7 +36,7 @@ public class TemplateLoader {
 			return null;
 		}
 		DomainParameter domainparam = DomainParameter.getDomainParameter();
-		String templatebody = new Sub().loadTemplateFile(domainparam.getTemplateFilePath(templatepath));
+		String templatebody = loadTemplateFile(domainparam.getTemplateFilePath(templatepath));
 		if (templatebody == null) {
 			logger.info("loadtemplate templatebody null:" + domainparam.getTemplateFilePath(templatepath));
 			return null;
@@ -48,12 +48,11 @@ public class TemplateLoader {
 		xParser1.parseSax( templatebody );
 		return parser.getTemplateData();
 	}
-	
-	public static class Sub {
-		
-		public String loadTemplateFile(String filepath) {
-			return new FileUtils().getFile(filepath);
-		}
+
+	protected String loadTemplateFile(String filepath) {
+		logger.info("loadtemplate:" + filepath);
+		return new FileUtils().getFile(filepath, false);
 	}
+
 
 }

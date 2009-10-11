@@ -31,8 +31,6 @@ import com.appspot.gaejwiki.domain.setting.DomainParameter;
 public class TemplateMerger {
 	private static final Logger logger = Logger.getLogger(TemplateMerger.class.getName());
 
-	public static final String TEMPLATEFILE_EXT = ".p.html";
-	
 	/**
 	 * テンプレートデータ内のパラメータをMapのパラメータと置き換えて出力する
 	 * @param loadtemplate テンプレートデータ
@@ -60,9 +58,8 @@ public class TemplateMerger {
 	}
 	
 	protected String loadTemplateFile(String filepath) {
-		String filepathext = filepath + TEMPLATEFILE_EXT;
-		logger.info("makeHtml:loadtemplate:" + filepathext);
-		return new FileUtils().getFile(filepathext);
+		logger.info("makeHtml:loadtemplate:" + filepath);
+		return new FileUtils().getFile(filepath, true);
 	}
 	
 	public static class Sub {
