@@ -25,7 +25,12 @@ import org.junit.Test;
 public class WikiInlineParserTest {
 
 	public WikiInlineParser getTestParser() {
-		WikiInlineParser parser = new WikiInlineParser();
+		WikiInlineParser parser = new WikiInlineParser() {
+			public boolean checkPage(String pagename) {
+				return false;
+			}					
+		};
+		parser.setAccessPageName("reftest");
 		parser.setWikiObjectInlineFactory(new WikiObjectInlineFactory());
 		parser.setWikiObjectBlockInfo(new WikiObjectBlockInfo());
 		return parser;

@@ -37,7 +37,7 @@ public class PageSaver {
 		Sub sub = new Sub();
 		
 		WikiParser wikiparser = new WikiParser();
-		String htmldata = wikiparser.parse(wikidata);
+		String htmldata = wikiparser.parse(pagename, wikidata);
 		
 		WikiInfo info = sub.saveWikiInfo(pagename);
 		sub.saveWikiData(info, htmldata, wikidata);

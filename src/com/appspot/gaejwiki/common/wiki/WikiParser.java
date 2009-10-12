@@ -35,7 +35,7 @@ public class WikiParser {
 	private WikiInlineParser inlineparser = null;
 
 	
-	public String parse(String str) {
+	public String parse(String pagename, String str) {
 		if (str == null) {
 			return null;
 		}
@@ -52,7 +52,8 @@ public class WikiParser {
 		WikiObjectBlockInfo info = new WikiObjectBlockInfo();
 		
 		// inlineparserは新規作成する(note用情報が必要なため、メンバ変数としている）
-		inlineparser = new WikiInlineParser();
+		inlineparser = getInlineParser();
+		inlineparser.setAccessPageName(pagename);
 		inlineparser.setWikiObjectBlockInfo(info);
 		inlineparser.setWikiObjectInlineFactory(inlinefactory);
 		
@@ -63,6 +64,10 @@ public class WikiParser {
 		}
 		
 		return sb.toString();
+	}
+	
+	protected WikiInlineParser getInlineParser() {
+		return new WikiInlineParser(); 
 	}
 	
 	/**

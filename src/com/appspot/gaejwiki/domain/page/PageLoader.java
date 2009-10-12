@@ -79,6 +79,16 @@ public class PageLoader {
 		return pagedata;
 	}
 	
+
+	/**
+	 * ページが存在しているかどうか調べる
+	 * @param pagename ページ名
+	 * @return ページが存在していればtrue
+	 */
+	public boolean existPage(String pagename) {
+		return (new Sub().getWikiInfo(pagename, false) != null);
+	}
+	
 	static public class Sub {
 		
 		/**
@@ -192,5 +202,6 @@ public class PageLoader {
 		}
 
 	}
+
 
 }

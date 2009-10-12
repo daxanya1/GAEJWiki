@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import com.appspot.gaejwiki.common.wiki.block.HeadlineBlock;
 import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI.Util;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineFactory.WikiObjectInlineIPair;
+import com.appspot.gaejwiki.domain.page.PageLoader;
 
 
 public class WikiInlineParser {
@@ -32,6 +33,7 @@ public class WikiInlineParser {
 	private WikiObjectBlockInfo info = null;
 	private List<NoteInline> notelist = new ArrayList<NoteInline>();
 	private List<HeadlineBlock> contentslist = new ArrayList<HeadlineBlock>();
+	private String accesspagename = null;
 	
 	public void setWikiObjectInlineFactory(WikiObjectInlineFactory factory) {
 		this.factory = factory;
@@ -39,6 +41,10 @@ public class WikiInlineParser {
 	
 	public void setWikiObjectBlockInfo(WikiObjectBlockInfo info) {
 		this.info = info;
+	}
+	
+	public void setAccessPageName(String accesspagename) {
+		this.accesspagename = accesspagename;
 	}
 	
 	/**
@@ -55,6 +61,11 @@ public class WikiInlineParser {
 
 		if (line == null || line.length() == 0) {
 			logger.fine("wikiinlineparser line is null");
+			return wikilist;
+		}
+		
+		if (accesspagename == null || accesspagename.length() == 0) {
+			logger.fine("wikiinlineparser accesspagename is null");
 			return wikilist;
 		}
 		
@@ -156,8 +167,16 @@ public class WikiInlineParser {
 	 * @return ページ名が存在していればtrue
 	 */
 	public boolean checkPage(String pagename) {
-		// TODO Auto-generated method stub
-		return false;
+		assert (pagename != null);
+		return (new PageLoader().existPage(pagename));
+	}
+
+	/**
+	 * 現時点のパーサ対象ページ名を返す
+	 * @return パーサ対象ページ名
+	 */
+	public String getAccessPageName() {
+		return accesspagename;
 	}
 	
 }

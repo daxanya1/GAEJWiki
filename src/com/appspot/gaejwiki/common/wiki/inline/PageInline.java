@@ -47,9 +47,9 @@ public class PageInline extends ChildOnlyInlineBase {
 	public String toHtmlString() {
 		StringBuffer sb = new StringBuffer();
 		if (existpage) {
-			sb.append(new Sub().getExistHtmlString(toString()));
+			sb.append(new Sub().getExistHtmlString(toString(), getAccessPageName()));
 		} else {
-			sb.append(new Sub().getNonExistHtmlString(toString()));
+			sb.append(new Sub().getNonExistHtmlString(toString(), getAccessPageName()));
 		}
 		return sb.toString();
 	}

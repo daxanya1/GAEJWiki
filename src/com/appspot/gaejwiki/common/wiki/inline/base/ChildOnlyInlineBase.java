@@ -24,6 +24,7 @@ public abstract class ChildOnlyInlineBase implements WikiObjectInlineI {
 	private WikiObjectInlineI parent = null;
 	private String rawdata = null;
 	private String indata = null;
+	private String accesspagename = null;
 	
 	@Override
 	public void set(String str, WikiInlineParser parser) {
@@ -31,6 +32,7 @@ public abstract class ChildOnlyInlineBase implements WikiObjectInlineI {
 		indata = new Util().matchSet(rawdata, getPattern());
 		if (parser != null) {
 			checkPage(parser);
+			accesspagename = parser.getAccessPageName();
 		}
 	}
 
@@ -54,6 +56,10 @@ public abstract class ChildOnlyInlineBase implements WikiObjectInlineI {
 		return indata;
 	}
 	
+	public String getAccessPageName() {
+		return accesspagename;
+	}
+	
 	/**
 	 * 固有の正規表現のパターンを返す
 	 * @return 正規表現文字列
@@ -69,16 +75,19 @@ public abstract class ChildOnlyInlineBase implements WikiObjectInlineI {
 	
 	static public class Sub {
 		
-		public String getExistHtmlString(String name) {
-			return null;
+		public String getExistHtmlString(String name, String accesspagename) {
+			DomainParameter domainparam = DomainParameter.getDomainParameter();
+			StringBuffer sb = new StringBuffer();
+			sb.append("<a title=\"" + name + "\" href=\"" + domainparam.getViewURL(name) + "?ref=" + accesspagename + "\">" + name + "</a></span>");
+			return sb.toString();
 		}
 		
-		public String getNonExistHtmlString(String name) {
+		public String getNonExistHtmlString(String name, String accesspagename) {
 			DomainParameter domainparam = DomainParameter.getDomainParameter();
 			StringBuffer sb = new StringBuffer();
 			sb.append("<span class=\"noexists\">");
 			sb.append(name);
-			sb.append("<a href=\"" + domainparam.get(DomainParameter.EDITURL) + "?page=" + name + "&amp;refer=ref\">?</a></span>");
+			sb.append("<a href=\"" + domainparam.getEditURL(name) + "?ref=" + accesspagename + "\">?</a></span>");
 			return sb.toString();
 		}
 	}

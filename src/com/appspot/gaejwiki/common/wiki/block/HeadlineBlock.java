@@ -46,6 +46,7 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 	private List<WikiObjectInlineI> inlinelist = new ArrayList<WikiObjectInlineI>();
 	private int level = -1;
 	private int contentsid = -1;
+	private String accesspagename = null;
 	
 	@Override
 	public String toHtmlString() {
@@ -56,7 +57,7 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 			sb.append(new Sub().makeJumpmenu());
 		}
 		
-		sb.append(new Sub().makeHeadline(inlinelist, level, contentsid));
+		sb.append(new Sub().makeHeadline(inlinelist, level, contentsid, accesspagename));
 		return sb.toString();
 	}
 
@@ -71,6 +72,7 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 		level = util.checkLevel(getData(), HEADLINE);
 		inlinelist.addAll(parser.parseInline(util.cutFrontChar(getData(), level)));
 		contentsid = parser.addHeadline(this);
+		accesspagename = parser.getAccessPageName();
 	}
 	
 	@Override
@@ -80,7 +82,7 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 	
 	static public class Sub {
 
-		public String makeHeadline(List<WikiObjectInlineI> inlinelist, int level, int contentsid) {
+		public String makeHeadline(List<WikiObjectInlineI> inlinelist, int level, int contentsid, String pagename) {
 			assert(inlinelist != null);
 			StringBuffer sb = new StringBuffer();
 			
@@ -99,7 +101,7 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 				}
 			}
 			sb.append("  <a class=\"anchor_super\" id=\"id" + idstr + "\" ");
-			sb.append("href=\"" + domainparam.get(DomainParameter.VIEWURL) + "?ref#id" + idstr + "\" title=\"id" + idstr + "\">&dagger;</a></h" + levelstr + ">");
+			sb.append("href=\"" + domainparam.getViewURL(pagename) + "#id" + idstr + "\" title=\"id" + idstr + "\">&dagger;</a></h" + levelstr + ">");
 			sb.append(new Util().getLineSeparator());
 			return sb.toString();
 		}
