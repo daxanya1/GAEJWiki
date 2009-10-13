@@ -16,6 +16,7 @@
 package com.appspot.gaejwiki.data.dao;
 
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.jdo.JDOObjectNotFoundException;
@@ -67,6 +68,9 @@ public class WikiRef {
 		this.updatedate = updatedate;
 	}
 
+	public void setUpdatedateNow() {
+		setUpdatedate(Calendar.getInstance().getTime());
+	}
 	
 	
 	public static class Util {
@@ -142,4 +146,5 @@ public class WikiRef {
 			return sb.toString();
 		}
     }
+
 }

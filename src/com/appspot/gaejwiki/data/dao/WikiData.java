@@ -1,7 +1,7 @@
 package com.appspot.gaejwiki.data.dao;
 
 
-import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.jdo.JDOObjectNotFoundException;
@@ -12,6 +12,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.appspot.gaejwiki.data.common.DataUtils;
 import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -73,27 +74,31 @@ public class WikiData {
 	}
 
 	public String getHtmldataString() {
-		return new Util().toBlogString(htmldata);
+		return new DataUtils().toBlogString(getHtmldata());
 	}
 
 	public String getWikidataString() {
-		return new Util().toBlogString(wikidata);
+		return new DataUtils().toBlogString(getWikidata());
 	}
 
+	/**
+	 * 
+	 */
+	public void setUpdatedateNow() {
+    	setUpdatedate(Calendar.getInstance().getTime());
+	}
 
+	public void setHtmldataString(String htmldatastr) {
+		setHtmldata(new DataUtils().stringToBlob(htmldatastr));
+	}
 
+	public void setWikidataString(String wikidatastr) {
+		setWikidata(new DataUtils().stringToBlob(wikidatastr));
+	}
 
 
 	public static class Util {
     
-		public String toBlogString(Blob blob) {
-			try {
-				return new String(blob.getBytes(), "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				return null;
-			}
-		}
-		
 		public void saveData(WikiData data) {
 	        PersistenceManager pm = PMF.get().getPersistenceManager();
 	        try{
@@ -134,4 +139,5 @@ public class WikiData {
 		}
 		
     }
+
 }

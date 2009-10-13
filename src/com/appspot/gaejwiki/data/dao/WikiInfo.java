@@ -189,7 +189,13 @@ public class WikiInfo {
 		this.updatedate = updatedate;
 	}
 
+	public void setCounterupdatedateNow() {
+		setCounterupdatedate(Calendar.getInstance().getTime());
+	}
 
+	public void setUpdatedateNow() {
+		setUpdatedate(Calendar.getInstance().getTime());
+	}
 
 
 
@@ -284,4 +290,10 @@ public class WikiInfo {
 			
 		}
     }
+
+
+
+
+
+
 }

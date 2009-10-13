@@ -15,14 +15,12 @@
  */
 package com.appspot.gaejwiki.domain.page;
 
-import java.util.Calendar;
 import java.util.List;
 
 import com.appspot.gaejwiki.common.wiki.WikiParser;
 import com.appspot.gaejwiki.data.dao.WikiData;
 import com.appspot.gaejwiki.data.dao.WikiInfo;
 import com.appspot.gaejwiki.data.dao.WikiRef;
-import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.datastore.Key;
 
 /**
@@ -89,8 +87,7 @@ public class PageSaver {
 					refdata = util.addRefData(ref.getRefdata(), pagename);
 				}
 				ref.setRefdata(refdata);
-		    	Calendar cal = Calendar.getInstance();
-				ref.setUpdatedate(cal.getTime());
+				ref.setUpdatedateNow();
 				util.saveData(ref);
 	    	}
 		}
@@ -106,8 +103,7 @@ public class PageSaver {
 			
 	    	WikiInfo.Util util = new WikiInfo.Util();
 	    	info.setVersion(info.getVersion() + 1);
-	    	Calendar cal = Calendar.getInstance();
-	    	info.setUpdatedate(cal.getTime());
+	    	info.setUpdatedateNow();
 	    	util.saveData(info);
 	    	return info;
 		}
@@ -126,9 +122,8 @@ public class PageSaver {
 			info.setYesterdaycounter(0);
 			info.setTotalcounter(1);
 			info.setVersion(1);
-	    	Calendar cal = Calendar.getInstance();
-	    	info.setUpdatedate(cal.getTime());
-	    	info.setCounterupdatedate(cal.getTime());
+	    	info.setUpdatedateNow();
+	    	info.setCounterupdatedateNow();
 	    	WikiInfo.Util util = new WikiInfo.Util();
 	    	info.setKey(util.makeKey(pagename));
 	    	util.saveData(info);
@@ -143,14 +138,11 @@ public class PageSaver {
 		public WikiData saveWikiData(WikiInfo info, String htmldata, String wikidata) {
 			WikiData data = new WikiData();
 	    	WikiData.Util util = new WikiData.Util();
-	    	Calendar cal = Calendar.getInstance();
-	    	data.setUpdatedate(cal.getTime());
+	    	data.setUpdatedateNow();
 	    	Key datakey = util.makeKey(info.getKey(), info.getVersion());
 	    	data.setKey(datakey);
-	    	byte[] partdata = wikidata.getBytes();
-	    	data.setWikidata(new Blob(partdata));
-	    	byte[] parthtmldata = htmldata.getBytes();
-	    	data.setHtmldata(new Blob(parthtmldata));
+	    	data.setWikidataString(wikidata);
+	    	data.setHtmldataString(htmldata);
 	    	util.saveData(data);
 	    	
 	    	new PageMemcacheSetterGetter().setPageData(datakey, htmldata, wikidata);

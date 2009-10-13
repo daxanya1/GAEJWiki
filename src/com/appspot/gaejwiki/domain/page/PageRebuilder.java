@@ -16,12 +16,9 @@
 
 package com.appspot.gaejwiki.domain.page;
 
-import java.util.Calendar;
-
 import com.appspot.gaejwiki.common.wiki.WikiParser;
 import com.appspot.gaejwiki.data.dao.WikiData;
 import com.appspot.gaejwiki.data.dao.WikiInfo;
-import com.google.appengine.api.datastore.Blob;
 
 
 /**
@@ -64,9 +61,8 @@ public class PageRebuilder {
 			}
 			String wikidata = data.getWikidataString();
 			String htmldata = new WikiParser().parse(pagename, wikidata);
-			data.setHtmldata(new Blob(htmldata.getBytes()));
-	    	Calendar cal = Calendar.getInstance();
-	    	data.setUpdatedate(cal.getTime());
+			data.setHtmldataString(htmldata);
+	    	data.setUpdatedateNow();
 	    	datautil.saveData(data);
 	    	
 	    	// 
