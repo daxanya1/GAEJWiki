@@ -41,13 +41,13 @@ public class ItalicInlineTest {
 	public void testItalicInlineSub() {
 		ItalicInline inline1 = new ItalicInline();
 		WikiObjectInlineI.Util sub1 = new WikiObjectInlineI.Util();
-		String line1 = sub1.matchSet("'''test 1'''", inline1.getPattern());
+		String line1 = sub1.matchSet("'''test 1'''", inline1.getPattern(), 1);
 		assertEquals(line1, "test 1");
 		assertEquals(inline1.toDebugString(), "italic|");
 
 		ItalicInline inline2 = new ItalicInline();
 		WikiObjectInlineI.Util sub2 = new WikiObjectInlineI.Util();
-		String line2 = sub2.matchSet("'''test 1'''test'''", inline1.getPattern());
+		String line2 = sub2.matchSet("'''test 1'''test'''", inline1.getPattern(), 1);
 		assertEquals(line2, "test 1'''test");
 		assertEquals(inline2.toDebugString(), "italic|");
 

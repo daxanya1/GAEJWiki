@@ -15,8 +15,12 @@
  */
 package com.appspot.gaejwiki.domain.setting;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.appspot.gaejwiki.common.text.TextUtils;
 
 /**
  * 設定ファイルやJavaのシステムプロバティから取得できるパラメータを集約する
@@ -93,15 +97,15 @@ public class DomainParameter {
 	}
 	
 	public String getDefaultViewURL() {
-		return "/" + get(VIEWURL) + get(DEFAULTPAGENAME);
+		return "/" + get(VIEWURL) + new TextUtils().encodeUrlString(get(DEFAULTPAGENAME));
 	}
 	
 	public String getViewURL(String page) {
-		return "/" + get(VIEWURL) + page;
+		return "/" + get(VIEWURL) + new TextUtils().encodeUrlString(page);
 	}
 	
 	public String getEditURL(String page) {
-		return "/" + get(EDITURL) + page;
+		return "/" + get(EDITURL) + new TextUtils().encodeUrlString(page);
 	}
 	
 	public String getTemplateFilePath(String templatefilename) {

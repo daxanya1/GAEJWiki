@@ -34,6 +34,7 @@ public class WikiInlineParser {
 	private List<NoteInline> notelist = new ArrayList<NoteInline>();
 	private List<HeadlineBlock> contentslist = new ArrayList<HeadlineBlock>();
 	private String accesspagename = null;
+	private List<String> pagelist = new ArrayList<String>();
 	
 	public void setWikiObjectInlineFactory(WikiObjectInlineFactory factory) {
 		this.factory = factory;
@@ -163,11 +164,13 @@ public class WikiInlineParser {
 
 	/**
 	 * ページ名が存在していればtrueを返す
+	 * ページ名を登録しておく
 	 * @param pagename
 	 * @return ページ名が存在していればtrue
 	 */
 	public boolean checkPage(String pagename) {
 		assert (pagename != null);
+		pagelist.add(pagename);
 		return (new PageLoader().existPage(pagename));
 	}
 
@@ -177,6 +180,14 @@ public class WikiInlineParser {
 	 */
 	public String getAccessPageName() {
 		return accesspagename;
+	}
+	
+	/**
+	 * ページリストを返す
+	 * @return
+	 */
+	public List<String> getPageList() {
+		return pagelist;
 	}
 	
 }

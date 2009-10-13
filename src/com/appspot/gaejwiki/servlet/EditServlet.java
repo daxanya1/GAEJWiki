@@ -25,9 +25,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.appspot.gaejwiki.common.template.TemplateLoader;
 import com.appspot.gaejwiki.common.template.TemplateMapCreater;
 import com.appspot.gaejwiki.common.template.TemplateMerger;
+import com.appspot.gaejwiki.common.text.TextUtils;
 import com.appspot.gaejwiki.domain.page.PageData;
 import com.appspot.gaejwiki.domain.page.PageLoader;
 import com.appspot.gaejwiki.domain.page.PageParam;
+import com.appspot.gaejwiki.domain.page.PageQueueSetter;
 import com.appspot.gaejwiki.domain.page.PageSaver;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 import com.appspot.gaejwiki.domain.urlparam.ParamParser;
@@ -85,12 +87,18 @@ public class EditServlet extends HttpServlet {
 			assert(pageparam != null);
 			
 			// オリジナルと今回の変更点を比べて、変更されていなければ何もしない。
-			String wikidataoriginal = pageparam.get("original");
-			String wikidata = pageparam.get("wiki");
+			//wikidata, wikidataoriginalは改行コードが、\nになっていない可能性があるので、置換する
+			String wikidataoriginal = new TextUtils().removeReturnChar(pageparam.get("original"));
+			String wikidata = new TextUtils().removeReturnChar(pageparam.get("wiki"));
 			String pagename = pageparam.get(PageParam.PAGEKEY);
+			
+			
+			
 			if (wikidataoriginal == null || !wikidataoriginal.equals(wikidata)) {
 				// 書き込みする
 				new PageSaver().savePage(pagename, wikidata);
+				// 書き換わった披リンクについて作り直す
+				new PageQueueSetter().setQueue(pagename);
 				logger.info("editcommit save:" + pagename);
 			} else {
 				// 書き込みしない

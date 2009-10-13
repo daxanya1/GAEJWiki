@@ -65,6 +65,12 @@ public class WikiNameInline extends ChildOnlyInlineBase {
 		return WIKINAMEFORMATPATTERN;
 	}
 	
+	@Override
+	protected String getMatchData(String rawdata) {
+		return new Util().matchSet(rawdata, getPattern(), 1);
+
+	}
+	
 	/**
 	 * WikiNameかどうか確認
 	 */
@@ -74,5 +80,6 @@ public class WikiNameInline extends ChildOnlyInlineBase {
 			return new Util().getRegexMatcherLength(str, WIKINAMEFORMATPATTERN);
 		}
 	}
+
 
 }

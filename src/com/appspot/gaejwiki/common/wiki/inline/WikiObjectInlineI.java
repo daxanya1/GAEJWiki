@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.appspot.gaejwiki.common.text.TextUtils;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
 
@@ -44,8 +43,8 @@ public interface WikiObjectInlineI {
 	
 	public static final String URLPATTERN = "([a-z]+://[-_.!~*'\\(\\)a-zA-Z0-9;/?:@&=+$,%#]+)";
 	public static final String MAILPATTERN = "((?:(?:(?:(?:[a-zA-Z0-9_!#\\$\\%&'*+/=?\\^`{}~|\\-]+)(?:\\.(?:[a-zA-Z0-9_!#\\$\\%&'*+/=?\\^`{}~|\\-]+))*)|(?:\"(?:\\\\[^\\r\\n]|[^\\\\\"])*\")))\\@(?:(?:(?:(?:[a-zA-Z0-9_!#\\$\\%&'*+/=?\\^`{}~|\\-]+)(?:\\.(?:[a-zA-Z0-9_!#\\$\\%&'*+/=?\\^`{}~|\\-]+))*)|(?:\\[(?:\\\\\\S|[\\x21-\\x5a\\x5e-\\x7e])*\\]))))";
-	public static final String PAGEPATTERN = "([^\":&<>]+)";
-	public static final String PAGEFORMATPATTERN = "^\\[\\[" + PAGEPATTERN + "\\]\\]";
+	public static final String PAGEPATTERN = "([^\":&<>]+?)";
+	public static final String PAGEFORMATPATTERN = "^(\\[\\[" + PAGEPATTERN + "\\]\\]){1}?";
 	
 	public static final String LINKFORMATPATTERN1 = "^\\[\\[([^:>]+)" + "[:>]" + URLPATTERN + "\\]\\]";
 	public static final String LINKFORMATPATTERN2 = "^\\[\\[([^:>]+)" + "[:>]" + MAILPATTERN + "\\]\\]";
@@ -106,7 +105,7 @@ public interface WikiObjectInlineI {
 	static public class Util {
 		
 		// 正規表現にかけて、必要な情報を取り出す
-		public String matchSet(String str, String pat) {
+		public String matchSet(String str, String pat, int groupnum) {
 			if (str == null || pat == null) {
 				return null;
 			}
@@ -114,7 +113,7 @@ public interface WikiObjectInlineI {
 			Pattern pattern = Pattern.compile(pat);
 			Matcher matcher = pattern.matcher(str);
 			if (matcher.find()) {
-				return (matcher.groupCount() >= 1) ? matcher.group(1) : null;
+				return (matcher.groupCount() >= groupnum) ? matcher.group(groupnum) : null;
 			}
 			
 			return null;

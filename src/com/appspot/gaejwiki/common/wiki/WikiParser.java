@@ -78,5 +78,8 @@ public class WikiParser {
 		return inlineparser.toNoteHtmlString();
 	}
 	
+	public List<String> getPageList() {
+		return inlineparser.getPageList();
+	}
 	
 }

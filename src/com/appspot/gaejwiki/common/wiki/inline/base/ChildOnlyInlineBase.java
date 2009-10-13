@@ -15,6 +15,7 @@
  */
 package com.appspot.gaejwiki.common.wiki.inline.base;
 
+import com.appspot.gaejwiki.common.text.TextUtils;
 import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineI;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
@@ -29,12 +30,14 @@ public abstract class ChildOnlyInlineBase implements WikiObjectInlineI {
 	@Override
 	public void set(String str, WikiInlineParser parser) {
 		rawdata = str;
-		indata = new Util().matchSet(rawdata, getPattern());
+		indata = getMatchData(rawdata);
 		if (parser != null) {
 			checkPage(parser);
 			accesspagename = parser.getAccessPageName();
 		}
 	}
+	
+	abstract protected String getMatchData(String rawdata);
 
 	@Override
 	public WikiObjectInlineI getParent() {
@@ -78,7 +81,7 @@ public abstract class ChildOnlyInlineBase implements WikiObjectInlineI {
 		public String getExistHtmlString(String name, String accesspagename) {
 			DomainParameter domainparam = DomainParameter.getDomainParameter();
 			StringBuffer sb = new StringBuffer();
-			sb.append("<a title=\"" + name + "\" href=\"" + domainparam.getViewURL(name) + "?ref=" + accesspagename + "\">" + name + "</a></span>");
+			sb.append("<a title=\"" + name + "\" href=\"" + domainparam.getViewURL(name) + "?ref=" + new TextUtils().encodeUrlString(accesspagename) + "\">" + name + "</a></span>");
 			return sb.toString();
 		}
 		
@@ -87,7 +90,7 @@ public abstract class ChildOnlyInlineBase implements WikiObjectInlineI {
 			StringBuffer sb = new StringBuffer();
 			sb.append("<span class=\"noexists\">");
 			sb.append(name);
-			sb.append("<a href=\"" + domainparam.getEditURL(name) + "?ref=" + accesspagename + "\">?</a></span>");
+			sb.append("<a href=\"" + domainparam.getEditURL(name) + "?ref=" + new TextUtils().encodeUrlString(accesspagename) + "\">?</a></span>");
 			return sb.toString();
 		}
 	}

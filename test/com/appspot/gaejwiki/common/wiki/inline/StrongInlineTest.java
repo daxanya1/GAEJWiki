@@ -38,13 +38,13 @@ public class StrongInlineTest {
 	public void testStrongInlineSub() {
 		StrongInline strong1 = new StrongInline();
 		WikiObjectInlineI.Util sub1 = new WikiObjectInlineI.Util();
-		String line1 = sub1.matchSet("''test 1''", strong1.getPattern());
+		String line1 = sub1.matchSet("''test 1''", strong1.getPattern() ,1);
 		assertEquals(line1, "test 1");
 		assertEquals(strong1.toDebugString(), "strong|");
 
 		StrongInline strong2 = new StrongInline();
 		WikiObjectInlineI.Util sub2 = new WikiObjectInlineI.Util();
-		String line2 = sub2.matchSet("''test 1''test''", strong2.getPattern());
+		String line2 = sub2.matchSet("''test 1''test''", strong2.getPattern(), 1);
 		assertEquals(line2, "test 1''test");
 		assertEquals(strong2.toDebugString(), "strong|");
 

@@ -17,7 +17,8 @@
 package com.appspot.gaejwiki.common.text;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
@@ -35,12 +36,15 @@ public class FileUtils {
 	 */
 	public String getFile(String filepath, boolean includebr) {
 		StringBuffer sb = new StringBuffer();
-        FileReader in = null;
+		FileInputStream is = null;
+		InputStreamReader in = null;
         BufferedReader br = null;
         
         DomainParameter domainparam = DomainParameter.getDomainParameter();
         try {
-            in = new FileReader(filepath);
+            is  = new FileInputStream(filepath);
+            in = new InputStreamReader(is, "UTF-8");
+//            in = new FileReader(filepath);
             br = new BufferedReader(in);
             String line;
             while ((line = br.readLine()) != null) {
@@ -56,6 +60,7 @@ public class FileUtils {
         	try {
 	            if (br != null) { br.close(); }
 	            if (in != null) { in.close(); }
+	            if (is != null) { is.close(); }
         	} catch (Exception e){
         		//
         	}

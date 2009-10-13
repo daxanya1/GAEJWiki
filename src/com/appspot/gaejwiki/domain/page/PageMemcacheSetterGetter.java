@@ -50,10 +50,17 @@ public class PageMemcacheSetterGetter {
 		if (pagedata == null) {
 			return;
 		}
+		setPageData(keyname, pagedata.get(PageData.HTMLDATAKEY), pagedata.get(PageData.WIKIDATAKEY));
+	}
+	
+	public void setPageData(Key keyname, String htmldata, String wikidata) {
+		if (keyname == null || htmldata == null || wikidata == null) {
+			return;
+		}
 		
 		MemcacheService memcache = getMemcacheService();
-		memcache.put(keyname + KEY_MEMCACHEHTML, pagedata.get(PageData.HTMLDATAKEY));
-		memcache.put(keyname + KEY_MEMCACHEWIKI, pagedata.get(PageData.WIKIDATAKEY));
+		memcache.put(keyname + KEY_MEMCACHEHTML, htmldata);
+		memcache.put(keyname + KEY_MEMCACHEWIKI, wikidata);
 	}
 	
 	/**
@@ -62,5 +69,17 @@ public class PageMemcacheSetterGetter {
 	 */
 	protected MemcacheService getMemcacheService() {
 		return MemcacheServiceFactory.getMemcacheService();
+	}
+
+	/**
+	 * @param key
+	 */
+	public void clearHtmlData(Key keyname) {
+		if (keyname == null) {
+			return;
+		}
+		
+		MemcacheService memcache = getMemcacheService();
+		memcache.put(keyname + KEY_MEMCACHEHTML, null);
 	}
 }

@@ -41,6 +41,7 @@ public class ViewServlet extends HttpServlet {
 	private static final Logger logger = Logger.getLogger(ViewServlet.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
+		logger.info("view url:" + req.getRequestURI());
 		new Sub().exec(req, resp);
 	}
 	

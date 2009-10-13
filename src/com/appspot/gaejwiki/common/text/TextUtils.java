@@ -15,12 +15,31 @@
  */
 package com.appspot.gaejwiki.common.text;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * テキストに関するユーティリティクラス
  * @author Ryuichi Danno
  */
 public class TextUtils {
 
+	public String removeReturnChar(String data) {
+		if (data == null) {
+			return null;
+		}
+		return data.replaceAll("\r\n", "\n");
+	}
+	
+	public String encodeUrlString(String url) {
+		try {
+			return URLEncoder.encode(url, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			return null;
+		}
+	}
+
+	
 	/**
 	 * 通常のテキストに対してHTML文字列をエスケープする
 	 * @param line エスケープ前の文字列

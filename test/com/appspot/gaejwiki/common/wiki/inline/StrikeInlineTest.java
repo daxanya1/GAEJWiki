@@ -39,13 +39,13 @@ public class StrikeInlineTest {
 	public void testStrikeInlineSub() {
 		StrikeInline strike1 = new StrikeInline();
 		WikiObjectInlineI.Util sub1 = new WikiObjectInlineI.Util();
-		String line1 = sub1.matchSet("%%test 1%%", strike1.getPattern());
+		String line1 = sub1.matchSet("%%test 1%%", strike1.getPattern(), 1);
 		assertEquals(line1, "test 1");
 		assertEquals(strike1.toDebugString(), "strike|");
 
 		StrikeInline strike2 = new StrikeInline();
 		WikiObjectInlineI.Util sub2 = new WikiObjectInlineI.Util();
-		String line2 = sub2.matchSet("%%test 1%%test%%", strike2.getPattern());
+		String line2 = sub2.matchSet("%%test 1%%test%%", strike2.getPattern(), 1);
 		assertEquals(line2, "test 1%%test");
 		assertEquals(strike2.toDebugString(), "strike|");
 

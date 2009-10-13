@@ -16,10 +16,12 @@
 package com.appspot.gaejwiki.domain.page;
 
 import java.util.Calendar;
+import java.util.List;
 
 import com.appspot.gaejwiki.common.wiki.WikiParser;
 import com.appspot.gaejwiki.data.dao.WikiData;
 import com.appspot.gaejwiki.data.dao.WikiInfo;
+import com.appspot.gaejwiki.data.dao.WikiRef;
 import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.datastore.Key;
 
@@ -41,6 +43,7 @@ public class PageSaver {
 		
 		WikiInfo info = sub.saveWikiInfo(pagename);
 		sub.saveWikiData(info, htmldata, wikidata);
+		sub.saveWikiRef(pagename, wikiparser.getPageList());
 	}
 	
 	static public class Sub {
@@ -64,6 +67,35 @@ public class PageSaver {
 		}
 		
 		/**
+		 * WikiRefにpageListを保存する
+		 * WikiRefは自分自身のではなくて、リンク先のところに自分の情報を保存する
+		 * @param info
+		 * @param pageList
+		 */
+		public void saveWikiRef(String pagename, List<String> pagelist) {
+			assert(pagename != null);
+			assert(pagelist != null);
+
+	    	WikiRef.Util util = new WikiRef.Util();
+	    	for (String targetpagename : pagelist) {
+	    		Key key = util.makeKey(targetpagename);
+				WikiRef ref = util.loadData(key);
+				String refdata = null;
+				if (ref == null) {
+					ref = new WikiRef();
+					ref.setKey(key);
+					refdata = pagename;
+				} else {
+					refdata = util.addRefData(ref.getRefdata(), pagename);
+				}
+				ref.setRefdata(refdata);
+		    	Calendar cal = Calendar.getInstance();
+				ref.setUpdatedate(cal.getTime());
+				util.saveData(ref);
+	    	}
+		}
+
+		/**
 		 * Version情報をインクリメントして上書きする
 		 * @param pagename
 		 * @param wikiinfo
@@ -81,7 +113,7 @@ public class PageSaver {
 		}
 		
 		/**
-		 * 
+		 * 新規で作成する
 		 * @param pagename
 		 * @return
 		 */
@@ -121,12 +153,12 @@ public class PageSaver {
 	    	data.setHtmldata(new Blob(parthtmldata));
 	    	util.saveData(data);
 	    	
-	    	PageData pagedata = new PageData();
-	    	pagedata.setHtmlWiki(htmldata, wikidata);
-	    	new PageMemcacheSetterGetter().setPageData(datakey, pagedata);
+	    	new PageMemcacheSetterGetter().setPageData(datakey, htmldata, wikidata);
 	    	
 	    	return data;
 		}
 	}
+
+
 
 }

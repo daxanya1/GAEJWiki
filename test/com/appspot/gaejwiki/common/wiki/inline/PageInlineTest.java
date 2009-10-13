@@ -49,7 +49,7 @@ public class PageInlineTest {
 
 		PageInline page2 = new PageInline();
 		page2.set("[[test 1[[]]test]]", null);
-		assertEquals(page2.toDebugString(), "page|test 1[[]]test");
+		assertEquals(page2.toDebugString(), "page|test 1[[");
 
 	}
 }

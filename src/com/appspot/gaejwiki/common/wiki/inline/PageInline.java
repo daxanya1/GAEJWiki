@@ -54,6 +54,11 @@ public class PageInline extends ChildOnlyInlineBase {
 		return sb.toString();
 	}
 	
+	@Override
+	protected String getMatchData(String rawdata) {
+		return new Util().matchSet(rawdata, getPattern(), 2);
+
+	}
 
 	@Override
 	protected void checkPage(WikiInlineParser parser) {

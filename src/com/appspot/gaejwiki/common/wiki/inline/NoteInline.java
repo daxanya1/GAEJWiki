@@ -51,7 +51,7 @@ public class NoteInline implements WikiObjectInlineI {
 	public void set(String str, WikiInlineParser parser) {
 		rawdata = str;
 		// 再帰処理を行う
-		String line = new Util().matchSet(rawdata, getPattern());
+		String line = new Util().matchSet(rawdata, getPattern(), 1);
 		if (line != null) {
 			childlist = parser.parseInline(line);
 		}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cronentries>
+	<cron>
+		<url>/view/Welcome</url>
+		<description>Access default page.</description>
+		<schedule>every 5 minutes</schedule>
+		<timezone>Asia/Tokyo</timezone>
+	</cron>
+</cronentries>
