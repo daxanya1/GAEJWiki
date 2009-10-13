@@ -1,7 +1,6 @@
 package com.appspot.gaejwiki.data.dao;
 
 
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;

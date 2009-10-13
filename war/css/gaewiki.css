@@ -1,0 +1,241 @@
+/**
+ Copyright 2009 GAEJWiki Team.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+ * @author Ryuichi Danno
+ */
+@charset "utf-8";
+
+/* ref: http://bowz.info/409 */
+pre {
+ white-space: -moz-pre-wrap; /* Mozilla */
+ white-space: -pre-wrap;     /* Opera 4-6 */
+ white-space: -o-pre-wrap;   /* Opera 7 */
+ white-space: pre-wrap;      /* CSS3 */
+ word-wrap: break-word;      /* IE 5.5+ */
+}
+
+/* ref: http://it.kndb.jp/entry/show/id/719 */
+pre {
+ font-size: 1em;
+ color: #204080;
+ background-color: #f0f0f0;
+ border: solid 1px #e0e0e0;
+ line-height: 120%;
+ margin: 1em 0 0 0;
+ padding: 0.99em;
+ overflow-x: auto;
+ overflow-y: auto;
+}
+
+blockquote {
+ margin-left:32px;
+}
+
+body {
+ margin: 1%;
+ overflow : hidden;
+ font-family:verdana, arial, helvetica, Sans-Serif;
+}
+
+/* ref: http://colorchart.jp/color/4048680978 */
+a:link {
+ color:#0080c0;
+ text-decoration:none;
+}
+a:visited {
+ color:#c06020;
+ text-decoration:none;
+}
+a:hover {
+ background-color:#f0e0e0;
+ text-decoration:underline;
+}
+a:active {
+ color:#f04040;
+ background-color:#f0e0e0;
+}
+
+a.note {
+ color:#f04040;
+ font-weight:bold;
+ font-size:60%;
+ vertical-align:super;
+}
+div.anchor {
+ font-size:60%; 
+ text-align:right;
+}
+.anchor_super {
+ font-size:xx-small;
+ vertical-align:super;
+}
+
+h1.title a:visited {
+ color:#0080c0;
+ text-decoration:none;
+}
+h1.title {
+ font-size: 32px;
+ font-weight:bold;
+ padding: 12px 0px 0px 0px;
+ border: 0px;
+ margin: 12px 0px 0px 0px;
+}
+
+h1, h2 {
+ padding: 5px 5px 3px; 
+ background-color: #fcfcfc; 
+ border-bottom: 1px #e0e0e0 solid;
+ margin-bottom: 5px;
+}
+
+h3 {
+ padding: 5px 5px 3px; 
+ background-color: #fcfcfc; 
+ border-left: 5px #e0e0e0 solid;
+ border-bottom: 1px #e0e0e0 solid;
+}
+
+h4 {
+ padding: 5px 5px 3px; 
+ background-color: #fcfcfc; 
+}
+
+img {
+ border:none;
+ vertical-align:middle;
+}
+
+em {
+ font-style:italic;
+}
+
+strong {
+ font-weight:bold;
+}
+
+hr {
+ border-style:ridge;
+ border-color:#202020;
+ border-width:1px 0px;
+}
+
+hr.note {
+ width:90%;
+ border-style:ridge;
+ border-color:#202020;
+ border-width:1px 0px;
+ text-align:center;
+ margin:1em auto 0em auto;
+}
+
+
+div#header {
+ padding:0px;
+ margin:0px;
+}
+
+div#navi {
+ clear:both;
+ padding:4px 0px 0px 0px;
+ margin:0px;
+}
+
+td.menu {
+ width:8em;
+ vertical-align:top;
+}
+
+div#menu {
+ width:8em;
+ padding:1px;
+ margin:3px;
+ word-break:break-all;
+ font-size:90%;
+ overflow:hidden;
+}
+
+div#menu h2 {
+ border:solid 1px #e0e0e0;
+ background-color: #e0e0e0; 
+ text-align:center;
+ font-size:90%;
+}
+
+div#menu h3 {
+ border:solid 1px #e0e0e0;
+ text-align:center;
+ font-size:80%;
+}
+
+div#menu h4 {
+ font-size:80%;
+}
+
+div#menu h5 {
+ font-size:90%;
+}
+
+div#menu ul {
+ margin:0px 0px 0px .8em;
+ padding:0px .5em 0px .5em;
+ list-style-type:none;
+}
+
+div#menu ul li {
+ line-height:110%;
+}
+
+div#body {
+ padding:0px;
+ margin:0px 0px 0px 0.3em;
+}
+
+div#body p {
+ margin-top: 0.5em;
+ margin-left: 0.5em;
+}
+
+div#note {
+ clear:both;
+ padding:0px;
+ margin:0px;
+}
+
+div#footer {
+ font-size:70%;
+ padding:0px;
+ margin:16px 0px 0px 0px;
+}
+
+div#preview {
+ color:inherit;
+ background-color:#F5F8FF;
+}
+
+img#logo {
+ float:left;
+ margin-right:20px;
+}
+
+div.ie5 {
+ text-align:center;
+}
+
+span.noexists {
+ color:inherit;
+ background-color:#f0e0e0;
+}
+

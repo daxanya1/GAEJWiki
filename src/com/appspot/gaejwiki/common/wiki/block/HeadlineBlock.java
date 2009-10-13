@@ -54,7 +54,7 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 
 		// 最初のHeadline以外は、一番上に戻るためのタグを追加
 		if (contentsid != 0) {
-			sb.append(new Sub().makeJumpmenu());
+			sb.append(new Sub().makeAnchor());
 		}
 		
 		sb.append(new Sub().makeHeadline(inlinelist, level, contentsid, accesspagename));
@@ -106,8 +106,8 @@ public class HeadlineBlock extends NoChildParentBlockBase {
 			return sb.toString();
 		}
 		
-		public String makeJumpmenu() {
-			return "<div class=\"jumpmenu\"><a href=\"#navigator\">&uarr;</a></div>";
+		public String makeAnchor() {
+			return "<div class=\"anchor\"><a href=\"#navigator\">&uarr;</a></div>";
 		}
 		
 		/**

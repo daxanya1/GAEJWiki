@@ -86,7 +86,7 @@ public class NoteInline implements WikiObjectInlineI {
 
 	public String toHtmlStringHeader() {
 		String nostr = new Integer(noteno).toString();
-		return "<a id=\"notetext_" + nostr + "\" href=\"#notefoot_" + nostr + "\" class=\"note_super\" title=\"" + toString() + "\">";
+		return "<a id=\"notetext_" + nostr + "\" href=\"#notefoot_" + nostr + "\" class=\"note\" title=\"" + toString() + "\">";
 	}
 	
 	/**
@@ -99,7 +99,7 @@ public class NoteInline implements WikiObjectInlineI {
 		}
 		String nostr = new Integer(noteno).toString();
 		StringBuffer sb = new StringBuffer();
-		sb.append("<a id=\"notefoot_" + nostr + "\" href=\"#notetext_" + nostr + "\" class=\"note_super\">");
+		sb.append("<a id=\"notefoot_" + nostr + "\" href=\"#notetext_" + nostr + "\" class=\"note\">");
 		sb.append("*" + nostr);
 		sb.append("</a>");
 		sb.append(new Util().getLineSeparator());
