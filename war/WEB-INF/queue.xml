@@ -6,8 +6,8 @@
   </queue>
   <queue>
     <name>background-processing</name>
-    <rate>10/s</rate>
-    <bucket-size>10</bucket-size>
+    <rate>5/s</rate>
+    <bucket-size>5</bucket-size>
   </queue>
   <queue>
     <name>background-processing-retry</name>

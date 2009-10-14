@@ -33,9 +33,8 @@ public class PageMemcacheSetterGetter {
 			return null;
 		}
 		
-		MemcacheService memcache = getMemcacheService();
-		String memwikidata = (String)memcache.get(pagename + KEY_MEMCACHEWIKI);
-		String memhtmldata = (String)memcache.get(pagename + KEY_MEMCACHEHTML);
+		String memwikidata = (String)getMemcacheService().get(pagename + KEY_MEMCACHEWIKI);
+		String memhtmldata = (String)getMemcacheService().get(pagename + KEY_MEMCACHEHTML);
 		if (memwikidata == null || memhtmldata == null) {
 			return null;
 		}
@@ -57,14 +56,14 @@ public class PageMemcacheSetterGetter {
 			return;
 		}
 		
-		MemcacheService memcache = getMemcacheService();
 		if (wikidata != null) {
-			memcache.put(pagename + KEY_MEMCACHEWIKI, wikidata);
+			getMemcacheService().put(pagename + KEY_MEMCACHEWIKI, wikidata);
 		}
 		if (htmldata != null) {
-			memcache.put(pagename + KEY_MEMCACHEHTML, htmldata);
+			getMemcacheService().put(pagename + KEY_MEMCACHEHTML, htmldata);
 		}
 	}
+
 	
 	/**
 	 * 
@@ -82,7 +81,6 @@ public class PageMemcacheSetterGetter {
 			return;
 		}
 		
-		MemcacheService memcache = getMemcacheService();
-		memcache.put(pagename + KEY_MEMCACHEHTML, null);
+		getMemcacheService().put(pagename + KEY_MEMCACHEHTML, null);
 	}
 }

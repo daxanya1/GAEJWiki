@@ -27,19 +27,36 @@ import com.google.appengine.api.datastore.Key;
  */
 public class PageSaver {
 
-	public void savePage(String pagename, String wikidata) {
+	/**
+	 * Pageの書き込みをする
+	 * @param pagename
+	 * @param wikidata
+	 * @return　新規であればtrue
+	 */
+	public boolean savePage(String pagename, String wikidata) {
 		if (pagename == null || wikidata == null) {
-			return;
+			return false;
 		}
 		
 		WikiParser parser = getParser();
 		String htmldata = parser.parse(pagename, wikidata);
 		
 		Sub sub = new Sub();
-		WikiInfo info = sub.saveWikiInfo(pagename);
+		WikiInfo info = sub.loadWikiInfo(pagename);
+		boolean retcode;
+    	if (info == null) {
+    		retcode = true;
+    		info = sub.createWikiInfo(pagename);
+    	} else {
+    		retcode = false;
+    		info = sub.updateWikiInfo(pagename, info);
+    	}
+
 		sub.saveWikiData(info, wikidata);
 		getPageMemcacheSetterGetter().setPageWikiHtmlData(pagename, wikidata, htmldata);
-		new AddRefQueueCommand.Util().queueAddRef(pagename, parser.getPageList());
+		new AddRefQueueCommand.Util().queueAddRef(pagename, parser.getNonExistsPageSet());
+		
+		return retcode;
 	}
 	
 	protected WikiParser getParser() {
@@ -56,18 +73,12 @@ public class PageSaver {
 		 * WikiInfoがあるかないかで処理を分ける
 		 * @param pagename
 		 */
-		public WikiInfo saveWikiInfo(String pagename) {
+		public WikiInfo loadWikiInfo(String pagename) {
 			assert(pagename != null);
 			
 	    	WikiInfo.Util util = new WikiInfo.Util();
 	    	Key key = util.makeKey(pagename);
-	    	WikiInfo wikiinfo = util.loadData(key);
-	    	if (wikiinfo == null) {
-	    		return createWikiInfo(pagename);
-	    	} else {
-	    		return updateWikiInfo(pagename, wikiinfo);
-	    	}
-	    	
+	    	return util.loadData(key);
 		}
 		
 

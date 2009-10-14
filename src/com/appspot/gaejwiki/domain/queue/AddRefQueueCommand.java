@@ -16,8 +16,6 @@
 
 package com.appspot.gaejwiki.domain.queue;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.appspot.gaejwiki.data.common.StringInsertDataExec;
@@ -82,13 +80,12 @@ public class AddRefQueueCommand implements QueueCommandI {
 		 * @param info
 		 * @param pageList
 		 */
-		public void queueAddRef(String originalpagename, List<String> pagelist) {
+		public void queueAddRef(String originalpagename, Set<String> pageset) {
 			assert(originalpagename != null);
-			assert(pagelist != null);
+			assert(pageset != null);
 
-	    	
-	    	Set<String> set = new HashSet<String>();
-	    	for (String targetpagename : pagelist) {
+	    	QueueSetter queue = new QueueSetter();
+	    	for (String targetpagename : pageset) {
 	    		if (targetpagename.length() == 0) {
 	    			continue;
 	    		}
@@ -96,12 +93,6 @@ public class AddRefQueueCommand implements QueueCommandI {
 	    		if (originalpagename.equals(targetpagename)) {
 	    			continue;
 	    		}
-	    		// 重複を排除
-	    		set.add(targetpagename);
-	    	}
-	    	
-	    	QueueSetter queue = new QueueSetter();
-	    	for (String targetpagename : set) {
 	    		queue.setQueue(targetpagename, originalpagename, COMMAND_ADDREF);
 	    	}
 		}

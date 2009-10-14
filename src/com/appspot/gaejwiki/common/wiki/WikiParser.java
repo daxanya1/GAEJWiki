@@ -16,6 +16,7 @@
 package com.appspot.gaejwiki.common.wiki;
 
 import java.util.List;
+import java.util.Set;
 
 import com.appspot.gaejwiki.common.text.TextUtils;
 import com.appspot.gaejwiki.common.wiki.block.WikiBlockParser;
@@ -24,6 +25,7 @@ import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI;
 import com.appspot.gaejwiki.common.wiki.inline.WikiInlineParser;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectBlockInfo;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineFactory;
+import com.appspot.gaejwiki.data.dao.WikiRef;
 
 /**
  *
@@ -32,8 +34,12 @@ import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineFactory;
 public class WikiParser {
 
 	// private static final Logger logger = Logger.getLogger(WikiParser.class.getName());
-	private WikiInlineParser inlineparser = null;
+	private WikiObjectBlockInfo info = null;
 
+	public WikiParser() {
+		info = getSub().getWikiObjectBlockInfo();
+		info.setAllPageData(getSub().getAllPageData());
+	}
 	
 	public String parse(String pagename, String str) {
 		if (str == null) {
@@ -48,11 +54,10 @@ public class WikiParser {
 		
 		
 		WikiObjectInlineFactory inlinefactory = new WikiObjectInlineFactory();
-		WikiObjectBlockInfo info = new WikiObjectBlockInfo();
 		
 		// inlineparserは新規作成する(note用情報が必要なため、メンバ変数としている）
-		inlineparser = getInlineParser();
-		inlineparser.setAccessPageName(pagename);
+		WikiInlineParser inlineparser = getSub().getInlineParser();
+		info.setAccessPagename(pagename);
 		inlineparser.setWikiObjectBlockInfo(info);
 		inlineparser.setWikiObjectInlineFactory(inlinefactory);
 		
@@ -65,8 +70,8 @@ public class WikiParser {
 		return sb.toString();
 	}
 	
-	protected WikiInlineParser getInlineParser() {
-		return new WikiInlineParser(); 
+	public Sub getSub() {
+		return new Sub();
 	}
 	
 	/**
@@ -74,11 +79,34 @@ public class WikiParser {
 	 * @return
 	 */
 	public String toNoteHtmlString() {
-		return inlineparser.toNoteHtmlString();
+		return info.toNoteHtmlString();
 	}
 	
-	public List<String> getPageList() {
-		return inlineparser.getPageList();
+	public Set<String> getNonExistsPageSet() {
+		return info.getNonExistsPageSet();
 	}
 	
+	static public class Sub {
+
+		public WikiInlineParser getInlineParser() {
+			return new WikiInlineParser(); 
+		}
+		
+		public WikiObjectBlockInfo getWikiObjectBlockInfo() {
+			return new WikiObjectBlockInfo();
+		}
+
+		/**
+		 * @return
+		 */
+		public String getAllPageData() {
+			WikiRef.Util refutil = new WikiRef.Util();
+			WikiRef ref = refutil.loadData(WikiRef.Util.ALLPAGEKEY);
+			if (ref == null) {
+				return new String("");
+			}
+			return ref.getRefdata();
+		}
+	}
+
 }

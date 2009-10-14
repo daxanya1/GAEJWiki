@@ -30,9 +30,10 @@ public class WikiInlineParserTest {
 				return false;
 			}					
 		};
-		parser.setAccessPageName("reftest");
+		WikiObjectBlockInfo info = new WikiObjectBlockInfo();
+		info.setAccessPagename("reftest");
+		parser.setWikiObjectBlockInfo(info);
 		parser.setWikiObjectInlineFactory(new WikiObjectInlineFactory());
-		parser.setWikiObjectBlockInfo(new WikiObjectBlockInfo());
 		return parser;
 	}
 	

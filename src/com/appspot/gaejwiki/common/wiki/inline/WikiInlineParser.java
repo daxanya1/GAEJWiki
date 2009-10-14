@@ -20,9 +20,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.appspot.gaejwiki.common.wiki.block.HeadlineBlock;
-import com.appspot.gaejwiki.common.wiki.block.WikiObjectBlockI.Util;
 import com.appspot.gaejwiki.common.wiki.inline.WikiObjectInlineFactory.WikiObjectInlineIPair;
-import com.appspot.gaejwiki.domain.page.PageLoader;
 
 
 public class WikiInlineParser {
@@ -31,10 +29,6 @@ public class WikiInlineParser {
 
 	private WikiObjectInlineFactory factory = null;
 	private WikiObjectBlockInfo info = null;
-	private List<NoteInline> notelist = new ArrayList<NoteInline>();
-	private List<HeadlineBlock> contentslist = new ArrayList<HeadlineBlock>();
-	private String accesspagename = null;
-	private List<String> pagelist = new ArrayList<String>();
 	
 	public void setWikiObjectInlineFactory(WikiObjectInlineFactory factory) {
 		this.factory = factory;
@@ -42,10 +36,6 @@ public class WikiInlineParser {
 	
 	public void setWikiObjectBlockInfo(WikiObjectBlockInfo info) {
 		this.info = info;
-	}
-	
-	public void setAccessPageName(String accesspagename) {
-		this.accesspagename = accesspagename;
 	}
 	
 	/**
@@ -65,7 +55,7 @@ public class WikiInlineParser {
 			return wikilist;
 		}
 		
-		if (accesspagename == null || accesspagename.length() == 0) {
+		if (info.getAccessPagename() == null) {
 			logger.fine("wikiinlineparser accesspagename is null");
 			return wikilist;
 		}
@@ -126,29 +116,8 @@ public class WikiInlineParser {
 	 * @return note番号(1はじまり)
 	 */
 	public int addNote(NoteInline note) {
-		notelist.add(note);
-		return notelist.size();
-	}
-
-	/**
-	 * note情報を返す
-	 * @return note情報のHtmlフォーマット
-	 */
-	public String toNoteHtmlString() {
-		if (notelist == null || notelist.size() == 0) {
-			return "";
-		}
-		
-		StringBuffer sb = new StringBuffer();
-		sb.append("<div id=\"note\">");
-		sb.append("<hr class=\"note_hr\" />");
-		boolean first = true;
-		for (NoteInline note : notelist) {
-			if (!first) { sb.append(new Util().getLineSeparator()); } else { first = false; }
-			sb.append(note.toNoteHtmlString());
-		}
-		sb.append("</div>");
-		return sb.toString();
+		info.getNoteList().add(note);
+		return info.getNoteList().size();
 	}
 
 	/**
@@ -157,9 +126,9 @@ public class WikiInlineParser {
 	 * @return contents番号(0はじまり)
 	 */
 	public int addHeadline(HeadlineBlock headlineblock) {
-		contentslist.add(headlineblock);
+		info.getContentsList().add(headlineblock);
 		// 返すIDは0はじまりにする。
-		return contentslist.size() - 1;
+		return info.getContentsList().size() - 1;
 	}
 
 	/**
@@ -169,9 +138,7 @@ public class WikiInlineParser {
 	 * @return ページ名が存在していればtrue
 	 */
 	public boolean checkPage(String pagename) {
-		assert (pagename != null);
-		pagelist.add(pagename);
-		return (new PageLoader().existPage(pagename));
+		return info.checkPage(pagename);
 	}
 
 	/**
@@ -179,15 +146,7 @@ public class WikiInlineParser {
 	 * @return パーサ対象ページ名
 	 */
 	public String getAccessPageName() {
-		return accesspagename;
+		return info.getAccessPagename();
 	}
-	
-	/**
-	 * ページリストを返す
-	 * @return
-	 */
-	public List<String> getPageList() {
-		return pagelist;
-	}
-	
+
 }

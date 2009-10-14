@@ -26,6 +26,7 @@ import com.appspot.gaejwiki.common.template.TemplateLoader;
 import com.appspot.gaejwiki.common.template.TemplateMapCreater;
 import com.appspot.gaejwiki.common.template.TemplateMerger;
 import com.appspot.gaejwiki.common.text.TextUtils;
+import com.appspot.gaejwiki.data.common.StringInsertDataExec;
 import com.appspot.gaejwiki.data.dao.WikiRef;
 import com.appspot.gaejwiki.domain.page.PageData;
 import com.appspot.gaejwiki.domain.page.PageLoader;
@@ -34,6 +35,7 @@ import com.appspot.gaejwiki.domain.page.PageSaver;
 import com.appspot.gaejwiki.domain.queue.ClearMemcachedQueueCommand;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 import com.appspot.gaejwiki.domain.urlparam.ParamParser;
+import com.google.appengine.api.datastore.Key;
 
 /**
  *
@@ -95,11 +97,24 @@ public class EditServlet extends HttpServlet {
 			
 			if (wikidataoriginal == null || !wikidataoriginal.equals(wikidata)) {
 				// 書き込みする
-				new PageSaver().savePage(pagename, wikidata);
-				// 被リンク情報を取り出して、被リンク先のMemcached-HTMLをクリアするようQueueにセットする
-				WikiRef.Util wikirefutil = new WikiRef.Util();
-				new ClearMemcachedQueueCommand.Util().queueClearMemcached(pagename, wikirefutil.getRefStringArrayRefIncoming(pagename));
-				logger.info("editcommit save:" + pagename);
+				boolean newflag = new PageSaver().savePage(pagename, wikidata);
+				if (newflag) {
+					logger.info("editcommit new-save:" + pagename);
+					// 被リンク情報を取り出して、被リンク先のMemcached-HTMLをクリアするようQueueにセットする
+					WikiRef.Util refutil = new WikiRef.Util();
+					Key refkey = refutil.makeKey(pagename, WikiRef.Util.KEYFOOTER_INCOMINGLINK);
+					new ClearMemcachedQueueCommand.Util().queueClearMemcached(pagename, refutil.getRefStringArray(refkey));
+					
+					// 披リンク情報を消す
+					refutil.removeData(refkey);
+					
+					// ページ名を書き込む
+					StringInsertDataExec execdata = new StringInsertDataExec();
+					execdata.setData(pagename);
+					refutil.execTransaction(WikiRef.Util.ALLPAGEKEY, execdata);
+				} else {
+					logger.info("editcommit save:" + pagename);
+				}
 			} else {
 				// 書き込みしない
 				logger.info("editcommit original same:" + pagename);

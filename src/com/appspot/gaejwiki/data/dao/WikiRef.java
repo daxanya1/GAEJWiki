@@ -80,8 +80,12 @@ public class WikiRef {
 	
 	public static class Util {
     
+		public static final String KEYHEADER_ALL = "all";
+		public static final String KEYFOOTER_PAGE = "_page_%_";
 		public static final String KEYFOOTER_INCOMINGLINK = "_income_%_";
 		public static final String KEYFOOTER_LINK = "_link_%_";
+		
+		public static final Key ALLPAGEKEY = new Util().makeKey(WikiRef.Util.KEYHEADER_ALL, WikiRef.Util.KEYFOOTER_PAGE);
 		
 		/**
 		 * Refからrefdataを取り出して処理して書き込むまでの一連の流れをトランザクションを使って行う
@@ -173,6 +177,21 @@ public class WikiRef {
 			return getRefStringArray(makeKey(pagename, KEYFOOTER_INCOMINGLINK));
 		}
 
+
+		/**
+		 * @param refkey
+		 */
+		public void removeData(Key key) {
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+			try {
+				WikiRef data = pm.getObjectById(WikiRef.class, key);
+				pm.deletePersistent(data);
+			} catch (JDOObjectNotFoundException e) {
+			} catch (Exception e) {
+			} finally {
+	            pm.close();
+			}
+		}
     }
 
 }

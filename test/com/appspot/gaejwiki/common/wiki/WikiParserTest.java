@@ -28,15 +28,26 @@ public class WikiParserTest {
 
 	public WikiParser getTestWikiParser() {
 		return new WikiParser() {
-			protected WikiInlineParser getInlineParser() {
-				return new WikiInlineParser() {
-					public boolean checkPage(String pagename) {
-						return false;
-					}					
-				}; 
+			public Sub getSub() {
+				return new WikiParserTest.Sub();
 			}
 		};
 	}
+	
+	static final public class Sub extends WikiParser.Sub {
+		public WikiInlineParser getInlineParser() {
+			return new WikiInlineParser() {
+				public boolean checkPage(String pagename) {
+					return false;
+				}					
+			}; 
+		}
+		
+		public String getAllPageData() {
+			return "";
+		}
+	}
+
 	
 	@Before
 	public void initDomainParameter() {

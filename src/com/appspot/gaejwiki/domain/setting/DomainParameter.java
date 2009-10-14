@@ -15,8 +15,6 @@
  */
 package com.appspot.gaejwiki.domain.setting;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
