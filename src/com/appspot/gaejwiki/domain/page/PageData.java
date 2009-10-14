@@ -30,9 +30,9 @@ public class PageData extends HashMap<String, String> {
 	public static final String WIKIDATAKEY = "WIKI";
 	public static final String HTMLDATAKEY = "HTML";
 	
-	public void setHtmlWiki(String html, String wiki) {
-		this.put(HTMLDATAKEY, html);
+	public void setWikiHtml(String wiki, String html) {
 		this.put(WIKIDATAKEY, wiki);
+		this.put(HTMLDATAKEY, html);
 	}
 
 }

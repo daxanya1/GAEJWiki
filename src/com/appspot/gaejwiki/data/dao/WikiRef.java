@@ -27,7 +27,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.appspot.gaejwiki.domain.setting.DomainParameter;
+import com.appspot.gaejwiki.common.text.TextUtils;
+import com.appspot.gaejwiki.data.common.DataExecI;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
@@ -72,9 +73,53 @@ public class WikiRef {
 		setUpdatedate(Calendar.getInstance().getTime());
 	}
 	
+	public String[] getRefdataStringArray() {
+		return new TextUtils().parseData(getRefdata());
+	}
+	
 	
 	public static class Util {
     
+		public static final String KEYFOOTER_INCOMINGLINK = "_income_%_";
+		public static final String KEYFOOTER_LINK = "_link_%_";
+		
+		/**
+		 * Refからrefdataを取り出して処理して書き込むまでの一連の流れをトランザクションを使って行う
+		 * @param key Dataref読み出しKey
+		 * @param execdata 処理インターフェース
+		 * @return トランザクション処理に成功したらtrue
+		 */
+		public boolean execTransaction(Key key, DataExecI execdata) {
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+	        try{
+	            pm.currentTransaction().begin();
+	            WikiRef ref = null;
+	            try {
+	            	ref = pm.getObjectById(WikiRef.class, key);
+	            } catch (JDOObjectNotFoundException e) {
+	            }
+				if (ref == null) {
+					ref = new WikiRef();
+					ref.setKey(key);
+					ref.setRefdata(execdata.exec(new String("")));
+				} else {
+					ref.setRefdata(execdata.exec(ref.getRefdata()));
+				}
+				ref.setUpdatedateNow();
+		    	pm.makePersistent(ref);
+				pm.currentTransaction().commit();
+				return true;
+	        } catch (Exception e) {
+	        	return false;
+	        } finally {
+	        	if(pm.currentTransaction().isActive()){
+	    			pm.currentTransaction().rollback();
+	    		}
+	        	pm.close();
+	        }
+		}
+		
+		
 		public void saveData(WikiRef data) {
 	        PersistenceManager pm = PMF.get().getPersistenceManager();
 	        try{
@@ -84,9 +129,9 @@ public class WikiRef {
 	        }
 	    }
 		
-		public Key makeKey(String pagename) {
+		public Key makeKey(String pagename, String footer) {
 	    	KeyFactory.Builder kb = new KeyFactory.Builder(RootEntity.class.getSimpleName(), EntityKey.WikiRef.toString());
-	    	kb.addChild(WikiRef.class.getSimpleName(), pagename);
+	    	kb.addChild(WikiRef.class.getSimpleName(), pagename + footer);
 			return kb.getKey();
 		}
 
@@ -108,43 +153,26 @@ public class WikiRef {
 			return (loadData(key) != null);
 		}
 
-		public String[] parserRefData(String refdata) {
-			assert(refdata != null);
-			return refdata.split(DomainParameter.getDomainParameter().getLineSeparator());
+		public String[] getRefStringArray(Key key) {
+			assert(key != null);
+			
+			WikiRef ref = loadData(key);
+			if (ref == null) {
+				return null;
+			}
+			return ref.getRefdataStringArray();
 		}
-		
+
+
 		/**
-		 * refdataに、pagenameを追加する
-		 * すでにrefdata内にpagenameがあればそのまま返す
-		 * @param refdata
 		 * @param pagename
 		 * @return
 		 */
-		public String addRefData(String refdata, String pagename) {
-			assert(refdata != null);
+		public String[] getRefStringArrayRefIncoming(String pagename) {
 			assert(pagename != null);
-			
-			String separator = DomainParameter.getDomainParameter().getLineSeparator();
-			String[] strlist = parserRefData(refdata);
-			StringBuffer sb = new StringBuffer();
-			boolean existsflag = false;
-			for (String str: strlist) {
-				if (str.length() == 0) {
-					continue;
-				}
-				if (pagename.equals(str)) {
-					existsflag = true;
-				}
-				sb.append(str);
-				sb.append(separator);
-			}
-			if (!existsflag) {
-				sb.append(pagename);
-				sb.append(separator);
-			}
-			
-			return sb.toString();
+			return getRefStringArray(makeKey(pagename, KEYFOOTER_INCOMINGLINK));
 		}
+
     }
 
 }

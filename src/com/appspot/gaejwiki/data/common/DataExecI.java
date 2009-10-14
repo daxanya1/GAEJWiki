@@ -14,22 +14,18 @@
  limitations under the License.
  */
 
-package com.appspot.gaejwiki.domain.page;
-
-import java.util.HashMap;
-
-
+package com.appspot.gaejwiki.data.common;
 
 /**
  *
  * @author Ryuichi Danno
  */
-@SuppressWarnings("serial")
-public class PageParam extends HashMap<String, String> {
+public interface DataExecI {
 
-	public static final String PAGEKEY = "PAGE";
-	public static final String REFERKEY = "ref";
-	public static final String TARGETKEY = "target";
-	
+	/**
+	 * @param refdata
+	 * @return
+	 */
+	String exec(String data);
 
 }

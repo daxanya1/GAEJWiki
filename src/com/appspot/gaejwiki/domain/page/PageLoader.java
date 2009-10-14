@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import com.appspot.gaejwiki.common.text.FileUtils;
+import com.appspot.gaejwiki.common.wiki.WikiParser;
 import com.appspot.gaejwiki.data.dao.WikiData;
 import com.appspot.gaejwiki.data.dao.WikiInfo;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
@@ -61,13 +62,13 @@ public class PageLoader {
 		Sub sub = new Sub();
 		WikiInfo info = sub.getWikiInfo(pagename, incrementcounter);
 		if (info == null) {
-			logger.info("loadpage:info null");
+			logger.info("loadpage:info null:" + pagename);
 			return sub.getDefaultHtmlData(pagename);
 		}
 		
-		PageData pagedata = sub.getHtmlData(info);
+		PageData pagedata = sub.getHtmlData(info, getWikiParser());
 		if (pagedata == null) {
-			logger.info("loadpage:htmldata null");
+			logger.info("loadpage:htmldata null:" + pagename);
 			return null;
 		}
 		
@@ -77,6 +78,10 @@ public class PageLoader {
 		
 		logger.info("loadpage:done:" + pagename);
 		return pagedata;
+	}
+	
+	protected WikiParser getWikiParser() {
+		return new WikiParser();
 	}
 	
 
@@ -96,26 +101,25 @@ public class PageLoader {
 		 * @param info
 		 * @return
 		 */
-		public PageData getHtmlData(WikiInfo info) {
+		public PageData getHtmlData(WikiInfo info, WikiParser wikiparser) {
 			assert(info != null);
 			
 			WikiData.Util datautil = new WikiData.Util();
 			Key datakey = datautil.makeKey(info.getKey(), info.getVersion());
 			
-			PageData mempegedata = new PageMemcacheSetterGetter().getPageData(datakey);
+			PageData mempegedata = new PageMemcacheSetterGetter().getPageData(info.getPagename());
 			if (mempegedata != null) {
 				return mempegedata;
 			}
 			
-			WikiData data = datautil.loadData(datakey, true, true);
+			WikiData data = datautil.loadData(datakey, true);
 			if (data == null) {
 				return null;
 			}
 			
+			String htmldata = wikiparser.parse(info.getPagename(), data.getWikidataString());
 			PageData pegedata = new PageData();
-			pegedata.setHtmlWiki(data.getHtmldataString(), data.getWikidataString());
-			new PageMemcacheSetterGetter().setPageData(datakey, pegedata);
-			
+			pegedata.setWikiHtml(data.getWikidataString(), htmldata);
 			return pegedata;
 		}
 
@@ -133,7 +137,7 @@ public class PageLoader {
 				logger.info("loadpage:defaultpage:" + DomainParameter.DEFAULTPAGENAME);
 				String html = loadTemplateFile(domainparam.getTemplateFilePath(domainparam.get(DomainParameter.DEFAULTMESSAGE)));
 				PageData data = new PageData();
-				data.setHtmlWiki(html, null);
+				data.setWikiHtml(null, html);
 				return data;
 			} else {
 				return null;

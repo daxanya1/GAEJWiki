@@ -17,6 +17,9 @@ package com.appspot.gaejwiki.common.text;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
+
+import com.appspot.gaejwiki.domain.setting.DomainParameter;
 
 /**
  * テキストに関するユーティリティクラス
@@ -38,6 +41,21 @@ public class TextUtils {
 			return null;
 		}
 	}
+
+	public String[] parseData(String data) {
+		if (data == null) {
+			return null;
+		}
+		return data.split(DomainParameter.getDomainParameter().getLineSeparator());
+	}
+	
+	public List<String> parseDataToList(String data) {
+		if (data == null) {
+			return null;
+		}
+		return java.util.Arrays.asList(parseData(data));
+	}
+	
 
 	
 	/**

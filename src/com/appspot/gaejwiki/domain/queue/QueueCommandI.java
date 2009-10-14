@@ -14,22 +14,26 @@
  limitations under the License.
  */
 
-package com.appspot.gaejwiki.domain.page;
+package com.appspot.gaejwiki.domain.queue;
 
-import java.util.HashMap;
-
-
+import com.appspot.gaejwiki.domain.page.PageParam;
 
 /**
  *
  * @author Ryuichi Danno
  */
-@SuppressWarnings("serial")
-public class PageParam extends HashMap<String, String> {
+public interface QueueCommandI {
 
-	public static final String PAGEKEY = "PAGE";
-	public static final String REFERKEY = "ref";
-	public static final String TARGETKEY = "target";
-	
+	public static final String COMMAND_CLEARMEMCACHED = "rebuild";
+	public static final String COMMAND_ADDREF = "addref";
+	/**
+	 * @param pageparam
+	 * @return
+	 */
+	boolean exec(PageParam pageparam);
+	/**
+	 * @return
+	 */
+	String getName();
 
 }

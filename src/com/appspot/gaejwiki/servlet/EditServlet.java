@@ -26,11 +26,12 @@ import com.appspot.gaejwiki.common.template.TemplateLoader;
 import com.appspot.gaejwiki.common.template.TemplateMapCreater;
 import com.appspot.gaejwiki.common.template.TemplateMerger;
 import com.appspot.gaejwiki.common.text.TextUtils;
+import com.appspot.gaejwiki.data.dao.WikiRef;
 import com.appspot.gaejwiki.domain.page.PageData;
 import com.appspot.gaejwiki.domain.page.PageLoader;
 import com.appspot.gaejwiki.domain.page.PageParam;
-import com.appspot.gaejwiki.domain.page.PageQueueSetter;
 import com.appspot.gaejwiki.domain.page.PageSaver;
+import com.appspot.gaejwiki.domain.queue.ClearMemcachedQueueCommand;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 import com.appspot.gaejwiki.domain.urlparam.ParamParser;
 
@@ -92,13 +93,12 @@ public class EditServlet extends HttpServlet {
 			String wikidata = new TextUtils().removeReturnChar(pageparam.get("wiki"));
 			String pagename = pageparam.get(PageParam.PAGEKEY);
 			
-			
-			
 			if (wikidataoriginal == null || !wikidataoriginal.equals(wikidata)) {
 				// 書き込みする
 				new PageSaver().savePage(pagename, wikidata);
-				// 書き換わった披リンクについて作り直す
-				new PageQueueSetter().setQueue(pagename);
+				// 被リンク情報を取り出して、被リンク先のMemcached-HTMLをクリアするようQueueにセットする
+				WikiRef.Util wikirefutil = new WikiRef.Util();
+				new ClearMemcachedQueueCommand.Util().queueClearMemcached(pagename, wikirefutil.getRefStringArrayRefIncoming(pagename));
 				logger.info("editcommit save:" + pagename);
 			} else {
 				// 書き込みしない

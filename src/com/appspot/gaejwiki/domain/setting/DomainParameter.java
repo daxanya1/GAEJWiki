@@ -41,6 +41,7 @@ public class DomainParameter {
 	public static final String DOMAINURL = "domain";
 	public static final String VIEWURL = "viewurl";
 	public static final String EDITURL = "editurl";
+	public static final String QUEUECOMMANDURL = "queuecommandurl";
 	public static final String VIEWTEMPLATE = "viewtemplate";
 	public static final String EDITTEMPLATE = "edittemplate";
 	public static final String TIMEZONE = "timezone";
@@ -63,6 +64,7 @@ public class DomainParameter {
 		sub.putMap(DOMAINURL, parammap);
 		sub.putMap(VIEWURL, parammap);
 		sub.putMap(EDITURL, parammap);
+		sub.putMap(QUEUECOMMANDURL, parammap);
 		sub.putMap(VIEWTEMPLATE, parammap);
 		sub.putMap(EDITTEMPLATE, parammap);
 		sub.putMap(TIMEZONE, parammap);
@@ -106,6 +108,10 @@ public class DomainParameter {
 	
 	public String getEditURL(String page) {
 		return "/" + get(EDITURL) + new TextUtils().encodeUrlString(page);
+	}
+	
+	public String getQueueCommandURL(String command) {
+		return "/" + get(QUEUECOMMANDURL) + command;
 	}
 	
 	public String getTemplateFilePath(String templatefilename) {

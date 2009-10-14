@@ -58,7 +58,7 @@ public class TemplateMerger {
 	}
 	
 	protected String loadTemplateFile(String filepath) {
-		logger.info("makeHtml:loadtemplate:" + filepath);
+		// logger.info("makeHtml:loadtemplate:" + filepath);
 		return new FileUtils().getFile(filepath, true);
 	}
 	

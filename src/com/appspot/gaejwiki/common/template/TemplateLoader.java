@@ -50,7 +50,7 @@ public class TemplateLoader {
 	}
 
 	protected String loadTemplateFile(String filepath) {
-		logger.info("loadtemplate:" + filepath);
+		// logger.info("loadtemplate:" + filepath);
 		return new FileUtils().getFile(filepath, false);
 	}
 

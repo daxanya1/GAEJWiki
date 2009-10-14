@@ -15,12 +15,10 @@
  */
 package com.appspot.gaejwiki.domain.page;
 
-import java.util.List;
-
 import com.appspot.gaejwiki.common.wiki.WikiParser;
 import com.appspot.gaejwiki.data.dao.WikiData;
 import com.appspot.gaejwiki.data.dao.WikiInfo;
-import com.appspot.gaejwiki.data.dao.WikiRef;
+import com.appspot.gaejwiki.domain.queue.AddRefQueueCommand;
 import com.google.appengine.api.datastore.Key;
 
 /**
@@ -34,14 +32,22 @@ public class PageSaver {
 			return;
 		}
 		
+		WikiParser parser = getParser();
+		String htmldata = parser.parse(pagename, wikidata);
+		
 		Sub sub = new Sub();
-		
-		WikiParser wikiparser = new WikiParser();
-		String htmldata = wikiparser.parse(pagename, wikidata);
-		
 		WikiInfo info = sub.saveWikiInfo(pagename);
-		sub.saveWikiData(info, htmldata, wikidata);
-		sub.saveWikiRef(pagename, wikiparser.getPageList());
+		sub.saveWikiData(info, wikidata);
+		getPageMemcacheSetterGetter().setPageWikiHtmlData(pagename, wikidata, htmldata);
+		new AddRefQueueCommand.Util().queueAddRef(pagename, parser.getPageList());
+	}
+	
+	protected WikiParser getParser() {
+		return new WikiParser();
+	}
+	
+	protected PageMemcacheSetterGetter getPageMemcacheSetterGetter() {
+		return new PageMemcacheSetterGetter();
 	}
 	
 	static public class Sub {
@@ -64,33 +70,6 @@ public class PageSaver {
 	    	
 		}
 		
-		/**
-		 * WikiRefにpageListを保存する
-		 * WikiRefは自分自身のではなくて、リンク先のところに自分の情報を保存する
-		 * @param info
-		 * @param pageList
-		 */
-		public void saveWikiRef(String pagename, List<String> pagelist) {
-			assert(pagename != null);
-			assert(pagelist != null);
-
-	    	WikiRef.Util util = new WikiRef.Util();
-	    	for (String targetpagename : pagelist) {
-	    		Key key = util.makeKey(targetpagename);
-				WikiRef ref = util.loadData(key);
-				String refdata = null;
-				if (ref == null) {
-					ref = new WikiRef();
-					ref.setKey(key);
-					refdata = pagename;
-				} else {
-					refdata = util.addRefData(ref.getRefdata(), pagename);
-				}
-				ref.setRefdata(refdata);
-				ref.setUpdatedateNow();
-				util.saveData(ref);
-	    	}
-		}
 
 		/**
 		 * Version情報をインクリメントして上書きする
@@ -135,18 +114,14 @@ public class PageSaver {
 		 * @param pagename
 		 * @param wikidata
 		 */
-		public WikiData saveWikiData(WikiInfo info, String htmldata, String wikidata) {
+		public WikiData saveWikiData(WikiInfo info, String wikidata) {
 			WikiData data = new WikiData();
 	    	WikiData.Util util = new WikiData.Util();
 	    	data.setUpdatedateNow();
 	    	Key datakey = util.makeKey(info.getKey(), info.getVersion());
 	    	data.setKey(datakey);
 	    	data.setWikidataString(wikidata);
-	    	data.setHtmldataString(htmldata);
 	    	util.saveData(data);
-	    	
-	    	new PageMemcacheSetterGetter().setPageData(datakey, htmldata, wikidata);
-	    	
 	    	return data;
 		}
 	}

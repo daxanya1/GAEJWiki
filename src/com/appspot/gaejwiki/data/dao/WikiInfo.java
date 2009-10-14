@@ -255,9 +255,8 @@ public class WikiInfo {
 					info.setTodaycounter(info.getTodaycounter() + 1);
 				}
 				info.setTotalcounter(info.getTotalcounter() + 1);
-		    	Calendar cal = Calendar.getInstance();
-		    	info.setUpdatedate(cal.getTime());
-		    	info.setCounterupdatedate(cal.getTime());
+		    	info.setUpdatedateNow();
+		    	info.setCounterupdatedateNow();
 		    	pm.makePersistent(info);
 				pm.currentTransaction().commit();
 				return info;

@@ -13,16 +13,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>com.appspot.gaejwiki.servlet.EditServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>REBUILD</servlet-name>
-		<servlet-class>com.appspot.gaejwiki.servlet.RebuildServlet</servlet-class>
+		<servlet-name>QUEUECOMMAND</servlet-name>
+		<servlet-class>com.appspot.gaejwiki.servlet.QueueCommandServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>EDIT</servlet-name>
 		<url-pattern>/edit/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>REBUILD</servlet-name>
-		<url-pattern>/admin/rebuild/*</url-pattern>
+		<servlet-name>QUEUECOMMAND</servlet-name>
+		<url-pattern>/queuecommand/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>READ</servlet-name>

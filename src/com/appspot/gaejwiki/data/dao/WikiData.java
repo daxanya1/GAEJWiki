@@ -28,9 +28,6 @@ public class WikiData {
     private Blob wikidata;
     
 	@Persistent
-    private Blob htmldata;
-    
-	@Persistent
     private Date updatedate;
     
     
@@ -54,16 +51,6 @@ public class WikiData {
 	}
 
 
-	public Blob getHtmldata() {
-		return htmldata;
-	}
-
-
-	public void setHtmldata(Blob htmldata) {
-		this.htmldata = htmldata;
-	}
-
-
 	public Date getUpdatedate() {
 		return updatedate;
 	}
@@ -71,10 +58,6 @@ public class WikiData {
 
 	public void setUpdatedate(Date updatedate) {
 		this.updatedate = updatedate;
-	}
-
-	public String getHtmldataString() {
-		return new DataUtils().toBlogString(getHtmldata());
 	}
 
 	public String getWikidataString() {
@@ -86,10 +69,6 @@ public class WikiData {
 	 */
 	public void setUpdatedateNow() {
     	setUpdatedate(Calendar.getInstance().getTime());
-	}
-
-	public void setHtmldataString(String htmldatastr) {
-		setHtmldata(new DataUtils().stringToBlob(htmldatastr));
 	}
 
 	public void setWikidataString(String wikidatastr) {
@@ -114,13 +93,16 @@ public class WikiData {
 			return kb.getKey();
 		}
 
-		public WikiData loadData(Key key, boolean wikiflag, boolean htmlflag) {
+		/**
+		 * 
+		 * @param key
+		 * @param wikiflag
+		 * @return
+		 */
+		public WikiData loadData(Key key, boolean wikiflag) {
 			PersistenceManager pm = PMF.get().getPersistenceManager();
 			try {
 				WikiData data = pm.getObjectById(WikiData.class, key);
-				if (htmlflag) {
-					data.getHtmldata();
-				}
 				if (wikiflag) {
 					data.getWikidata();
 				}
@@ -135,7 +117,7 @@ public class WikiData {
 		}
 		
 		public boolean isExist(Key key) {
-			return (loadData(key, false, false) != null);
+			return (loadData(key, false) != null);
 		}
 		
     }

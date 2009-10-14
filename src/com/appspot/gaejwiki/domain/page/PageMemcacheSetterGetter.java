@@ -16,7 +16,6 @@
 
 package com.appspot.gaejwiki.domain.page;
 
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
@@ -26,41 +25,45 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
  */
 public class PageMemcacheSetterGetter {
 
-	public static final String KEY_MEMCACHEHTML = "_HTML";
 	public static final String KEY_MEMCACHEWIKI = "_WIKI";
+	public static final String KEY_MEMCACHEHTML = "_HTML";
 	
-	public PageData getPageData(Key keyname) {
-		if (keyname == null) {
+	public PageData getPageData(String pagename) {
+		if (pagename == null) {
 			return null;
 		}
 		
 		MemcacheService memcache = getMemcacheService();
-		String memhtmldata = (String)memcache.get(keyname + KEY_MEMCACHEHTML);
-		String memwikidata = (String)memcache.get(keyname + KEY_MEMCACHEWIKI);
-		if (memhtmldata == null || memwikidata == null) {
+		String memwikidata = (String)memcache.get(pagename + KEY_MEMCACHEWIKI);
+		String memhtmldata = (String)memcache.get(pagename + KEY_MEMCACHEHTML);
+		if (memwikidata == null || memhtmldata == null) {
 			return null;
 		}
 		
 		PageData pagedata = new PageData();
-		pagedata.setHtmlWiki(memhtmldata, memwikidata);
+		pagedata.setWikiHtml(memwikidata, memhtmldata);
 		return pagedata;
 	}
 	
-	public void setPageData(Key keyname, PageData pagedata) {
+	public void setPageData(String pagename, PageData pagedata) {
 		if (pagedata == null) {
 			return;
 		}
-		setPageData(keyname, pagedata.get(PageData.HTMLDATAKEY), pagedata.get(PageData.WIKIDATAKEY));
+		setPageWikiHtmlData(pagename, pagedata.get(PageData.HTMLDATAKEY), pagedata.get(PageData.WIKIDATAKEY));
 	}
 	
-	public void setPageData(Key keyname, String htmldata, String wikidata) {
-		if (keyname == null || htmldata == null || wikidata == null) {
+	public void setPageWikiHtmlData(String pagename, String wikidata, String htmldata) {
+		if (pagename == null) {
 			return;
 		}
 		
 		MemcacheService memcache = getMemcacheService();
-		memcache.put(keyname + KEY_MEMCACHEHTML, htmldata);
-		memcache.put(keyname + KEY_MEMCACHEWIKI, wikidata);
+		if (wikidata != null) {
+			memcache.put(pagename + KEY_MEMCACHEWIKI, wikidata);
+		}
+		if (htmldata != null) {
+			memcache.put(pagename + KEY_MEMCACHEHTML, htmldata);
+		}
 	}
 	
 	/**
@@ -74,12 +77,12 @@ public class PageMemcacheSetterGetter {
 	/**
 	 * @param key
 	 */
-	public void clearHtmlData(Key keyname) {
-		if (keyname == null) {
+	public void clearHtmlData(String pagename) {
+		if (pagename == null) {
 			return;
 		}
 		
 		MemcacheService memcache = getMemcacheService();
-		memcache.put(keyname + KEY_MEMCACHEHTML, null);
+		memcache.put(pagename + KEY_MEMCACHEHTML, null);
 	}
 }

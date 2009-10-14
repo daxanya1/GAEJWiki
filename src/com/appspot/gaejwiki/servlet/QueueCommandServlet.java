@@ -22,26 +22,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.appspot.gaejwiki.common.template.TemplateLoader;
-import com.appspot.gaejwiki.common.template.TemplateMapCreater;
-import com.appspot.gaejwiki.common.template.TemplateMerger;
-import com.appspot.gaejwiki.common.text.TextUtils;
-import com.appspot.gaejwiki.domain.page.PageData;
-import com.appspot.gaejwiki.domain.page.PageLoader;
 import com.appspot.gaejwiki.domain.page.PageParam;
-import com.appspot.gaejwiki.domain.page.PageQueueSetter;
-import com.appspot.gaejwiki.domain.page.PageRebuilder;
-import com.appspot.gaejwiki.domain.page.PageSaver;
+import com.appspot.gaejwiki.domain.queue.QueueCommandI;
+import com.appspot.gaejwiki.domain.queue.QueueCommandManager;
 import com.appspot.gaejwiki.domain.setting.DomainParameter;
 import com.appspot.gaejwiki.domain.urlparam.ParamParser;
 
 /**
- *
+ * Queueから呼び出される
+ * URLにより処理を分ける
  * @author Ryuichi Danno
  */
 @SuppressWarnings("serial")
-public class RebuildServlet extends HttpServlet {
-	private static final Logger logger = Logger.getLogger(ViewServlet.class.getName());
+public class QueueCommandServlet extends HttpServlet {
+	private static final Logger logger = Logger.getLogger(QueueCommandServlet.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 		new Sub().exec(req, resp);
@@ -50,25 +44,20 @@ public class RebuildServlet extends HttpServlet {
 	static public class Sub {
 
 		public void exec(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-			PageParam pageparam = new ParamParser().parseUrl(req, "rebuild/");
-			rebuild(resp, pageparam);
-		}
-		
-		/**
-		 * @param req
-		 * @param resp
-		 * @param pageparam
-		 */
-		public void rebuild(HttpServletResponse resp, PageParam pageparam) throws IOException {
-			assert(resp != null);
-			assert(pageparam != null);
+			// staticパラメータ初期化用に一度呼び出しておく
+			DomainParameter domain = DomainParameter.getDomainParameter();
 			
-			String pagename = pageparam.get(PageParam.PAGEKEY);
-			// 書き込みする
-			new PageRebuilder().rebuildPage(pagename);
-			logger.info("rebild savepage:" + pagename);
+			PageParam pageparam = new ParamParser().parseUrl(req, domain.get(DomainParameter.QUEUECOMMANDURL));
+			QueueCommandI queuecommand = new QueueCommandManager().getQueueCommand(pageparam);
+			if (queuecommand == null) {
+				logger.info("queue execcommand: notfound");
+				return;
+			}
+			
 			resp.setContentType("text/plain; charset=UTF-8");
-			resp.getWriter().print("ok");
+			String retcode = queuecommand.exec(pageparam) ? "ok" : "ng";
+			logger.info("queue command:" + queuecommand.getName() + ":" + retcode);
+			resp.getWriter().print(retcode);
 		}
 	}
 }
